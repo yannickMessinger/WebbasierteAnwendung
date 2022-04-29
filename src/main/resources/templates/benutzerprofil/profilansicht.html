@@ -6,15 +6,22 @@
 
         <h3>Ihre Daten:</h3>
     
-        Name: <span th:text="${name}">Name</span><br>
-        Geburtstag: <span th:text="${geburstag}">Geburtstag</span><br>
-        Adresse: <span th:text="${adresse}">Adresse</span><br>
-        eMail: <span th:text="${email}">eMail</span><br>
-        Lieblingsfarbe: <span th:text="${lieblingsfarbe}">Lieblingsfarbe</span><br>
+        Name: <span th:text="${profil.name}">Name</span><br>
+        Geburtstag: <span th:text="${profil.geburtsdatum}">Geburtstag</span><br>
+        Adresse: <span th:text="${profil.adresse}">Adresse</span><br>
+        eMail: <span th:text="${profil.email}">eMail</span><br>
+        Lieblingsfarbe: <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
+        
         
         <h3>Interessen:</h3>
-        <span th:text="${interessen}">Interessen</span><br>
+        <span th:text="${profil.interessen}">Interessen</span><br>
+        
+            
+        
 
+
+    
+            
 
 
 
