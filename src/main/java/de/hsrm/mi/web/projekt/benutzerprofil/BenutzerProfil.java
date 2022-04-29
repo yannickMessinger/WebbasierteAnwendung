@@ -34,7 +34,7 @@ public class BenutzerProfil {
     public List<String> getInteressenListe(){
 
         List<String> interessenListe = new ArrayList<String>();
-        //Whitespace an Anfang und Ende entfernen, was passiert wenn String nur aus Leerzeichen besteht?
+        
         this.interessen = this.interessen.strip();
         
 
@@ -42,7 +42,7 @@ public class BenutzerProfil {
             return interessenListe;
         }
         
-        //String in Liste überführen und auf Komma splitten, ggf alternatives Vorgehen?
+        
         //Map trim() nomma auf alle Listenelemente
         interessenListe = Arrays.asList(this.interessen.split(", "));
 
