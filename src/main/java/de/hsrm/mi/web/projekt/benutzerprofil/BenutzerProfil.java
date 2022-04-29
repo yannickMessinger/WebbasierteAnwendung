@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,16 @@ public class BenutzerProfil {
     public List<String> getInteressenListe(){
 
         List<String> interessenListe = new ArrayList<String>();
+        //Whitespace an Anfang und Ende entfernen, was passiert wenn String nur aus Leerzeichen besteht?
+        this.interessen = this.interessen.strip();
+        
+
+        if(this.interessen.equals("")){
+            return interessenListe;
+        }
+        
+        //String in Liste überführen und auf Komma splitten, ggf alternatives Vorgehen?
+        interessenListe = Arrays.asList(this.interessen.split(","));
         return interessenListe;
 
     }
@@ -100,7 +111,7 @@ public class BenutzerProfil {
 
     @Override
     public String toString() {
-        return " Der Username ist:" + name + ", wohnhaft in: " + adresse + "Geburtstag am: " + geburtsdatum + ", email: " + email + " Lieblingsfarbe: " + lieblingsfarbe + " Interessen: " + interessen;
+        return " Der Username ist:" + name + ", wohnhaft in: " + adresse + ", Geburtstag am: " + geburtsdatum + ", email: " + email + ", Lieblingsfarbe: " + lieblingsfarbe + " ,Interessen: " + interessen;
     }
 
 
