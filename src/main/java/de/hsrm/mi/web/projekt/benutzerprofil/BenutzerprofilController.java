@@ -62,5 +62,22 @@ public class BenutzerprofilController {
         return "benutzerprofil/profilansicht";
     }
 
+    @GetMapping("profileditor")
+    public String showProfilEditor(@ModelAttribute("profil") BenutzerProfil profil, Model m){
+        
+        m.addAttribute("name", profil.getName());
+        m.addAttribute("geburtstag", profil.getGeburtsdatum());
+        m.addAttribute("adresse", profil.getAdresse());
+        m.addAttribute("email", profil.getEmail());
+        m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
+        m.addAttribute("interessen", profil.getInteressenListe());
+        
+        
+        
+        
+        
+        return "benutzerprofil/profileditor";
+    }
+
 
 }
