@@ -43,7 +43,9 @@ public class BenutzerProfil {
         }
         
         //String in Liste überführen und auf Komma splitten, ggf alternatives Vorgehen?
-        interessenListe = Arrays.asList(this.interessen.split(","));
+        //Map trim() nomma auf alle Listenelemente
+        interessenListe = Arrays.asList(this.interessen.split(", "));
+
         return interessenListe;
 
     }
