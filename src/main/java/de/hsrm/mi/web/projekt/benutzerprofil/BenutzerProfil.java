@@ -34,6 +34,7 @@ public class BenutzerProfil {
     public List<String> getInteressenListe(){
 
         List<String> interessenListe = new ArrayList<String>();
+        List<String> clean_Strings = new ArrayList<String>();
         
         this.interessen = this.interessen.strip();
         
@@ -44,7 +45,15 @@ public class BenutzerProfil {
         
         
         //Map trim() nomma auf alle Listenelemente
-        interessenListe = Arrays.asList(this.interessen.split(", "));
+        interessenListe = Arrays.asList(this.interessen.split(","));
+        
+        for(String i : interessenListe) {
+            clean_Strings.add(i.trim());
+          }
+          
+          interessenListe = clean_Strings;
+
+        
 
         return interessenListe;
 

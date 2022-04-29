@@ -31,7 +31,7 @@ public class BenutzerprofilController {
         profil.setAdresse("Geheime Straße 101");
         profil.setEmail("vauzwomachtfroh@web.de");
         profil.setLieblingsfarbe("orange");
-        profil.setInteressen("essen, atmen, trinken");
+        profil.setInteressen("weit hüpfen, fern sehen  ,  Topflappen häkeln");
         
         m.addAttribute("profil", profil);
         
