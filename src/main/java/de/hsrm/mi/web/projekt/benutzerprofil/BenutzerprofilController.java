@@ -20,18 +20,14 @@ public class BenutzerprofilController {
     
 
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
-
-    //@ModelAttribute
-    //public void initProfil(Model m) {
-    //    m.addAttribute("profil", new BenutzerProfil());
-    //}
+    
+    
 
 
     @GetMapping("benutzerprofil")
     public String getProfilansicht(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         
-        //vorher schon Model bzw Benutzerprofil initialisieren?
-        //profil = new BenutzerProfil();
+        
         profil.setName("Yannick");
         profil.setGeburtsdatum(LocalDate.of(1991,9,12));
         profil.setAdresse("Geheime Straße 101");
@@ -39,7 +35,7 @@ public class BenutzerprofilController {
         profil.setLieblingsfarbe("orange");
         profil.setInteressen("racen, rasten, tanken");
         
-        m.addAttribute("interessenliste", profil.getInteressenListe());
+        
         
         
         

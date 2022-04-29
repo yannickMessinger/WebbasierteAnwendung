@@ -14,9 +14,13 @@
         
         
         <h3>Interessen:</h3>
-        <span th:text="${profil.interessen}">Interessen</span><br>
         
-            
+        <ol>
+
+            <li th:each="i: ${profil.getInteressenListe()}" th:text="${i}"></li>
+
+        </ol>
+           
         
 
 
