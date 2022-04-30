@@ -1,6 +1,6 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
-import java.time.LocalDate;
+
 
 
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -26,13 +27,6 @@ public class BenutzerprofilController {
     public void initBenutzerProfil(Model m) {
 
         BenutzerProfil profil = new BenutzerProfil();
-        profil.setName("Yannick");
-        profil.setGeburtsdatum(LocalDate.of(1993,7,13));
-        profil.setAdresse("Geheime Straße 101");
-        profil.setEmail("vauzwomachtfroh@web.de");
-        profil.setLieblingsfarbe("orange");
-        profil.setInteressen("weit hüpfen, fern sehen  ,  Topflappen häkeln");
-        
         m.addAttribute("profil", profil);
         
 
@@ -42,7 +36,7 @@ public class BenutzerprofilController {
     @GetMapping("benutzerprofil")
     public String getProfilansicht(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         
-        
+        //einzelne Werte eig. unnötig
         m.addAttribute("name", profil.getName());
         m.addAttribute("geburtstag", profil.getGeburtsdatum());
         m.addAttribute("adresse", profil.getAdresse());
@@ -50,6 +44,7 @@ public class BenutzerprofilController {
         m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
         m.addAttribute("interessen", profil.getInteressenListe());
 
+        m.addAttribute("profil", profil);
         
         
         
@@ -62,7 +57,7 @@ public class BenutzerprofilController {
         return "benutzerprofil/profilansicht";
     }
 
-    @GetMapping("profileditor")
+    @GetMapping("benutzerprofil/bearbeiten")
     public String showProfilEditor(@ModelAttribute("profil") BenutzerProfil profil, Model m){
         
         m.addAttribute("name", profil.getName());
@@ -73,10 +68,31 @@ public class BenutzerprofilController {
         m.addAttribute("interessen", profil.getInteressenListe());
         
         
+        m.addAttribute("profil", profil);
+        
         
         
         
         return "benutzerprofil/profileditor";
+    }
+
+    @PostMapping("/benutzerprofil/bearbeiten")
+    public String postForm(@ModelAttribute("profil") BenutzerProfil profil, Model m){
+        
+        m.addAttribute("name", profil.getName());
+        m.addAttribute("geburtstag", profil.getGeburtsdatum());
+        m.addAttribute("adresse", profil.getAdresse());
+        m.addAttribute("email", profil.getEmail());
+        m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
+        m.addAttribute("interessen", profil.getInteressenListe());
+        
+        
+        m.addAttribute("profil", profil);
+        
+        
+        
+        
+        return "redirect:/benutzerprofil";
     }
 
 

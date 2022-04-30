@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class BenutzerProfil {
 
     private String name;
-    @DateTimeFormat(iso = ISO.TIME)
+    @DateTimeFormat(iso = ISO.DATE)
     private LocalDate geburtsdatum;
     private String adresse;
     private String email;

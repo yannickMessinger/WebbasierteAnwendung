@@ -8,7 +8,7 @@ xmlns:th="http://www.thymeleaf.org">
     <title>Document</title>
 </head>
 <body>
-    <h1>PROFIL EDITOR AMK</h1>
+    <h1>PROFIL EDITOR</h1>
 
         Name: <span th:text="${profil.name}">Name</span><br>
         Geburtstag: <span th:text="${profil.geburtsdatum}">Geburtstag</span><br>
@@ -16,24 +16,32 @@ xmlns:th="http://www.thymeleaf.org">
         eMail: <span th:text="${profil.email}">eMail</span><br>
         Lieblingsfarbe: <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
         <br>
-        <form>
+        
+        <form th:action = "@{/benutzerprofil/bearbeiten}" th:method ="post" th:object ="${profil}">
+           
             <label for="name">Name:</label><br>
-            <input type="text" name="name"><br>
-            <br>
+            <input type="text" name="name" th:field="*{name}"/>
+            <br><br>
+
+            
             <label for="geburtsdatum">Geburtsdatum:</label><br>
-            <input type="date" name="geburtsdatum"><br>
+            <input type="date" name="geburtsdatum" th:field="*{geburtsdatum}"/><br>
             <br>
+
             <label for="adresse">Adresse:</label><br>
-            <input type="text" name="adresse"><br><br>
+            <input type="text" name="adresse" th:field="*{adresse}" /><br><br>
 
             <label for="email">E-Mail:</label><br>
-            <input type="text" name="email"><br><br>
+            <input type="text" name="email" th:field="*{email}" /><br><br>
 
             <label for="lieblingsfarbe">Lieblingsfarbe:</label><br>
-            <input type="color" name="lieblingsfarbe"/><br><br>
+            <input type="color" name="lieblingsfarbe" th:field="*{lieblingsfarbe}"/><br><br>
+
+            <label for="interessen">Interessen</label><br>
+            <input type="text" name="interessen" th:field="*{interessen}" /><br><br>
 
 
-            <input type="submit" value = "OK" action ="" method="POST">
+            <input type="submit" value = "SPEICHERN">
         </form>
 </body>
 </html>
