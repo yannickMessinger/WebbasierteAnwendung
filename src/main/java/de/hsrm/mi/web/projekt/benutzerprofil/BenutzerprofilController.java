@@ -34,7 +34,7 @@ public class BenutzerprofilController {
 
 
     @GetMapping("benutzerprofil")
-    public String getProfilansicht(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
+    public String getProfilansicht(){
         
         //einzelne Werte eig. unnötig
         //m.addAttribute("name", profil.getName());
@@ -44,16 +44,14 @@ public class BenutzerprofilController {
         //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
         //m.addAttribute("interessen", profil.getInteressenListe());
 
-        m.addAttribute("profil", profil);
+        //eigentlich auch unnötig
+        //m.addAttribute("profil", profil);
         
         
         
         
         
-        if(result.hasErrors()) {
-            logger.error("Problem beim binden der werte", profil);
-        }
-        
+
         return "benutzerprofil/profilansicht";
     }
 

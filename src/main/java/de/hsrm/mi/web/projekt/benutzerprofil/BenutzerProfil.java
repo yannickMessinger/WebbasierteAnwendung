@@ -5,13 +5,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class BenutzerProfil {
-
+   
+    @Size(min = 3, max = 60, message = "Name muss mind. {min} Buchstaben und maximal {max} Buchstaben haben!!")
+    @NotNull
     private String name;
+
     @DateTimeFormat(iso = ISO.DATE)
+    @Past
     private LocalDate geburtsdatum;
     private String adresse;
     private String email;
