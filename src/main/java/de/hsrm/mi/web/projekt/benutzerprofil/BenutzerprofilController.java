@@ -36,16 +36,7 @@ public class BenutzerprofilController {
     @GetMapping("benutzerprofil")
     public String getProfilansicht(){
         
-        //einzelne Werte eig. unnötig
-        //m.addAttribute("name", profil.getName());
-        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        //m.addAttribute("adresse", profil.getAdresse());
-        //m.addAttribute("email", profil.getEmail());
-        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        //m.addAttribute("interessen", profil.getInteressenListe());
-
-        //eigentlich auch unnötig
-        //m.addAttribute("profil", profil);
+        
         
         
         
@@ -56,17 +47,9 @@ public class BenutzerprofilController {
     }
 
     @GetMapping("benutzerprofil/bearbeiten")
-    public String showProfilEditor(@ModelAttribute("profil") BenutzerProfil profil, Model m){
+    public String showProfilEditor(Model m){
         
-        //m.addAttribute("name", profil.getName());
-        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        //m.addAttribute("adresse", profil.getAdresse());
-        //m.addAttribute("email", profil.getEmail());
-        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        //m.addAttribute("interessen", profil.getInteressenListe());
-        
-        
-        m.addAttribute("profil", profil);
+
         
         
         
@@ -77,13 +60,7 @@ public class BenutzerprofilController {
     @PostMapping("/benutzerprofil/bearbeiten")
     public String postForm(@ModelAttribute("profil") BenutzerProfil profil, Model m){
         
-        //m.addAttribute("name", profil.getName());
-        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        //m.addAttribute("adresse", profil.getAdresse());
-        //m.addAttribute("email", profil.getEmail());
-        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        //m.addAttribute("interessen", profil.getInteressenListe());
-        
+      
         
         m.addAttribute("profil", profil);
         
