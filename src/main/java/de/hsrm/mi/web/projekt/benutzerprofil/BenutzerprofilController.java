@@ -37,12 +37,12 @@ public class BenutzerprofilController {
     public String getProfilansicht(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         
         //einzelne Werte eig. unnötig
-        m.addAttribute("name", profil.getName());
-        m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        m.addAttribute("adresse", profil.getAdresse());
-        m.addAttribute("email", profil.getEmail());
-        m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        m.addAttribute("interessen", profil.getInteressenListe());
+        //m.addAttribute("name", profil.getName());
+        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
+        //m.addAttribute("adresse", profil.getAdresse());
+        //m.addAttribute("email", profil.getEmail());
+        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
+        //m.addAttribute("interessen", profil.getInteressenListe());
 
         m.addAttribute("profil", profil);
         
@@ -60,12 +60,12 @@ public class BenutzerprofilController {
     @GetMapping("benutzerprofil/bearbeiten")
     public String showProfilEditor(@ModelAttribute("profil") BenutzerProfil profil, Model m){
         
-        m.addAttribute("name", profil.getName());
-        m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        m.addAttribute("adresse", profil.getAdresse());
-        m.addAttribute("email", profil.getEmail());
-        m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        m.addAttribute("interessen", profil.getInteressenListe());
+        //m.addAttribute("name", profil.getName());
+        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
+        //m.addAttribute("adresse", profil.getAdresse());
+        //m.addAttribute("email", profil.getEmail());
+        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
+        //m.addAttribute("interessen", profil.getInteressenListe());
         
         
         m.addAttribute("profil", profil);
@@ -79,12 +79,12 @@ public class BenutzerprofilController {
     @PostMapping("/benutzerprofil/bearbeiten")
     public String postForm(@ModelAttribute("profil") BenutzerProfil profil, Model m){
         
-        m.addAttribute("name", profil.getName());
-        m.addAttribute("geburtstag", profil.getGeburtsdatum());
-        m.addAttribute("adresse", profil.getAdresse());
-        m.addAttribute("email", profil.getEmail());
-        m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
-        m.addAttribute("interessen", profil.getInteressenListe());
+        //m.addAttribute("name", profil.getName());
+        //m.addAttribute("geburtstag", profil.getGeburtsdatum());
+        //m.addAttribute("adresse", profil.getAdresse());
+        //m.addAttribute("email", profil.getEmail());
+        //m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
+        //m.addAttribute("interessen", profil.getInteressenListe());
         
         
         m.addAttribute("profil", profil);
