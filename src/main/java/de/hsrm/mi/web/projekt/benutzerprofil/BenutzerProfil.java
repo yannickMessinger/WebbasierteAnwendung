@@ -20,19 +20,19 @@ public class BenutzerProfil {
     private String name;
 
     @DateTimeFormat(iso = ISO.DATE)
-    @Past(message ="Das Geburtstadtum darf nicht in der Zukuunft liegen!")
+    @Past(message ="Das Geburtstadtum darf nicht in der Zukunft liegen!")
     @NotNull
     private LocalDate geburtsdatum;
     
-    @NotNull
+    @NotNull(message = "Adresse muss angegeben werden!")
     private String adresse;
     
-    @Email
+    @Email(message = "E-Mail mit ungültigen Format!")
     private String email;
     
     private String lieblingsfarbe;
     
-    @NotNull
+    @NotNull(message = "Man muss Interessen haben!")
     private String interessen;
 
 
