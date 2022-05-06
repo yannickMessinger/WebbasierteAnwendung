@@ -36,37 +36,28 @@ public class BenutzerprofilController {
     @GetMapping("benutzerprofil")
     public String getProfilansicht(){
         
-        
-        
-        
-        
-        
-        
-
         return "benutzerprofil/profilansicht";
     }
 
     @GetMapping("benutzerprofil/bearbeiten")
     public String showProfilEditor(Model m){
         
-
-        
-        
-        
-        
         return "benutzerprofil/profileditor";
     }
 
+
     @PostMapping("/benutzerprofil/bearbeiten")
-    public String postForm(@ModelAttribute("profil") BenutzerProfil profil, Model m){
+    public String postForm(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
         
-      
+        if(result.hasErrors()){
+            return "benutzerprofil/profileditor";
+        }
+
         
-        m.addAttribute("profil", profil);
         
-        
-        
-        
+
+
+
         return "redirect:/benutzerprofil";
     }
 
