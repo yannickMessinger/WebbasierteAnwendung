@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -19,11 +20,19 @@ public class BenutzerProfil {
     private String name;
 
     @DateTimeFormat(iso = ISO.DATE)
-    @Past
+    @Past(message ="Das Geburtstadtum darf nicht in der Zukuunft liegen!")
+    @NotNull
     private LocalDate geburtsdatum;
+    
+    @NotNull
     private String adresse;
+    
+    @Email
     private String email;
+    
     private String lieblingsfarbe;
+    
+    @NotNull
     private String interessen;
 
 
@@ -32,7 +41,7 @@ public class BenutzerProfil {
         this.name = "";
         this.geburtsdatum = LocalDate.of(1,1,1);
         this.adresse = "";
-        this.email = "";
+        this.email = null;
         this.lieblingsfarbe = "";
         this.interessen = "";
 
