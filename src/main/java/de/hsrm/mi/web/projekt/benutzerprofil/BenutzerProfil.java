@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -25,6 +26,7 @@ public class BenutzerProfil {
     private LocalDate geburtsdatum;
     
     @NotNull(message = "Adresse muss angegeben werden!")
+    @NotBlank(message = "Adresse muss angegeben werden!")
     private String adresse;
     
     @Email(message = "E-Mail mit ungültigen Format!")
@@ -33,6 +35,7 @@ public class BenutzerProfil {
     private String lieblingsfarbe;
     
     @NotNull(message = "Man muss Interessen haben!")
+    @NotBlank(message = "Man muss Interessen haben!")
     private String interessen;
 
 

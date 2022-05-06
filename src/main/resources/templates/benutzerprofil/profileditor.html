@@ -19,26 +19,32 @@ xmlns:th="http://www.thymeleaf.org">
         
         <form th:action = "@{/benutzerprofil/bearbeiten}" th:method ="post" th:object ="${profil}">
            
+
             <label for="name">Name:</label><br>
             <input type="text" name="name" th:field="*{name}"/>
             <br><br>
-
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
             
             <label for="geburtsdatum">Geburtsdatum:</label><br>
             <input type="date" name="geburtsdatum" th:field="*{geburtsdatum}"/><br>
             <br>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
 
             <label for="adresse">Adresse:</label><br>
             <input type="text" name="adresse" th:field="*{adresse}" /><br><br>
+            <p th:if="${#fields.hasErrors('adresse')}" th:errorclass="error" th:errors="*{adresse}"></p>
 
             <label for="email">E-Mail:</label><br>
             <input type="text" name="email" th:field="*{email}" /><br><br>
+            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 
             <label for="lieblingsfarbe">Lieblingsfarbe:</label><br>
             <input type="color" name="lieblingsfarbe" th:field="*{lieblingsfarbe}"/><br><br>
 
             <label for="interessen">Interessen</label><br>
             <input type="text" name="interessen" th:field="*{interessen}" /><br><br>
+            <p th:if="${#fields.hasErrors('interessen')}" th:errorclass="error" th:errors="*{interessen}"></p>
+            
 
 
             <input type="submit" value = "SPEICHERN">
