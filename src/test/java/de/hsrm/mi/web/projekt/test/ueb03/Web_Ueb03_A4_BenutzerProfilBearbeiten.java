@@ -38,7 +38,7 @@ class Web_Ueb03_A4_BenutzerprofilAnsichtBearbeiten {
     private final String TESTISODATUM = "2017-07-17";
 	private final LocalDate TESTDATUM = LocalDate.of(2017, 7, 17);
     private final String TESTEMAIL = "joghi@mi.hs-rm.de";
-    private final String TESTLIEBLINGSFARBE = "#171717";
+    private final String TESTLIEBLINGSFARBE = "#161718";
     private final String TESTINTERESSEN = "weit hüpfen, fern sehen  ,  Topflappen häkeln";
     
     BenutzerProfil benutzerprofil = null;

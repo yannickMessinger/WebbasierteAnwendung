@@ -2,18 +2,20 @@
     xmlns:th="http://www.thymeleaf.org">
     
     <body> 
-        <h2> Benutzerprofil</h2>
+        <h2><span th:text="#{form.benutzerprofil}"></span></h2>
+        Wollen sie <a th:href="@{?sprache=de}">Deutsch</a>
+        oder <a th:href="@{?sprache=en}">Englisch</a>?
 
-        <h3>Ihre Daten:</h3>
+        <h3><span th:text="#{form.daten}"></span></h3>
     
-        Name: <span th:text="${profil.name}">Name</span><br>
-        Geburtstag: <span th:text="${profil.geburtsdatum}">Geburtstag</span><br>
-        Adresse: <span th:text="${profil.adresse}">Adresse</span><br>
-        eMail: <span th:text="${profil.email}">eMail</span><br>
-        Lieblingsfarbe: <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
+        <span th:text="#{form.name}"></span><span th:text="${profil.name}">Name</span><br>
+        <span th:text="#{form.geburtsdatum}"></span><span th:text="${profil.geburtsdatum}">Geburtstag</span><br>
+        <span th:text="#{form.adresse}"></span><span th:text="${profil.adresse}">Adresse</span><br>
+        <span th:text="#{form.email}"></span></span> <span th:text="${profil.email}">eMail</span><br>
+        <span th:text="#{form.lieblingsfarbe}"></span> <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
         
         
-        <h3>Interessen:</h3>
+        <h3> <span th:text="#{form.interessen}"></span></h3>
         
         <ol>
 
@@ -23,7 +25,7 @@
            
         
 
-        <b><a th:href="@{benutzerprofil/bearbeiten}">(Profil bearbeiten)</a></b>
+        <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
     
             
 

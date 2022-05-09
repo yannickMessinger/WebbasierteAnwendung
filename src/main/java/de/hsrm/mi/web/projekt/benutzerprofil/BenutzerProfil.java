@@ -8,34 +8,37 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import de.hsrm.mi.web.projekt.validierung.Bunt;
+
 public class BenutzerProfil {
    
-    @Size(min = 3, max = 60, message = "Name muss mind. {min} Buchstaben und maximal {max} Buchstaben haben!!")
+    @Size(min = 3, max = 60, message = "{name_fehler}")
     @NotNull
     private String name;
 
-    @DateTimeFormat(iso = ISO.DATE)
-    @Past(message ="Das Geburtstadtum darf nicht in der Zukunft liegen!")
+    @PastOrPresent(message ="{geburtstag_fehler}")
     @NotNull
+    @DateTimeFormat(iso = ISO.DATE)
     private LocalDate geburtsdatum;
     
-    @NotNull(message = "Adresse muss angegeben werden!")
-    @NotBlank(message = "Adresse muss angegeben werden!")
+    @NotNull(message = "{adresse_fehler}")
+    @NotBlank(message = "{adresse_fehler}")
     private String adresse;
     
-    @Email(message = "E-Mail mit ungültigen Format!")
+    @Email(message = "{email_fehler}")
     private String email;
     
+    @Bunt(message = "{farbe_fehler}")
     private String lieblingsfarbe;
     
-    @NotNull(message = "Man muss Interessen haben!")
-    @NotBlank(message = "Man muss Interessen haben!")
+    @NotNull(message = "{interessen_fehler}")
+    @NotBlank(message = "{interessen_fehler}")
     private String interessen;
 
 

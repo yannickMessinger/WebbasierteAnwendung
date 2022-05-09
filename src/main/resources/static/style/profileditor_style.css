@@ -1,0 +1,17 @@
+body {
+    background-color: lightblue;
+  }
+  
+  h1 {
+    color: navy;
+   
+  }
+
+  .input_error {
+    color : red;
+    border: 2px solid red;
+  }
+
+  p.input_error {
+     color: red;
+     }

@@ -3,6 +3,8 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -26,18 +28,18 @@ public class BenutzerprofilController {
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
     
     @ModelAttribute("profil")
-    public void initBenutzerProfil(Model m) {
+    public void initBenutzerProfil(Locale locale, Model m) {
 
         BenutzerProfil profil = new BenutzerProfil();
         m.addAttribute("profil", profil);
-        
+        m.addAttribute("sprache", locale.getDisplayLanguage());
 
     }
 
 
     @GetMapping("benutzerprofil")
-    public String getProfilansicht(){
-        logger.info("Logger Message in getProfilAnsicht");
+    public String getProfilansicht(Model m){
+        
 
         return "benutzerprofil/profilansicht";
     }
@@ -45,14 +47,14 @@ public class BenutzerprofilController {
     @GetMapping("benutzerprofil/bearbeiten")
     public String showProfilEditor(Model m){
         
-        logger.info("Logger Message in showProfilEditor");
-
+        
+        
         return "benutzerprofil/profileditor";
     }
 
 
     @PostMapping("/benutzerprofil/bearbeiten")
-    public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
+    public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         
         logger.info("Logger Message in postForm");
 
@@ -61,7 +63,8 @@ public class BenutzerprofilController {
             logger.error("fehlerhafte Eingabe",profil);
             return "benutzerprofil/profileditor";
         }
-
+        
+        
         
         
 
