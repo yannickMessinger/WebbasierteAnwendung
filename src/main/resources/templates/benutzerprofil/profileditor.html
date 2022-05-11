@@ -17,6 +17,9 @@ xmlns:th="http://www.thymeleaf.org">
         eMail: <span th:text="${profil.email}">eMail</span><br>
         Lieblingsfarbe: <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
         <br>
+
+        Wollen sie <a th:href="@{?sprache=de}">Deutsch</a>
+        oder <a th:href="@{?sprache=en}">Englisch</a>?
         
         <form th:action = "@{/benutzerprofil/bearbeiten}" th:method ="post" th:object ="${profil}">
            
@@ -67,6 +70,6 @@ xmlns:th="http://www.thymeleaf.org">
             <input type="submit" th:value="#{form.abspeichern}">
         </form>
 
-        <input type="submit" th:value = "#{form.abbrechen}">
+        <button onclick="window.location.href='/benutzerprofil'" type="reset" th:text = "#{form.abbrechen}"></button>
 </body>
 </html>

@@ -63,6 +63,9 @@ public class BenutzerprofilController {
             logger.error("fehlerhafte Eingabe",profil);
             return "benutzerprofil/profileditor";
         }
+
+
+
         
         
         
@@ -72,6 +75,9 @@ public class BenutzerprofilController {
 
         return "redirect:/benutzerprofil";
     }
+
+
+
 
 
 }

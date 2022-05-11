@@ -3,16 +3,39 @@
     
     <body> 
         <h2><span th:text="#{form.benutzerprofil}"></span></h2>
-        Wollen sie <a th:href="@{?sprache=de}">Deutsch</a>
-        oder <a th:href="@{?sprache=en}">Englisch</a>?
+        <a th:href="@{?sprache=de}">Deutsch</a>
+        <a th:href="@{?sprache=en}">Englisch</a>
 
         <h3><span th:text="#{form.daten}"></span></h3>
     
-        <span th:text="#{form.name}"></span><span th:text="${profil.name}">Name</span><br>
-        <span th:text="#{form.geburtsdatum}"></span><span th:text="${profil.geburtsdatum}">Geburtstag</span><br>
-        <span th:text="#{form.adresse}"></span><span th:text="${profil.adresse}">Adresse</span><br>
-        <span th:text="#{form.email}"></span></span> <span th:text="${profil.email}">eMail</span><br>
-        <span th:text="#{form.lieblingsfarbe}"></span> <span th:text="${profil.lieblingsfarbe}">Lieblingsfarbe</span><br>
+        <table>
+            <tr>
+                <td><b th:text="#{form.name}">Name</b></td>
+                <td th:text="${profil.name}"></td>
+            </tr>
+            <tr>
+                <td><b th:text="#{form.geburtsdatum}"> Geburtsdatum</b></td>
+                <td th:text="${profil.geburtsdatum}"> </td>
+            </tr>
+
+            <tr>
+                <td><b th:text="#{form.adresse}">Adresse</b></td>
+                <td th:text="${profil.adresse}"></td>
+            </tr>
+
+            <tr>
+                <td><b th:text="#{form.email}">Email</b></td>
+                <td th:text="${profil.email}"></td>
+            </tr>
+
+            <tr>
+                <td><b th:text="#{form.lieblingsfarbe}">Lieblingsfarbe</b></td>
+                <td  th:text="${profil.lieblingsfarbe}"></td>
+            </tr>
+
+        </table>
+
+        
         
         
         <h3> <span th:text="#{form.interessen}"></span></h3>
