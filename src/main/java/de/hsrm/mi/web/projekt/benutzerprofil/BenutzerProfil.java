@@ -1,10 +1,16 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Version;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,8 +22,17 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
-public class BenutzerProfil {
-   
+@Entity
+public class BenutzerProfil implements Serializable{
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Version
+    private long version;
+
+
+
     @Size(min = 3, max = 60, message = "{name_fehler}")
     @NotNull
     private String name;
@@ -146,7 +161,7 @@ public class BenutzerProfil {
 
     @Override
     public String toString() {
-        return " Der Username ist:" + name + ", wohnhaft in: " + adresse + ", Geburtstag am: " + geburtsdatum + ", email: " + email + ", Lieblingsfarbe: " + lieblingsfarbe + " ,Interessen: " + interessen;
+        return " Der Username ist:" + name + ", wohnhaft in: " + adresse + ", Geburtstag am: " + geburtsdatum + ", email: " + email + ", Lieblingsfarbe: " + lieblingsfarbe + " ,Interessen: " + interessen + "die H2 ID ist: " + String.valueOf(id) + " in Version: " + String.valueOf(version);
     }
 
 
