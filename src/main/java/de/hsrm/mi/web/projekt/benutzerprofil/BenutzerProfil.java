@@ -35,6 +35,7 @@ public class BenutzerProfil {
     private String email;
     
     @Bunt(message = "{farbe_fehler}")
+    @NotNull(message = "{farbe_fehler}")
     private String lieblingsfarbe;
     
     @NotNull(message = "{interessen_fehler}")
