@@ -1,12 +1,12 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
-import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Generated;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 @Entity
-public class BenutzerProfil implements Serializable{
+public class BenutzerProfil {
     @Id
     @GeneratedValue
     private long id;
