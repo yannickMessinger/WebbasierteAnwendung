@@ -97,7 +97,7 @@ public class BenutzerprofilController {
         if(op.equals("bearbeiten")){
             logger.info(op+ ":" + String.valueOf(id));
             m.addAttribute("profil",b_profilService.holeBenutzerProfilMitId(id).get());
-            return "benutzerprofil/profileditor";
+            return "redirect:/benutzerprofil/bearbeiten";
 
         }
         
