@@ -197,6 +197,10 @@ public class BenutzerProfil {
         return true;
     }
 
+    public long getId(){
+        return this.id;
+    }
+
     
     
 }

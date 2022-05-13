@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <link rel="stylesheet" th:href="@{/style/profileditor_style.css}" />
+    </head>
+    
+    <body> 
+        <a th:href="@{?sprache=de}">Deutsch</a>
+        <a th:href="@{?sprache=en}">Englisch</a>
+        <h2><span th:text="#{profilliste.titel}"></span></h2>
+
+        <div th:if="${not #lists.isEmpty(profilliste)}">
+        
+        <table>
+            <tr>
+                <th><b th:text="#{profilliste.tab.name}">Name</b></th>
+                <th><b th:text="#{profilliste.tab.geburtsdatum}">Geb</b></th>
+                <th><b th:text="#{profilliste.tab.email}">EPost</b></th>
+                <th><b th:text="#{profilliste.tab.adresse}">aus</b></th>
+                <th><b th:text="#{profilliste.tab.loeschen}">loeschen</b></th>
+              </tr>
+              
+            <tr th:each="i: ${profilliste}">
+                <td><a th:href="@{?op=bearbeiten&id=__${i.getId()}__}" th:text ="${i.name}"></a></td>
+                <td th:text ="${i.geburtsdatum}"></td>
+                <td th:text ="${i.email}"></td>
+                <td th:text ="${i.adresse}"></td>
+                <td><a th:href="@{?op=loeschen&id=__${i.getId()}__}" th:text ="#{profilliste.tab.loeschen}"></a></td>
+            </tr>
+
+            
+
+
+        </table>   
+    </div>
+
+    </body>    
+</html>

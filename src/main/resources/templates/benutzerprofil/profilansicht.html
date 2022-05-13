@@ -17,6 +17,7 @@
                 <td><b th:text="#{form.name}">Name</b></td>
                 <td th:text="${profil.name}"></td>
             </tr>
+           
             <tr>
                 <td><b th:text="#{form.geburtsdatum}"> Geburtsdatum</b></td>
                 <td th:text="${profil.geburtsdatum}"> </td>
@@ -56,6 +57,7 @@
 
         <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
         <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
+        <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
     
             
 

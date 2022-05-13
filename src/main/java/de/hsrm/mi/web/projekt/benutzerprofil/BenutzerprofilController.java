@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -70,6 +71,44 @@ public class BenutzerprofilController {
     }
 
 
+    @GetMapping("benutzerprofil/liste")
+    public String getProfilListe(Model m){
+
+        logger.info("fordere Liste an || BenutzerprofilController getProfilListe()");
+        
+        
+        
+           
+         m.addAttribute("profilliste", b_profilService.alleBenutzerProfile());
+
+
+        return "benutzerprofil/profilliste";
+    }
+
+    @GetMapping(value = "benutzerprofil/liste", params ="op")
+    public String getDelView(@RequestParam String op, @RequestParam("id") Long id, Model m){
+       
+        if(op.equals("loeschen")){
+            logger.info("versuche User mit ID:"+ String.valueOf(id) +" zu loeschen!");
+            b_profilService.loescheBenutzerProfilMitId(id);
+            return "redirect:/benutzerprofil/liste";
+        }
+        
+        if(op.equals("bearbeiten")){
+            logger.info(op+ ":" + String.valueOf(id));
+            m.addAttribute("profil",b_profilService.holeBenutzerProfilMitId(id).get());
+            return "benutzerprofil/profileditor";
+
+        }
+        
+       return "redirect:/benutzerprofil/liste";
+    }
+
+ 
+
+
+
+
     @PostMapping("/benutzerprofil/bearbeiten")
     public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         
@@ -82,8 +121,7 @@ public class BenutzerprofilController {
         }
 
 
-        /*Also muss das in profil gehaltene BenutzerProfil auch hinsichtlich version stets mit
-        dem Stand in der DB abgeglichen sein Muss man das noch iwo abfangen?!*/
+       
 
         m.addAttribute("profil", b_profilService.speichereBenutzerProfil(profil));
         
