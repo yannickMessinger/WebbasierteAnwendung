@@ -67,7 +67,8 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
 
 
         List<BenutzerProfil> profilListOrderedByName = new ArrayList<BenutzerProfil>();
-        profilListOrderedByName = profil_repository.findAll(Sort.by("name"));
+        
+        profilListOrderedByName = profil_repository.findAll(Sort.by(Sort.Direction.ASC,"name"));
         
         
         return profilListOrderedByName;
