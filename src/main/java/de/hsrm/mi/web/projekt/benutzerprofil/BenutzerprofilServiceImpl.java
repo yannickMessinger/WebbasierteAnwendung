@@ -16,6 +16,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
 
     //stimmt des so, ist das die Depenency Injection?
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilServiceImpl.class);
+    
     private BenutzerprofilRepository profil_repository;
 
     @Autowired

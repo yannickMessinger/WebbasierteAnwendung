@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import de.hsrm.mi.web.projekt.geo.GeoService;
+
 @Controller
 @RequestMapping("/")
 @SessionAttributes(names = {"profil"})
@@ -34,7 +36,10 @@ public class BenutzerprofilController {
     @Autowired
     private BenutzerprofilService b_profilService;
 
+    @Autowired
+    private GeoService geo_Service;
 
+    
     
     @ModelAttribute("profil")
     public void initBenutzerProfil(Locale locale, Model m) {
@@ -42,7 +47,7 @@ public class BenutzerprofilController {
         BenutzerProfil profil = new BenutzerProfil();
         m.addAttribute("profil", profil);
         m.addAttribute("sprache", locale.getDisplayLanguage());
-
+        
     }
 
 
@@ -104,6 +109,11 @@ public class BenutzerprofilController {
        return "redirect:/benutzerprofil/liste";
     }
 
+
+    @GetMapping("benutzerprofil/adressKoord")
+    public void calcCoord(@ModelAttribute("profil") BenutzerProfil profil){
+        geo_Service.findeAdressInfo(profil.getAdresse());
+    }
  
 
 
