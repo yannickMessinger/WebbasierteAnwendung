@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +22,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 @Entity
@@ -30,6 +33,11 @@ public class BenutzerProfil {
 
     @Version
     private long version;
+
+
+    private double lat;
+
+    private double lon;
 
 
 
@@ -57,6 +65,10 @@ public class BenutzerProfil {
     @NotBlank(message = "{interessen_fehler}")
     private String interessen;
 
+    @OneToMany(mappedBy = "anbieter",cascade=CascadeType.ALL
+    ,orphanRemoval=true, fetch = FetchType.EAGER)
+    private List<Angebot> angebote;
+
 
     public BenutzerProfil(){
         
@@ -66,6 +78,7 @@ public class BenutzerProfil {
         this.email = null;
         this.lieblingsfarbe = "";
         this.interessen = "";
+        this.angebote = new ArrayList<>();
 
     }
 
@@ -161,7 +174,7 @@ public class BenutzerProfil {
 
     @Override
     public String toString() {
-        return " Der Username ist:" + name + ", wohnhaft in: " + adresse + ", Geburtstag am: " + geburtsdatum + ", email: " + email + ", Lieblingsfarbe: " + lieblingsfarbe + " ,Interessen: " + interessen + "die H2 ID ist: " + String.valueOf(id) + " in Version: " + String.valueOf(version);
+        return " Der Username ist:" + name + ", wohnhaft in: " + adresse +"lat("+ lat +")" + "lon("+ lon +")" + ", Geburtstag am: " + geburtsdatum + ", email: " + email + ", Lieblingsfarbe: " + lieblingsfarbe + " ,Interessen: " + interessen + "die H2 ID ist: " + String.valueOf(id) + " in Version: " + String.valueOf(version);
     }
 
 
@@ -201,6 +214,32 @@ public class BenutzerProfil {
         return this.id;
     }
 
+
+    public double getLat(){
+        return this.lat;
+    }
+
+    public double getLon(){
+        return this.lon;
+    }
+
+    public void setLat(double lat){
+        this.lat = lat;
+    }
+
+    public void setLon(double lon){
+        this.lon = lon;
+    }
+
+
+    public List<Angebot> getAngebote() {
+        return angebote;
+    }
+
+
+    public void setAngebote(List<Angebot> angebote) {
+        this.angebote = angebote;
+    }
     
     
 }

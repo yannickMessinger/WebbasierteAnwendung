@@ -4,7 +4,7 @@ package de.hsrm.mi.web.projekt.geo;
 
 
 
-//kp ob ich das so brauch...
+
 
 
 

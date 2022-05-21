@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.geo.GeoService;
 
 @Controller
@@ -50,6 +52,7 @@ public class BenutzerprofilController {
         
     }
 
+    //hier alle GET
 
     @GetMapping("benutzerprofil")
     public String getProfilansicht(Model m){
@@ -109,15 +112,24 @@ public class BenutzerprofilController {
        return "redirect:/benutzerprofil/liste";
     }
 
+    @GetMapping("benutzerprofil/angebot")
+    public String getAngebotsFormular(Model m){
 
-    @GetMapping("benutzerprofil/adressKoord")
-    public void calcCoord(@ModelAttribute("profil") BenutzerProfil profil){
-        geo_Service.findeAdressInfo(profil.getAdresse());
+        Angebot a = new Angebot();
+
+      
+
+        m.addAttribute("angebot",a);
+
+
+
+        return "benutzerprofil/angebotsformular";
     }
+    
  
 
-
-
+    //------------------------------------------------------------------------------------------------------------------
+    //hier alles POST
 
     @PostMapping("/benutzerprofil/bearbeiten")
     public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
@@ -139,6 +151,16 @@ public class BenutzerprofilController {
         
 
 
+
+        return "redirect:/benutzerprofil";
+    }
+
+
+    @PostMapping("/benutzerprofil/angebot")
+    public String postAngebot(@SessionAttribute("profil") BenutzerProfil profil,@ModelAttribute("angebot") Angebot a, Model m){
+       
+        b_profilService.fuegeAngebotHinzu(profil.getId(), a);
+        m.addAttribute("profil", b_profilService.speichereBenutzerProfil(profil));
 
         return "redirect:/benutzerprofil";
     }

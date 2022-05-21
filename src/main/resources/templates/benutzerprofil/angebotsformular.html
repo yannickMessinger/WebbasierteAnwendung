@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/style/profileditor_style.css}" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>ANGEBOTSEDITOR</h1>
+
+
+        Wollen sie <a th:href="@{?sprache=de}">Deutsch</a>
+        oder <a th:href="@{?sprache=en}">Englisch</a>?
+        
+        <form th:action = "@{/benutzerprofil/angebot}" th:method ="post">
+           
+            <div>
+                
+            <span th:text="#{angebot.form.beschreibung}"></span><br>
+            <input type="text" name="beschreibung" th:field="*{angebot.beschreibung}"/>
+            <br>
+           
+            </div>
+
+            <div>
+                <span th:text="#{angebot.form.mindestpreis}"></span><br>
+                <input type="text" name="mindestpreis" th:field="*{angebot.mindestpreis}"/>
+                <br>
+            </div>
+
+            <div>
+                <span th:text="#{angebot.form.ablaufzeitpunkt}"></span><br>
+                <input type="text" name="ablaufzeitpunkt" th:field="*{angebot.ablaufzeitpunkt}"/>
+                <br>
+            </div>
+
+           
+
+
+            <input type="submit" th:value="#{angebot.form.hinzufuegen}">
+        </form>
+
+        <button onclick="window.location.href='/benutzerprofil'" type="reset" th:text = "#{form.abbrechen}"></button>
+       
+</body>
+</html>

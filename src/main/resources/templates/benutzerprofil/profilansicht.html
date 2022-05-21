@@ -52,14 +52,42 @@
             <li th:each="i: ${profil.getInteressenListe()}" th:text="${i}"></li>
 
         </ol>
+
+        <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
+        <button><a th:if="${profil.getLat()} != null" th:href="@{https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})}" th:text="#{form.koord}" target="_blank"></a></button>
+        <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
+        <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
+        
+        
+        <div th:text="${profil.getAdresse()}"></div>
+       <div th:text="${profil.getLat()}"></div>
+       <div th:text="${profil.getLon()}"></div>
+
+        <h3>Angebote</h3>
+
+        <div th:if="${profil.id != null}">
+        
+            <table>
+                <tr>
+                    <th><b th:text="#{angebot.form.beschreibung}">beschreibung</b></th>
+                    <th><b th:text="#{angebot.form.mindestpreis}">mindestpreis</b></th>
+                    <th><b th:text="#{angebot.form.ablaufzeitpunkt}">angebotsende</b></th>
+
+                </tr>
+                  
+                <tr th:each="a: ${profil.getAngebote()}">
+                    <td th:text ="${a.beschreibung}"></td>
+                    <td th:text ="${a.mindestpreis}"></td>
+                    <td th:text ="${a.angebotsende}"></td>
+                </tr>
+            
+            </table>
+            
+            <button><a th:href="@{benutzerprofil/angebot}" th:text="#{angebot.form.hinzufuegen}"></a></button>
            
         
 
-        <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
-        <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
-        <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
-        <button><a th:href="@{benutzerprofil/adressKoord}" th:text="#{form.koord}"></a></button>
-    
+        
             
 
 

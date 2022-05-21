@@ -71,7 +71,8 @@ public class  GeoServiceImpl implements GeoService {
 
     @Override
     public double abstandKmNachGrad(double abstand) {
-        return 0;
+
+        return abstand / 111.139;
     }
     
 }
