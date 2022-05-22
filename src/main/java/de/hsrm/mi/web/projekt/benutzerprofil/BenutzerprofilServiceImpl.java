@@ -40,9 +40,11 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     @Override
     @Transactional
     public BenutzerProfil speichereBenutzerProfil(BenutzerProfil bp) {
+        
         List<AdressInfo> AdressInfoList = geoService.findeAdressInfo(bp.getAdresse());
 
         logger.info("setze Adressdaten || BenutzerprofilServiceImpl -> GeoService -> speichereBenutzerProfil()");
+        
         if(AdressInfoList.isEmpty()){
                 bp.setLat(0.0);
                 bp.setLon(0.0);
@@ -116,7 +118,10 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
         !beide Seiten pflegen). Wegen der oben getroffenen Vorkehrungen genügt eine Speicher-Operation
         auf dem BenutzerProfil, um die erweiterte Angebot-Sammlung automatisch mit zu speichern.
         */
-        List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(angebot.getAbholort());
+        BenutzerProfil foundProfil = profil_repository.findById(id).get();
+        
+        //hier die Adresse aus dem Profil als Abholort setzen??
+        List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(foundProfil.getAdresse());
 
         logger.info("setze Adressdaten || BenutzerprofilServiceImpl -> GeoService -> speichereBenutzerProfil()");
         if(AngebotAdressInfoList.isEmpty()){
@@ -128,7 +133,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
                 angebot.setLon(AngebotAdressInfoList.get(0).lon());
         }
 
-        BenutzerProfil foundProfil = profil_repository.findById(id).get();
+        
         
         foundProfil.getAngebote().add(angebot);
         angebot.setAnbieter(foundProfil);

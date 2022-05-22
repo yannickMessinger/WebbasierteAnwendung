@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -125,6 +126,18 @@ public class BenutzerprofilController {
 
         return "benutzerprofil/angebotsformular";
     }
+
+
+    @GetMapping("benutzerprofil/angebot/{id}/del")
+    public String delAngebotfromList(@PathVariable("id") long id,@SessionAttribute("profil") BenutzerProfil profil, Model m){
+        
+        logger.info("Angebot mit ID: " + String.valueOf(id) + " wird entfernt!");
+        b_profilService.loescheAngebot(id);
+
+        m.addAttribute("profil", b_profilService.holeBenutzerProfilMitId(profil.getId()).get());
+        
+        return "redirect:/benutzerprofil";
+    }
     
  
 
@@ -159,8 +172,12 @@ public class BenutzerprofilController {
     @PostMapping("/benutzerprofil/angebot")
     public String postAngebot(@SessionAttribute("profil") BenutzerProfil profil,@ModelAttribute("angebot") Angebot a, Model m){
        
+        logger.info("Akt Session Profil ID: " + String.valueOf(profil.getId()));
+        logger.info("Angebotsinhalt:" + a.getBeschreibung());
+
         b_profilService.fuegeAngebotHinzu(profil.getId(), a);
-        m.addAttribute("profil", b_profilService.speichereBenutzerProfil(profil));
+        //so SessionAtt aktualisieren??
+        m.addAttribute("profil", b_profilService.holeBenutzerProfilMitId(profil.getId()).get());
 
         return "redirect:/benutzerprofil";
     }
