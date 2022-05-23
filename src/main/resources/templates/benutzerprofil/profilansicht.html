@@ -54,6 +54,7 @@
         </ol>
 
         <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
+        <a href="https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})/{lon}(lat=${profil.getLon()})" target="_blank" name="submit" type="submit" th:text="Standort"><button></button></a>
         <button><a th:if="${profil.getLat()} != 0" th:href="@{https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})}" th:text="#{form.koord}" target="_blank"></a></button>
         <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
         <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
