@@ -45,6 +45,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
 
         logger.info("setze Adressdaten || BenutzerprofilServiceImpl -> GeoService -> speichereBenutzerProfil()");
         
+
         if(AdressInfoList.isEmpty()){
                 bp.setLat(0.0);
                 bp.setLon(0.0);
