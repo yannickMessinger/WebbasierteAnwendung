@@ -107,22 +107,11 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     @Override
     @Transactional
     public void fuegeAngebotHinzu(long id, Angebot angebot) {
-        /*
-        verwendet zunächst den GeoService, um die
-        Attribute lat und lon in angebot aus dem abholort-Attribut zu aktualisieren. Falls abholort
-        nicht gefunden wird, sollen lat und lon wieder auf die Zahl Null gesetzt werden, ansonsten werden
-        wieder die Koordinaten aus dem ersten Antwortsatz der GeoService-Anfrage übernommen.
         
-        Nach dieser Datensatzveredelung wird das BenutzerProfil mit der übergebenen id aus der Datenbank
-        gefischt (dazu haben Sie ja bereits eine Methode) und das übergebene angebot den Angeboten des
-        Benutzers hinzugefügt bzw. der Benutzer als anbieter des Angebots eingetragen (bidirektionale Beziehung
-        !beide Seiten pflegen). Wegen der oben getroffenen Vorkehrungen genügt eine Speicher-Operation
-        auf dem BenutzerProfil, um die erweiterte Angebot-Sammlung automatisch mit zu speichern.
-        */
         BenutzerProfil foundProfil = profil_repository.findById(id).get();
         
         //hier die Adresse aus dem Profil als Abholort setzen??
-        List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(foundProfil.getAdresse());
+        List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(angebot.getAbholort());
 
         logger.info("setze Adressdaten || BenutzerprofilServiceImpl -> GeoService -> speichereBenutzerProfil()");
         if(AngebotAdressInfoList.isEmpty()){
@@ -149,12 +138,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     @Override
     @Transactional
     public void loescheAngebot(long id) {
-       /*
-       überraschenderweise soll hiermit das Angebot mit der übergebenen
-        id gelöscht werden. Denken Sie wieder daran, dass Sie eine bidirektionale Beziehung pflegen müssen
-        – bevor Sie das Angebot aus der Datenbank werfen, muss es “seinem” BenutzerProfil aus der
-        angebote-Sammlung herausgenommen werden.
-       */
+      
 
       BenutzerProfil del_Angebot_Profil = angebot_repository.getById(id).getAnbieter();
       

@@ -54,7 +54,7 @@
         </ol>
 
         <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
-        <a href="https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})/{lon}(lat=${profil.getLon()})" target="_blank" name="submit" type="submit" th:text="Standort"><button></button></a>
+        <a href="https://www.openstreetmap.org/#map=17/#{profil.getLat()}/#{profil.getLon()}" target="_blank" name="submit" type="submit" th:text="Standort"><button></button></a>
         <button><a th:if="${profil.getLat()} != 0" th:href="@{https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})}" th:text="#{form.koord}" target="_blank"></a></button>
         <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
         <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
@@ -73,6 +73,7 @@
                     <th><b th:text="#{angebot.form.beschreibung}">beschreibung</b></th>
                     <th><b th:text="#{angebot.form.mindestpreis}">mindestpreis</b></th>
                     <th><b th:text="#{angebot.form.ablaufzeitpunkt}">angebotsende</b></th>
+                    <th><b th:text="#{angebot.form.abholort}">angebotsende</b></th>
                     <th><b th:text="#{profilliste.tab.loeschen}">loeschen</b></th>
                 </tr>
                   
@@ -80,6 +81,7 @@
                     <td th:text ="${a.beschreibung}"></td>
                     <td th:text ="${a.mindestpreis}"></td>
                     <td th:text ="${a.ablaufzeitpunkt}"></td>
+                    <td th:text ="${a.abholort}"></td>
                     <td><a th:href="@{/benutzerprofil/angebot/__${a.getId()}__/del}" th:text ="#{profilliste.tab.loeschen}"></a></td>
                 </tr>
             
