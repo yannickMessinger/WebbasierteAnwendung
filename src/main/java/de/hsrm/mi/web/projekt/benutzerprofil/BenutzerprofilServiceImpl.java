@@ -108,7 +108,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     @Transactional
     public void fuegeAngebotHinzu(long id, Angebot angebot) {
         
-        BenutzerProfil foundProfil = profil_repository.findById(id).get();
+        BenutzerProfil foundProfil = profil_repository.findById(id).orElseThrow();
         
         //hier die Adresse aus dem Profil als Abholort setzen??
         List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(angebot.getAbholort());
@@ -119,6 +119,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
                 angebot.setLon(0.0);
         
         }else{
+                //hier Abholort vom angrbot setzen?
                 angebot.setLat(AngebotAdressInfoList.get(0).lat());
                 angebot.setLon(AngebotAdressInfoList.get(0).lon());
         }
