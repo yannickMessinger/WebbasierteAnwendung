@@ -54,15 +54,12 @@
         </ol>
 
         <button><a th:href="@{benutzerprofil/bearbeiten}" th:text="#{form.bearbeiten}"></a></button>
-        <a href="https://www.openstreetmap.org/#map=17/#{profil.getLat()}/#{profil.getLon()}" target="_blank" name="submit" type="submit" th:text="Standort"><button></button></a>
-        <button><a th:if="${profil.getLat()} != 0" th:href="@{https://www.openstreetmap.org/#map=17/{lat}(lat=${profil.getLat()})}" th:text="#{form.koord}" target="_blank"></a></button>
+        <button><a th:if="${profil.getLat()} != 0" th:href="@{'https://www.openstreetmap.org/#map=17/'+ ${profil.lat} +'/'+ ${profil.lon}}" th:text="#{form.koord}" target="_blank"></a></button>
         <button><a th:href="@{benutzerprofil/clearsession}" th:text="#{form.clear}"></a></button>
         <button><a th:href="@{benutzerprofil/liste}" th:text="#{profilliste.titel}"></a></button>
         
         
-        <div th:text="${profil.getAdresse()}"></div>
-       <div th:text="${profil.getLat()}"></div>
-       <div th:text="${profil.getLon()}"></div>
+        
 
         <h3>Angebote</h3>
 
@@ -78,7 +75,7 @@
                 </tr>
                   
                 <tr th:each="a: ${profil.getAngebote()}">
-                    <td th:text ="${a.beschreibung}"></td>
+                    <td><a th:href="@{'https://www.openstreetmap.org/#map=17/'+ ${a.lat} +'/'+ ${a.lon}}" target="_blank" th:text ="${a.beschreibung}"></a></td>
                     <td th:text ="${a.mindestpreis}"></td>
                     <td th:text ="${a.ablaufzeitpunkt}"></td>
                     <td th:text ="${a.abholort}"></td>
