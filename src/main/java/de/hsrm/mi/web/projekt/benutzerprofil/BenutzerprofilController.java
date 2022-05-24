@@ -129,7 +129,7 @@ public class BenutzerprofilController {
 
 
     @GetMapping("benutzerprofil/angebot/{id}/del")
-    public String delAngebotfromList(@PathVariable("id") long id,@SessionAttribute("profil") BenutzerProfil profil, Model m){
+    public String delAngebotfromList(@PathVariable("id") long id, @SessionAttribute("profil") BenutzerProfil profil, Model m){
         
         logger.info("Angebot mit ID: " + String.valueOf(id) + " wird entfernt!");
         b_profilService.loescheAngebot(id);
