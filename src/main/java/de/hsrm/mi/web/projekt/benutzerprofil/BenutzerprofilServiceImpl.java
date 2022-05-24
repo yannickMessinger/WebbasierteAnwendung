@@ -139,8 +139,19 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     @Override
     @Transactional
     public void loescheAngebot(long id) {
-      
+        
+        
+        Angebot angebot = angebot_repository.findById(id).get();
 
+        BenutzerProfil profil = angebot.getAnbieter();
+        
+        profil.getAngebote().remove(angebot);
+
+        angebot_repository.deleteById(id);
+    }
+
+
+    /*
       BenutzerProfil del_Angebot_Profil = angebot_repository.getById(id).getAnbieter();
       
       for (int i = 0; i < del_Angebot_Profil.getAngebote().size(); i++) {
@@ -148,9 +159,11 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
                 del_Angebot_Profil.getAngebote().remove(i);
             }
       }
+      
 
       angebot_repository.deleteById(id);
         
     }
+    */
     
 }
