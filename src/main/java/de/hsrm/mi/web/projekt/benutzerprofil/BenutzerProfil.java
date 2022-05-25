@@ -23,10 +23,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
+import de.hsrm.mi.web.projekt.gebot.Gebot;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 @Entity
 public class BenutzerProfil {
+    
     @Id
     @GeneratedValue
     private long id;
@@ -69,6 +71,8 @@ public class BenutzerProfil {
     ,orphanRemoval=true, fetch = FetchType.EAGER)
     private List<Angebot> angebote;
 
+    //Beziehungen hinzufügen!
+    private List<Gebot> gebote;
 
     public BenutzerProfil(){
         
