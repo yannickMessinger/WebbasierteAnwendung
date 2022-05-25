@@ -25,11 +25,14 @@ public class Gebot {
     private long version;
 
     
+   //Beziehungen hiunzufügen
     @ManyToOne
     private BenutzerProfil gebieter;
 
     
-    @ManyToOne
+       //Beziehungen hiunzufügen
+
+    @ManyToOne   
     private Angebot angebot;
 
     private long betrag;
@@ -43,6 +46,66 @@ public class Gebot {
         this.betrag = 0;
         this.gebotzeitpunkt = LocalDateTime.now();
         
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public long getVersion() {
+        return version;
+    }
+
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+
+    public BenutzerProfil getGebieter() {
+        return gebieter;
+    }
+
+
+    public void setGebieter(BenutzerProfil gebieter) {
+        this.gebieter = gebieter;
+    }
+
+
+    public Angebot getAngebot() {
+        return angebot;
+    }
+
+
+    public void setAngebot(Angebot angebot) {
+        this.angebot = angebot;
+    }
+
+
+    public long getBetrag() {
+        return betrag;
+    }
+
+
+    public void setBetrag(long betrag) {
+        this.betrag = betrag;
+    }
+
+
+    public LocalDateTime getGebotzeitpunkt() {
+        return gebotzeitpunkt;
+    }
+
+
+    public void setGebotzeitpunkt(LocalDateTime gebotzeitpunkt) {
+        this.gebotzeitpunkt = gebotzeitpunkt;
     }
     
 }
