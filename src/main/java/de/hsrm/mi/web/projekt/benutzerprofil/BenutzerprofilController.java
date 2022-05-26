@@ -36,6 +36,7 @@ public class BenutzerprofilController {
 
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
 
+    //nur Service oder ServiceImpl????
     @Autowired
     private BenutzerprofilService b_profilService;
 
