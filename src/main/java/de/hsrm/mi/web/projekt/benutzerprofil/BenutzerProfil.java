@@ -246,6 +246,19 @@ public class BenutzerProfil {
     public void setAngebote(List<Angebot> angebote) {
         this.angebote = angebote;
     }
+
+
+    public List<Gebot> getGebote() {
+        return gebote;
+    }
+
+
+    public void setGebote(List<Gebot> gebote) {
+        this.gebote = gebote;
+    }
+
+
+    
     
     
 }

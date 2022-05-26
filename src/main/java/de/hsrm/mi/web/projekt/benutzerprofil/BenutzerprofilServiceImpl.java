@@ -73,6 +73,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
         
         }else if(foundProfil.isPresent()){
             foundProfil = Optional.of(foundProfil.get());
+            
         }
 
 
@@ -148,6 +149,37 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
         profil.getAngebote().remove(angebot);
 
         angebot_repository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public List<Angebot> alleAngebote() {
+       
+        List<Angebot> alleAngeboteList  = angebot_repository.findAll();
+
+        
+
+        return alleAngeboteList;
+    }
+
+    @Override
+    @Transactional
+    public Optional<Angebot> findeAngebotMitId(long angebotid) {
+        
+        Optional<Angebot> gefundenes_angebot = angebot_repository.findById(angebotid);
+
+        if(gefundenes_angebot.isEmpty()){
+            gefundenes_angebot = Optional.empty();
+        
+        }else if(gefundenes_angebot.isPresent()){
+            gefundenes_angebot = Optional.of(gefundenes_angebot.get());
+        }
+
+
+
+        return gefundenes_angebot;
+
+        
     }
 
 

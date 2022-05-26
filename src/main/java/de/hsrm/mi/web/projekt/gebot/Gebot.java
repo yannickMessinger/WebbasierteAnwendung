@@ -25,22 +25,22 @@ public class Gebot {
     private long version;
 
     
-   //wer bietet
+   //wer bietet / von welchem Nutzerprofil stammt das Gebot
     @ManyToOne
     private BenutzerProfil gebieter;
 
-    //auf welches Angebot/Artikel bezieht es sich
+    //auf welches Angebot/Artikel bezieht sich das Gebot
     @ManyToOne   
     private Angebot angebot;
 
 
-    
+
     private long betrag;
 
     @DateTimeFormat(iso=ISO.DATE_TIME)
     private LocalDateTime gebotzeitpunkt; 
 
-
+    //Geldgebot auf einen Artikel (Angebot)
     public Gebot(){
 
         this.betrag = 0;
