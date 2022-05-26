@@ -74,6 +74,8 @@ public class GebotServiceImpl implements GebotService{
             gebot.setBetrag(betrag);
             gebot.setGebieter(bietender);
             gebot.setAngebot(aufWelchesAngebot);
+            bietender.getGebote().add(gebot);
+            aufWelchesAngebot.getGebote().add(gebot);
         
         }else if(sucheGebot.isPresent()){
             
@@ -82,13 +84,16 @@ public class GebotServiceImpl implements GebotService{
             gebot.setBetrag(betrag);
             gebot.setGebotzeitpunkt(LocalDateTime.now());
             
+            //gebot.setGebieter(bietender);
+            //gebot.setAngebot(aufWelchesAngebot);
 
 
         }
         
+      
         
 
-        return gebot;
+        return  gebot_Repository.save(gebot);
     }
 
     @Override
