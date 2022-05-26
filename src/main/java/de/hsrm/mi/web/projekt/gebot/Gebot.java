@@ -25,16 +25,16 @@ public class Gebot {
     private long version;
 
     
-   //Beziehungen hiunzufügen
+   //wer bietet
     @ManyToOne
     private BenutzerProfil gebieter;
 
-    
-       //Beziehungen hiunzufügen
-
+    //auf welches Angebot/Artikel bezieht es sich
     @ManyToOne   
     private Angebot angebot;
 
+
+    
     private long betrag;
 
     @DateTimeFormat(iso=ISO.DATE_TIME)

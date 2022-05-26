@@ -1,17 +1,21 @@
 package de.hsrm.mi.web.projekt.angebot;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
+import de.hsrm.mi.web.projekt.gebot.Gebot;
 
 @Entity
 public class Angebot {
@@ -24,6 +28,7 @@ public class Angebot {
     private long version;
 
     private String beschreibung;
+    
     private long mindestpreis;
 
     @DateTimeFormat(iso=ISO.DATE_TIME)
@@ -38,6 +43,9 @@ public class Angebot {
     @ManyToOne
     private BenutzerProfil anbieter;
 
+    @OneToMany(mappedBy = "angebot")
+    private List<Gebot> gebote;
+
 
     public Angebot(){
         
@@ -47,6 +55,7 @@ public class Angebot {
         this.abholort = "";
         this.lat = 0;
         this.lon = 0;
+        this.gebote = new ArrayList<>();
         
     
     }
@@ -118,6 +127,16 @@ public class Angebot {
     }
 
 
+    public List<Gebot> getGebote() {
+        return gebote;
+    }
+
+
+    public void setGebote(List<Gebot> gebote) {
+        this.gebote = gebote;
+    }
+
+    
   
 
 }  

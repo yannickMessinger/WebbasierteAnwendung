@@ -71,7 +71,8 @@ public class BenutzerProfil {
     ,orphanRemoval=true, fetch = FetchType.EAGER)
     private List<Angebot> angebote;
 
-    //Beziehungen hinzufügen!
+   
+    @OneToMany(mappedBy = "gebieter")
     private List<Gebot> gebote;
 
     public BenutzerProfil(){
@@ -83,6 +84,7 @@ public class BenutzerProfil {
         this.lieblingsfarbe = "";
         this.interessen = "";
         this.angebote = new ArrayList<>();
+        this.gebote = new ArrayList<>();
 
     }
 
