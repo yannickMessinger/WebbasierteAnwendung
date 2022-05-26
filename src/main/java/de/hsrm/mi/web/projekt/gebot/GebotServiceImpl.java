@@ -10,19 +10,17 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilServiceImpl;
 
+@Service
 public class GebotServiceImpl implements GebotService{
 
 
-    /*
-    !Bitte greifen Sie bei der Umsetzung von GebotServiceImpl auf kein anderes Repository als das
-    !GebotRepository direkt zu und nutzen Sie ansonsten Methoden eines vorhandenen anderen Service, um
-    !benötigte Objekte zu erhalten
-    */
+    
     public static final Logger logger = LoggerFactory.getLogger(GebotServiceImpl.class);
 
     private GebotRepository gebot_Repository;

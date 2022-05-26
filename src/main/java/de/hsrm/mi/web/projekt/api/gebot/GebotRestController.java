@@ -17,18 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilService;
+
 import de.hsrm.mi.web.projekt.gebot.Gebot;
 import de.hsrm.mi.web.projekt.gebot.GebotService;
+
 
 @RestController
 @RequestMapping("/")
 public class GebotRestController {
 
     public static final Logger logger = LoggerFactory.getLogger(GebotRestController.class);
-
-    @Autowired
-    private BenutzerprofilService b_profilService;
 
     @Autowired
     private GebotService g_gebotService;
