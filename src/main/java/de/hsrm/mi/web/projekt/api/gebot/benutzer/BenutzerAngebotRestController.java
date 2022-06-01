@@ -36,9 +36,9 @@ public class BenutzerAngebotRestController {
     @GetMapping("api/angebot")
     public List<GetAngebotResponseDTO> getAngebotResponseDTOList(){
         
-        List<Angebot> alleGebote =  b_profilService.alleAngebote();
+        List<Angebot> alleAngebote =  b_profilService.alleAngebote();
         
-        List<GetAngebotResponseDTO> responseDTOList = alleGebote.stream()
+        List<GetAngebotResponseDTO> responseDTOList = alleAngebote.stream()
                 .map(gebot -> GetAngebotResponseDTO.from(gebot))
                 .collect(Collectors.toList());
         

@@ -100,20 +100,28 @@ public class GebotServiceImpl implements GebotService{
     @Transactional
     public void loescheGebot(long gebotid) {
 
-        List<Gebot> gebotsList = gebot_Repository.findAll();
-        Gebot delGebot;
+        //List<Gebot> gebotsList = gebot_Repository.findAll();
+        
+        Gebot delGebot = gebot_Repository.findById(gebotid).get();
 
+        delGebot.getGebieter().getGebote().remove(delGebot);
+        delGebot.getAngebot().getGebote().remove(delGebot);
+
+        gebot_Repository.deleteById(gebotid);
+
+        /*
         for(Gebot g : gebotsList){
             if(g.getId() == gebotid){
                 
                 delGebot = g;
                 g.getGebieter().getGebote().remove(delGebot);
+                g.getAngebot().getGebote().remove(delGebot);
             }
         }
         
         
         gebot_Repository.deleteById(gebotid);
-        
+        */
     }
     
 }
