@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
+import GeoLink from './components/GeoLink.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+      <GeoLink :lat="50.164802" :lon="8.624993" :zoom="18"></GeoLink>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>

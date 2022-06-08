@@ -1,6 +1,10 @@
 <template>
     <h1>!!GEOLINK!!</h1>
-    <RouterLink to="/ort/ulm">Ulm schnell</RouterLink>
+    
+    <div>
+        <a :href="testLink" target="_blank">{{ url }}</a>
+    </div>
+    
 
 </template>
 
@@ -11,7 +15,8 @@ defineProps<{ lat: number, lon: number, zoom?: number}>(),
 { zoom: 17 }
 )
 
-let testLink = "https://www.openstreetmap.org/#map=zoom/lat/lon"
+let testLink = `https://www.openstreetmap.org/#map=${props.zoom}/${props.lat}/${props.lon}`
+let url = "testAmina"
 
 
 </script>
