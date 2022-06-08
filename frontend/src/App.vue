@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
+import GeoLink from './components/GeoLink.vue'
 </script>
 
 <template>
@@ -8,8 +9,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it MÄRK!" />
-
+      <!--<HelloWorld msg="You did it MÄRK!" />-->
+      <GeoLink v-bind:lat="50.25"  v-bind:lon="8.258"></GeoLink>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
