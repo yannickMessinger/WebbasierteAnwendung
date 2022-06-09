@@ -3,16 +3,19 @@
   <div>
     <h1>This is an about page</h1>
     <br/>
-    <GeoLink :lat="50.164802" :lon="8.624993" :zoom="18"></GeoLink>
+    <GeoLink :lat="50.164802" :lon="8.624993" :zoom="18">Frankfurt</GeoLink>
     <br/>
-    <AngebotListeItem></AngebotListeItem>
+    <AngebotListeItem :angebot="a" />
+
   </div>
  
 </template>
 
 <script  setup lang="ts">
-import GeoLink from '@/components/GeoLink.vue'
-import AngebotListeItem from '../components/AngebotListeItem.vue'
+  import GeoLink from '@/components/GeoLink.vue'
+  import AngebotListeItem from '../components/AngebotListeItem.vue'
+  import type { AngebotListeDing, IAngebotListeItem } from '@/services/IAngebotListeItem';
+  let a : AngebotListeDing
 </script>
 
 <style>

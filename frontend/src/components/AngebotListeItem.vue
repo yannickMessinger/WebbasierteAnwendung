@@ -1,21 +1,51 @@
 <template>
    
    <div>
-   <tr class="angebotsinfo">
-        <td class="beschreibung" >{{ beschreibung }}</td>
-        <td class ="gebote">{{ gebote}}</td>
-        <td class="topgebot">{{ topgebot }}</td>
-        <td><button>del</button></td>
-    
-    </tr>
+   <table>    
+    <thead class="angebotsinfo">
+            <td class="beschreibung" >TEST</td>
+            <td class ="gebote">TEST</td>
+            <td class="topgebot">TEST</td>
+            <td><button @click="showDetails()">DETAILS</button></td>
+        </thead>
+
+        <tbody v-if="showDet">
+            <tr>TEST</tr>
+            <tr>TEST</tr>
+            <tr>TEST</tr>
+        </tbody>
+        
+    </table>
+
     </div>
 </template>
 
 <!-- oder hier wie slot nutzen um Textfelder anzuzeigen???-->
-<script  setup lang="ts">
-    let beschreibung = "Beschreibung-Dummy"
-    let gebote ="Gebote-Dummy"
-    let topgebot = "Topgebot-Dummy"
+<script  setup lang="ts">import { ref } from 'vue';
+    import type { AngebotListeDing, IAngebotListeItem } from '@/services/IAngebotListeItem';
+
+    //const props = defineProps<{
+    //angebot: AngebotListeDing
+    //}>()
+    
+    
+    //let beschreibung = props.angebot.abholort
+    //let gebote = props.angebot.gebote
+    //let topgebot = props.angebot.topgebot
+    
+    
+    let showDet = ref(false)
+
+    function showDetails(): void{
+        
+        if (!showDet.value){
+            showDet.value = true
+        
+        }else{
+        showDet.value = false
+        }
+    }
+
 </script>
 
 <style>

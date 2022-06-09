@@ -2,7 +2,7 @@
     <h1>!!GEOLINK!!</h1>
     
     <div>
-      <button><a :href="testLink" target="_blank">{{ url }}</a></button>
+      <button><a :href="testLink" target="_blank"><slot>Dummy-Text</slot></a></button>
     </div>
     
 
