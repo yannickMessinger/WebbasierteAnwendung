@@ -3,16 +3,16 @@
    <div>
    <table>    
     <thead class="angebotsinfo">
-            <td class="beschreibung" >TEST</td>
-            <td class ="gebote">TEST</td>
-            <td class="topgebot">TEST</td>
+            <td class="beschreibung" >{{fake_angebot.beschreibung}}</td>
+            <td class ="gebote">{{fake_angebot.gebote}}</td>
+            <td class="topgebot">{{fake_angebot.topgebot}}</td>
             <td><button @click="showDetails()">DETAILS</button></td>
         </thead>
 
         <tbody v-if="showDet">
-            <tr>TEST</tr>
-            <tr>TEST</tr>
-            <tr>TEST</tr>
+            <tr>{{fake_angebot.mindestpreis}}</tr>
+            <tr>{{fake_angebot.anbietername}}</tr>
+            <tr><GeoLink :lat="fake_angebot.lat" :lon="fake_angebot.lon" :zoom="18">Ort</GeoLink></tr>
         </tbody>
         
     </table>
@@ -23,10 +23,14 @@
 <!-- oder hier wie slot nutzen um Textfelder anzuzeigen???-->
 <script  setup lang="ts">import { ref } from 'vue';
     import type { AngebotListeDing, IAngebotListeItem } from '@/services/IAngebotListeItem';
+    import {useFakeAngebot} from '@/services/useFakeAngebot'
+    import GeoLink from '@/components/GeoLink.vue'
 
     //const props = defineProps<{
     //angebot: AngebotListeDing
     //}>()
+    
+    let fake_angebot = useFakeAngebot().angebote.value[1]
     
     
     //let beschreibung = props.angebot.abholort
