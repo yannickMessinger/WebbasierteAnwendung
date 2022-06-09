@@ -2,7 +2,7 @@
     <h1>!!GEOLINK!!</h1>
     
     <div>
-        <a :href="testLink" target="_blank">{{ url }}</a>
+      <button><a :href="testLink" target="_blank">{{ url }}</a></button>
     </div>
     
 
