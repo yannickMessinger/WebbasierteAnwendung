@@ -6,7 +6,8 @@
             <td class="beschreibung" >{{props.angebot.beschreibung}}</td>
             <td class ="gebote">{{props.angebot.gebote}}</td>
             <td class="topgebot">{{props.angebot.topgebot}}</td>
-            <td><button @click="showDetails()">DETAILS</button></td>
+            <td v-if="!showDet"><button @click="showDetails()">AUFklappe</button></td>
+            <td v-else><button @click="showDetails()">ZUklappe</button></td>
         </thead>
 
         <tbody v-if="showDet">
@@ -19,10 +20,12 @@
     </table>
 
     
+
+    
     </div>
 </template>
 
-<!-- oder hier wie slot nutzen um Textfelder anzuzeigen???-->
+
 <script  setup lang="ts">import { ref } from 'vue';
     import type {IAngebotListeItem } from '@/services/IAngebotListeItem';
     import GeoLink from '@/components/GeoLink.vue'
@@ -46,6 +49,7 @@
         
         }else{
         showDet.value = false
+        
         }
     }
 

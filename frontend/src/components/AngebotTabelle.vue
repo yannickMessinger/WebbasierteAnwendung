@@ -1,28 +1,19 @@
 <template>
-<div>
-    <div>
-        <input type="text" v-model="suchfeld" placeholder="Suchbegriff oder Sterne" />
-    </div>
+
+
+
 <div>
 <table>
         <thead>
-            <th style="width:75%">Erkenntnis</th>
-            <th style="width:25%">Rating</th>
+            <input type="text" v-model="suchfeld" placeholder="Suchbegriff oder Sterne" />
         </thead>
     
         <tbody>
-        <AngebotListItem :item="ele" v-for="ele in angebotsliste" :key="ele.angebotid"/>
+            <AngebotListeItem :angebot="ele" v-for="ele in angebotsliste" :key="ele.anbieterid"/>
         </tbody>
+    
     </table>
 </div>
-
-
-</div>
-
-
-
-
-
 
 </template>
 
@@ -33,13 +24,15 @@
 
     import { ref, computed} from 'vue';
     import type { AngebotListeDing, IAngebotListeItem } from '@/services/IAngebotListeItem';
+    import AngebotListeItem from '../components/AngebotListeItem.vue'
     import {useFakeAngebot} from '@/services/useFakeAngebot'
 
     
 
-    const neuigkeiten = ref("");
+    
+
+    
     const suchfeld = ref("");
-    const items = ref<IAngebotListeItem[]>([]);
     const angebotsliste = useFakeAngebot().angebote
     // ... zu ergaenzen: "items.value" mit Daten fuellen
     
