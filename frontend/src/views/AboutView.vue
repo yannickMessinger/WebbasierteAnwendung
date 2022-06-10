@@ -6,6 +6,7 @@
     <GeoLink :lat="50.164802" :lon="8.624993" :zoom="18">Frankfurt</GeoLink>
     <br/>
     <AngebotListeItem :angebot="a" />
+    <AngebotTabelle></AngebotTabelle>
 
   </div>
  
@@ -15,6 +16,7 @@
   import GeoLink from '@/components/GeoLink.vue'
   import AngebotListeItem from '../components/AngebotListeItem.vue'
   import type { AngebotListeDing, IAngebotListeItem } from '@/services/IAngebotListeItem';
+  import AngebotTabelle from '../components/AngebotTabelle.vue';
   let a : AngebotListeDing
 </script>
 
