@@ -6,7 +6,7 @@
     <GeoLink :lat="50.164802" :lon="8.624993" :zoom="18">Frankfurt</GeoLink>
     <br/>
     <AngebotListeItem :angebot="a"/>
-    
+    <button @click="useFakeAngebot().bietenSimulieren()">bieten simulieren</button>
     
     <AngebotTabelle></AngebotTabelle>
 
@@ -15,6 +15,7 @@
 </template>
 
 <script  setup lang="ts">
+
   import GeoLink from '@/components/GeoLink.vue'
   import AngebotListeItem from '../components/AngebotListeItem.vue'
   import type {IAngebotListeItem } from '@/services/IAngebotListeItem';
