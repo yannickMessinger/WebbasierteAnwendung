@@ -13,7 +13,7 @@
         <tbody v-if="showDet">
             <tr>Mindestpreis: {{props.angebot.mindestpreis}}</tr>
             <tr>Von: {{props.angebot.anbietername}}</tr>
-            <tr>Bis: {{props.angebot.ablaufzeitpunkt.toLocaleDateString()}} um {{props.angebot.ablaufzeitpunkt.toLocaleTimeString()}}</tr>
+            <tr>Bis: {{props.angebot.ablaufzeitpunkt}} um {{props.angebot.ablaufzeitpunkt}}</tr>
             <tr><GeoLink :lat="props.angebot.lat" :lon="props.angebot.lon" :zoom="18">Abholort</GeoLink></tr>
         </tbody>
         

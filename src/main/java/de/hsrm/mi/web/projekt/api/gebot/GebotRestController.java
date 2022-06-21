@@ -37,7 +37,7 @@ public class GebotRestController {
     
     @GetMapping("api/gebot")
     public List<GetGebotResponseDTO> getGebotResponseDTOList(){
-        
+        logger.info("Gebot REST aufgerufen!");
         List<Gebot> alleGebote =  g_gebotService.findeAlleGebote();
         
         List<GetGebotResponseDTO> responseDTOList = alleGebote.stream()

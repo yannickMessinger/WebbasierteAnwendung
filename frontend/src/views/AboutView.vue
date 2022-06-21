@@ -6,7 +6,7 @@
     
     
     
-    <AngebotTabelle></AngebotTabelle>
+    <AngebotListe></AngebotListe>
     <button @click="useFakeAngebot().bietenSimulieren()">bieten simulieren</button>
   </div>
  
@@ -16,7 +16,7 @@
 <script  setup lang="ts">
 
   import type {IAngebotListeItem } from '@/services/IAngebotListeItem';
-  import AngebotTabelle from '../components/AngebotTabelle.vue';
+  import AngebotListe from '../components/AngebotListe.vue';
   import {useFakeAngebot} from '@/services/useFakeAngebot'
   
   

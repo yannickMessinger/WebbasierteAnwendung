@@ -35,13 +35,14 @@ public class BenutzerAngebotRestController {
     
     @GetMapping("api/angebot")
     public List<GetAngebotResponseDTO> getAngebotResponseDTOList(){
-        
+        logger.info("angebote REST aufgerufen!");
         List<Angebot> alleAngebote =  b_profilService.alleAngebote();
         
         List<GetAngebotResponseDTO> responseDTOList = alleAngebote.stream()
                 .map(gebot -> GetAngebotResponseDTO.from(gebot))
                 .collect(Collectors.toList());
         
+        logger.info("Anz Angebote List: " + String.valueOf(responseDTOList.size()));
         return responseDTOList;
     }
 
