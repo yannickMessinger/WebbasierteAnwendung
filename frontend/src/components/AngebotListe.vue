@@ -31,18 +31,17 @@
 
     
     const suchfeld = ref("");
-    const angebote = useAngebot().angebote.angebotliste
-    console.log("AngebotListe aus AngebotListe.vue")
-    console.log(angebote)
+    const {angebote} = useAngebot()
+    
     
     const angebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
 
         if (suchfeld.value.length < 3) {
-            return angebote;
+            return angebote.angebotliste;
         } else {
         
-            return angebote.filter(e =>
+            return angebote.angebotliste.filter(e =>
             e.abholort.toLowerCase().includes(suchfeld.value.toLowerCase()) || e.beschreibung.toLocaleLowerCase().includes(suchfeld.value.toLowerCase()) || e.anbietername.toLocaleLowerCase().includes(suchfeld.value.toLowerCase()) 
             );
         }

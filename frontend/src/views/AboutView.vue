@@ -6,8 +6,7 @@
     
     
     
-    <AngebotListe></AngebotListe>
-    <button @click="useFakeAngebot().bietenSimulieren()">bieten simulieren</button>
+    
   </div>
  
 
@@ -20,8 +19,7 @@
   import {useFakeAngebot} from '@/services/useFakeAngebot'
   
   
-  let a : IAngebotListeItem
-  a = useFakeAngebot().angebote.value[0]
+  
 
  
 </script>

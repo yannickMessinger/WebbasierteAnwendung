@@ -7,17 +7,15 @@ export interface IAngebotState {
     }
     
     
-//potentiell falsch
-let angebotState: IAngebotState;
-angebotState = reactive({angebotliste: [], errormessage:""})
 
-const angebote = angebotState 
+const angebotState = reactive<IAngebotState>({angebotliste: [], errormessage:""})
+
 
 
 export function useAngebot() {
 
     return {
-        angebote: readonly(angebote), // state vor unkontrollierten Änderungen von außen schützen
+        angebote: readonly(angebotState), // state vor unkontrollierten Änderungen von außen schützen
         updateAngebote
     }
 
