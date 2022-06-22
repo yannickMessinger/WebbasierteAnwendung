@@ -18,7 +18,7 @@ import {updateAngebote} from '@/services/useAngebot'
 
 onMounted( async () => {
     updateAngebote()
-  
+  //wie hier auf Fehlermeldung reagieren?
 });
 
 

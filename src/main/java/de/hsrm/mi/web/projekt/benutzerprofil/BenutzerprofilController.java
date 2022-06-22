@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.geo.GeoService;
+import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
+import de.hsrm.mi.web.projekt.messaging.BackendOperation;
 
 @Controller
 @RequestMapping("/")
@@ -42,6 +46,9 @@ public class BenutzerprofilController {
 
     @Autowired
     private GeoService geo_Service;
+
+    @Autowired
+    private BackendInfoServiceImpl backEndInfo_Service;
 
     
     
@@ -128,14 +135,16 @@ public class BenutzerprofilController {
         return "benutzerprofil/angebotsformular";
     }
 
-
     @GetMapping("benutzerprofil/angebot/{id}/del")
+    //@MessageMapping("/topic/angebot/{id}/del")
+    //@SendTo("/topic/angebot/{id}/del")
     public String delAngebotfromList(@PathVariable("id") long id, @SessionAttribute("profil") BenutzerProfil profil, Model m){
         
         logger.info("Angebot mit ID: " + String.valueOf(id) + " wird entfernt!");
         b_profilService.loescheAngebot(id);
 
         m.addAttribute("profil", b_profilService.holeBenutzerProfilMitId(profil.getId()).get());
+        backEndInfo_Service.sendInfo("angebot", BackendOperation.DELETE, profil.getId());
         
         return "redirect:/benutzerprofil";
     }
@@ -171,6 +180,8 @@ public class BenutzerprofilController {
 
 
     @PostMapping("/benutzerprofil/angebot")
+    //@MessageMapping("/topic/angebot")
+    //@SendTo("/topic/angebot")
     public String postAngebot(@SessionAttribute("profil") BenutzerProfil profil,@ModelAttribute("angebot") Angebot a, Model m){
        
         logger.info("Akt Session Profil ID: " + String.valueOf(profil.getId()));
@@ -179,6 +190,7 @@ public class BenutzerprofilController {
         b_profilService.fuegeAngebotHinzu(profil.getId(), a);
         //so SessionAtt aktualisieren??
         m.addAttribute("profil", b_profilService.holeBenutzerProfilMitId(profil.getId()).get());
+        backEndInfo_Service.sendInfo("angebot", BackendOperation.CREATE, profil.getId());
 
         return "redirect:/benutzerprofil";
     }

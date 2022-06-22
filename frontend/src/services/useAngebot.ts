@@ -25,6 +25,7 @@ export function useAngebot() {
 export function updateAngebote(): void {
     const url = '/api/angebot';
         console.log('bin in updateAngebot()')
+        
         fetch(url,{
             method:'GET'
         }).then(response => {
