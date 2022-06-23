@@ -3,6 +3,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 
 
+import java.security.Principal;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ import de.hsrm.mi.web.projekt.geo.GeoService;
 import de.hsrm.mi.web.projekt.geo.GeoServiceImpl;
 import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
 import de.hsrm.mi.web.projekt.messaging.BackendOperation;
+import de.hsrm.mi.web.projekt.projektuser.ProjektUserServiceImpl;
 
 @Controller
 @RequestMapping("/")
@@ -49,12 +51,25 @@ public class BenutzerprofilController {
     @Autowired
     private BackendInfoServiceImpl backEndInfo_Service;
 
+    @Autowired
+    private ProjektUserServiceImpl projektUserService_impl;
+
     
     
     @ModelAttribute("profil")
-    public void initBenutzerProfil(Locale locale, Model m) {
+    public void initBenutzerProfil(Locale locale, Model m, Principal p) {
+        BenutzerProfil profil;
+        
+        if(p != null){
 
-        BenutzerProfil profil = new BenutzerProfil();
+            profil = projektUserService_impl.findeBenutzer(p.getName()).getBenutzerprofil();
+       
+        }else{
+
+            profil = new BenutzerProfil();
+        
+        }
+        
         m.addAttribute("profil", profil);
         m.addAttribute("sprache", locale.getDisplayLanguage());
         

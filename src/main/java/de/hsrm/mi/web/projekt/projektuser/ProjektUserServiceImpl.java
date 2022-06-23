@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilServiceImpl;
+
 @Service
 public class ProjektUserServiceImpl implements ProjektUserService {
 
@@ -22,24 +25,30 @@ public class ProjektUserServiceImpl implements ProjektUserService {
     @Autowired
     private ProjektUserRepository projektUserRepo;
 
+    @Autowired
+    private BenutzerprofilServiceImpl profil_service_Impl;
 
-    public ProjektUserServiceImpl(ProjektUserRepository u){
+
+    
+    public ProjektUserServiceImpl(ProjektUserRepository u,BenutzerprofilServiceImpl b){
         this.projektUserRepo = u;
+        this.profil_service_Impl = b;
     }
 
-
+    
 
 
 
     @Override
     @Transactional
-    public ProjektUser neuenBenutzerAnlegen(String username, String klartextpasswort, String rolle) {
+    public ProjektUser neuenBenutzerAnlegen(String username, String klartextpasswort, String rolle) throws ProjektUserServiceException {
         
         logger.info("ProjektUser DB neuenBenutzerAnlegen()");
         ProjektUser addProjektUser = new ProjektUser();
+        BenutzerProfil addProfil = new BenutzerProfil();
 
         if(projektUserRepo.existsById(username)){
-            throw new ProjektUserServiceException();
+            throw new ProjektUserServiceException("User " + username + " bereits in Datenbank vorhanden!!!");
         }
 
         if(rolle == null || rolle.equals("")){
@@ -49,8 +58,18 @@ public class ProjektUserServiceImpl implements ProjektUserService {
 
         addProjektUser.setPassword(pw_encoder.encode(klartextpasswort));
         addProjektUser.setUsername(username);
+        addProfil.setName(username);
+
+        addProfil.setProjektUser(addProjektUser);
+        addProjektUser.setBenutzerprofil(addProfil);
+        
+
+        profil_service_Impl.speichereBenutzerProfil(addProfil);
+
         logger.info("ProjektUser angelegt");
+        
         return projektUserRepo.save(addProjektUser);
+       
     }
 
 

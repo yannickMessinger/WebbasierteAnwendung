@@ -23,16 +23,19 @@ public class GebotServiceImpl implements GebotService{
     
     public static final Logger logger = LoggerFactory.getLogger(GebotServiceImpl.class);
 
+    @Autowired
     private GebotRepository gebot_Repository;
+    @Autowired
     private BenutzerprofilServiceImpl benutzerProfil_service;
 
 
-    @Autowired
+    
     public GebotServiceImpl(GebotRepository g, BenutzerprofilServiceImpl b){
 
         this.gebot_Repository = g;
         this.benutzerProfil_service = b;
     }
+    
 
 
     @Override

@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     //public static final Logger logger = LoggerFactory.getLogger(ProjektSecurityConfig.class);
+    @Autowired
+    private MyUserDetailService userDetailService;
 
     @Bean 
     PasswordEncoder passwordEncoder() { // @Bean -> Encoder woanders per @Autowired abrufbar
@@ -27,6 +30,10 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
        
 
         PasswordEncoder pw_encoder = passwordEncoder(); // Injection "in sich selbst" geht leider nicht
+
+        authentication_manager
+        .userDetailsService(userDetailService)
+        .passwordEncoder(passwordEncoder());
         
         authentication_manager.inMemoryAuthentication() // "in memory"-Benutzerdatenbank anlegen
             .withUser("friedfert")
@@ -40,6 +47,9 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
             .withUser("bärticus")
             .password(pw_encoder.encode("yannicksohilfmirbeimbankdrücken"))
             .roles("PUMPER");
+        
+       
+            
 
         //logger.info("USER ANGELEGT SECURITY CONFIG");
 

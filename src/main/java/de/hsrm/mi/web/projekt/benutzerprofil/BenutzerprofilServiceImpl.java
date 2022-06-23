@@ -26,16 +26,20 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilServiceImpl.class);
     
+    @Autowired
     private BenutzerprofilRepository profil_repository;
+    @Autowired
     private GeoServiceImpl geoService;
+    @Autowired
     private AngebotRepository angebot_repository;
 
-    @Autowired
+        
     public BenutzerprofilServiceImpl(BenutzerprofilRepository b,  GeoServiceImpl g, AngebotRepository a){
         this.profil_repository = b;
         this.geoService = g;
         this.angebot_repository = a;
     }
+    
 
     @Override
     @Transactional

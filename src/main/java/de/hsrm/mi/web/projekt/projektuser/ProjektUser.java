@@ -1,10 +1,12 @@
 package de.hsrm.mi.web.projekt.projektuser;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 
 @Entity
 public class ProjektUser {
@@ -20,9 +22,13 @@ public class ProjektUser {
     
     private String role;
 
+    @OneToOne
+    private BenutzerProfil benutzerProfil;
+
 
     public ProjektUser(){
         this.role = "";
+        
     }
 
     
@@ -54,6 +60,18 @@ public class ProjektUser {
     public void setRole(String role) {
         this.role = role;
     }
+
+
+    public BenutzerProfil getBenutzerprofil() {
+        return benutzerProfil;
+    }
+
+
+    public void setBenutzerprofil(BenutzerProfil benutzerProfil) {
+        this.benutzerProfil = benutzerProfil;
+    }
+
+    
     
 
 
