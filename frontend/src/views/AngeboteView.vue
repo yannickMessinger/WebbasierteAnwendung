@@ -13,11 +13,12 @@
 <script setup lang="ts">
 import { computed, ref, reactive, onMounted } from "vue";
 import AngebotListe from '../components/AngebotListe.vue';
-import {useAngebot} from '@/services/useAngebot'
+import {receiveAngebotMessages, useAngebot} from '@/services/useAngebot'
 import {updateAngebote} from '@/services/useAngebot'
 
 onMounted( async () => {
     updateAngebote()
+    receiveAngebotMessages()
   //wie hier auf Fehlermeldung reagieren?
 });
 
