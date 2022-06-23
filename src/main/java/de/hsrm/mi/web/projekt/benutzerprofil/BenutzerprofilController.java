@@ -10,8 +10,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.geo.GeoService;
+import de.hsrm.mi.web.projekt.geo.GeoServiceImpl;
 import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
 import de.hsrm.mi.web.projekt.messaging.BackendOperation;
 
@@ -42,10 +41,10 @@ public class BenutzerprofilController {
 
     //nur Service oder ServiceImpl????
     @Autowired
-    private BenutzerprofilService b_profilService;
+    private BenutzerprofilServiceImpl b_profilService;
 
     @Autowired
-    private GeoService geo_Service;
+    private GeoServiceImpl geo_Service;
 
     @Autowired
     private BackendInfoServiceImpl backEndInfo_Service;

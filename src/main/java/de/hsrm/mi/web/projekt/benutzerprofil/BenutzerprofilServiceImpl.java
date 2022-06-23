@@ -23,7 +23,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
 
     
 
-    //stimmt des so, ist das die Depenency Injection?
+    
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilServiceImpl.class);
     
     private BenutzerprofilRepository profil_repository;
@@ -183,19 +183,6 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     }
 
 
-    /*
-      BenutzerProfil del_Angebot_Profil = angebot_repository.getById(id).getAnbieter();
-      
-      for (int i = 0; i < del_Angebot_Profil.getAngebote().size(); i++) {
-            if(del_Angebot_Profil.getAngebote().get(i).getId() == id){
-                del_Angebot_Profil.getAngebote().remove(i);
-            }
-      }
-      
 
-      angebot_repository.deleteById(id);
-        
-    }
-    */
     
 }

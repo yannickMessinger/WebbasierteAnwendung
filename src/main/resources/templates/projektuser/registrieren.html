@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/style/profileditor_style.css}" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>REGISTRIEREN SIE SICH</h2>
+
+
+
+        Wollen sie <a th:href="@{?sprache=de}">Deutsch</a>
+        oder <a th:href="@{?sprache=en}">Englisch</a>?
+        
+        <form th:action = "@{/registrieren}" th:method ="post" th:object ="${projektUser}">
+           
+            <div>
+                
+            <span th:text="#{userReg.name}"></span><br>
+            <input type="text" name="username" th:field="*{username}" th:errorclass="input_error"/>
+            <p th:if="${#fields.hasErrors('username')}" th:errors ="*{username}">Username falsch!</p>
+            <br>
+           
+            </div>
+
+            <span th:text="#{userReg.passwort}"></span><br>
+            <input type="password" name="password" th:field="*{password}" th:errorclass="input_error"/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors ="*{password}">Username falsch!</p>
+            <br>
+           
+            </div>
+
+            <input type="submit" th:value="#{userReg.registrieren}">
+        </form> 
+
+        
+       
+    </body>
+    </html>
