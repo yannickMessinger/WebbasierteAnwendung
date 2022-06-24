@@ -65,9 +65,12 @@ public class ProjektUserServiceImpl implements ProjektUserService {
         
 
         profil_service_Impl.speichereBenutzerProfil(addProfil);
+        // addProjektUser = projektUserRepo.save(addProjektUser);
+        //addProfil = profil_service_Impl.speichereBenutzerProfil(addProfil);
 
         logger.info("ProjektUser angelegt");
         
+        //return addProjektUser;
         return projektUserRepo.save(addProjektUser);
        
     }
