@@ -64,6 +64,7 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
                 
                 
                 http.authorizeRequests()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/registrieren","/logout").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
