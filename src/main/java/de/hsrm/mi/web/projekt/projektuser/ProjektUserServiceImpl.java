@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.TransientPropertyValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,18 +60,24 @@ public class ProjektUserServiceImpl implements ProjektUserService {
         addProjektUser.setPassword(pw_encoder.encode(klartextpasswort));
         addProjektUser.setUsername(username);
         addProfil.setName(username);
+        addProfil.setAdresse("Platzhalterstr.1");
+        addProfil.setInteressen("Platzhalterinteressen");
+    
+
+   
+        
+        addProfil = profil_service_Impl.speichereBenutzerProfil(addProfil);
+        addProjektUser = projektUserRepo.save(addProjektUser);
+        
+        
+
+        logger.info("ProjektUser angelegt");
 
         addProfil.setProjektUser(addProjektUser);
         addProjektUser.setBenutzerprofil(addProfil);
         
-
-        profil_service_Impl.speichereBenutzerProfil(addProfil);
-        // addProjektUser = projektUserRepo.save(addProjektUser);
-        //addProfil = profil_service_Impl.speichereBenutzerProfil(addProfil);
-
-        logger.info("ProjektUser angelegt");
         
-        //return addProjektUser;
+        
         return projektUserRepo.save(addProjektUser);
        
     }
@@ -97,6 +104,6 @@ public class ProjektUserServiceImpl implements ProjektUserService {
         return foundProjektUser.get();
     }
 
-    //Syntax von Folie 250 klappt hier net
+    
     
 }

@@ -91,6 +91,7 @@ public class BenutzerProfil {
         this.angebote = new ArrayList<>();
         this.gebote = new ArrayList<>();
         
+        
 
     }
 

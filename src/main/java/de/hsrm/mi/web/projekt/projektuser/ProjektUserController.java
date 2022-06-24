@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.projektuser;
 
 import javax.validation.Valid;
 
+import org.hibernate.TransientPropertyValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class ProjektUserController {
             logger.error("fehlerhafte Profileingabe!",user);
             return "projektuser/registrieren";
         }
-
+        
         projektUser_Service.neuenBenutzerAnlegen(user.getUsername(), user.getPassword(), user.getRole());
-
+       
         return "redirect:/benutzerprofil";
     }
 
