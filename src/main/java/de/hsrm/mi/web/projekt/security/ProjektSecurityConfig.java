@@ -35,6 +35,7 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
         .userDetailsService(userDetailService)
         .passwordEncoder(passwordEncoder());
         
+        /* 
         authentication_manager.inMemoryAuthentication() // "in memory"-Benutzerdatenbank anlegen
             .withUser("friedfert")
             .password(pw_encoder.encode("dingdong")) // Passwörter nicht im Klartext speichern
@@ -48,7 +49,7 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
             .password(pw_encoder.encode("yannicksohilfmirbeimbankdrücken"))
             .roles("PUMPER");
         
-       
+        */
             
 
         //logger.info("USER ANGELEGT SECURITY CONFIG");
@@ -63,10 +64,10 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
                 
                 
                 http.authorizeRequests()
-                .antMatchers("/registrieren").permitAll()
+                .antMatchers("/registrieren","/logout").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/register", "/logout").permitAll()
+                //.antMatchers("/register", "/logout").permitAll()
                 .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN","USER")

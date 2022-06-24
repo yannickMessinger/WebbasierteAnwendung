@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(names = {"projektUser"})
+//@SessionAttributes(names = {"projektUser"}) geht auch ohne
 public class ProjektUserController {
     
     @Autowired
@@ -39,7 +39,7 @@ public class ProjektUserController {
         
     }
 
-    //kann man das irgendwie vermeiden, das man hier passwort im klartext übermittelt???
+    
 
     @PostMapping("/registrieren")
     public String postSignUpForm(@Valid @ModelAttribute("projektUser") ProjektUser user, BindingResult result, Model m){
