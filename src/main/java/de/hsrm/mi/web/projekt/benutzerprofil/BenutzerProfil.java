@@ -55,7 +55,6 @@ public class BenutzerProfil {
     private LocalDate geburtsdatum;
     
     @NotNull(message = "{adresse_fehler}")
-    @NotBlank(message = "{adresse_fehler}")
     private String adresse;
     
     @Email(message = "{email_fehler}")
@@ -66,7 +65,6 @@ public class BenutzerProfil {
     private String lieblingsfarbe;
     
     @NotNull(message = "{interessen_fehler}")
-    @NotBlank(message = "{interessen_fehler}")
     private String interessen;
 
     @OneToMany(mappedBy = "anbieter",cascade=CascadeType.ALL

@@ -61,8 +61,7 @@ public class ProjektUserServiceImpl implements ProjektUserService {
         addProjektUser.setUsername(username);
         
         addProfil.setName(username);
-        addProfil.setAdresse("Platzhalterstr.1");
-        addProfil.setInteressen("Platzhalterinteressen");
+     
     
 
    
