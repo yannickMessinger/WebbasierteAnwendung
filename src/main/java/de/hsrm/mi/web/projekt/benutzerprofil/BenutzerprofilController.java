@@ -41,7 +41,7 @@ public class BenutzerprofilController {
 
     public static final Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
 
-    //nur Service oder ServiceImpl????
+    
     @Autowired
     private BenutzerprofilServiceImpl b_profilService;
 
@@ -150,8 +150,6 @@ public class BenutzerprofilController {
     }
 
     @GetMapping("benutzerprofil/angebot/{id}/del")
-    //@MessageMapping("/topic/angebot/{id}/del")
-    //@SendTo("/topic/angebot/{id}/del")
     public String delAngebotfromList(@PathVariable("id") long id, @SessionAttribute("profil") BenutzerProfil profil, Model m){
         
         logger.info("Angebot mit ID: " + String.valueOf(id) + " wird entfernt!");
@@ -194,8 +192,6 @@ public class BenutzerprofilController {
 
 
     @PostMapping("/benutzerprofil/angebot")
-    //@MessageMapping("/topic/angebot")
-    //@SendTo("/topic/angebot")
     public String postAngebot(@SessionAttribute("profil") BenutzerProfil profil,@ModelAttribute("angebot") Angebot a, Model m){
        
         logger.info("Akt Session Profil ID: " + String.valueOf(profil.getId()));

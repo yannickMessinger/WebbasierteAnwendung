@@ -115,7 +115,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
         
         BenutzerProfil foundProfil = profil_repository.findById(id).orElseThrow();
         
-        //hier die Adresse aus dem Profil als Abholort setzen??
+        
         List<AdressInfo> AngebotAdressInfoList = geoService.findeAdressInfo(angebot.getAbholort());
 
         logger.info("setze Adressdaten || BenutzerprofilServiceImpl -> GeoService -> speichereBenutzerProfil()");
@@ -124,7 +124,7 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
                 angebot.setLon(0.0);
         
         }else{
-                //hier Abholort vom angrbot setzen?
+                
                 angebot.setLat(AngebotAdressInfoList.get(0).lat());
                 angebot.setLon(AngebotAdressInfoList.get(0).lon());
         }
@@ -146,7 +146,8 @@ public  class BenutzerprofilServiceImpl implements BenutzerprofilService {
     public void loescheAngebot(long id) {
         
         
-        Angebot angebot = angebot_repository.findById(id).get();
+        Angebot angebot = angebot_repository.findById(id).orElseThrow();
+        // Angebot angebot = angebot_repository.findById(id).get();
 
         BenutzerProfil profil = angebot.getAnbieter();
         
