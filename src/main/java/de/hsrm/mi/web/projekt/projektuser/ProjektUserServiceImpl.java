@@ -42,7 +42,7 @@ public class ProjektUserServiceImpl implements ProjektUserService {
 
     @Override
     @Transactional
-    public ProjektUser neuenBenutzerAnlegen(String username, String klartextpasswort, String rolle) throws ProjektUserServiceException {
+    public ProjektUser neuenBenutzerAnlegen(String username, String klartextpasswort, String rolle)  {
         
         logger.info("ProjektUser DB neuenBenutzerAnlegen()");
         ProjektUser addProjektUser = new ProjektUser();
