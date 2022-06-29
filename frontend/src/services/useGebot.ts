@@ -4,7 +4,7 @@ import { Client } from '@stomp/stompjs';
 const wsurl = `ws://${window.location.host}/stompbroker`
 
 import { useLogin } from '@/services/useLogin'
-const { logindata } = useLogin()
+//const { logindata } = useLogin()
 
 export function useGebot(angebotid: number) {
     /*
@@ -12,9 +12,10 @@ export function useGebot(angebotid: number) {
      * um parallel mehrere *verschiedene* Versteigerungen managen zu können
      * (Gebot-State ist also *nicht* Frontend-Global wie Angebot(e)-State)
      */
-
+   
     // STOMP-Destination
     const DEST = `/topic/gebot/${angebotid}`
+
 
     ////////////////////////////////
 
@@ -40,12 +41,14 @@ export function useGebot(angebotid: number) {
     }
 
 
-
-    const gebotState = /* reaktives Objekt auf Basis des Interface <IGebotState> */
+    /* reaktives Objekt auf Basis des Interface <IGebotState> */
+    const gebotState = reactive<IGebotState>({angebotid: 0, topgebot:0, topbieter : "", gebotliste : [], receivingMessages: false, errormessage:""});
+   
     
 
 
     function processGebotDTO(gebotDTO: IGetGebotResponseDTO) {
+        
         const dtos = JSON.stringify(gebotDTO)
         console.log(`processGebot(${dtos})`)
 
@@ -57,10 +60,52 @@ export function useGebot(angebotid: number) {
 
 
         /*
+        const index = gebotState.gebotliste.findIndex(gebot => gebot.gebieterid === gebotDTO.gebieterid);
+
+        if(index === -1){
+            gebotState.gebotliste.unshift(gebotDTO)
+        }else{
+            gebotState.gebotliste[index].betrag = gebotDTO.betrag
+            gebotState.gebotliste[index].gebotzeitpunkt = gebotDTO.gebotzeitpunkt
+        }
+
+
+        gebotState.gebotliste.forEach(o => o.gebieterid === gebotDTO.gebieterid)
+        */
+        
+        
+        for(let gebot of gebotState.gebotliste){
+            if (gebot.gebieterid === gebotDTO.gebieterid){
+                gebot.betrag = gebotDTO.betrag
+                gebot.gebotzeitpunkt = gebotDTO.gebotzeitpunkt
+            }
+        }
+
+        //neuer Bieter da nicht gefunden in der Liste
+        gebotState.gebotliste.unshift(gebotDTO)
+        
+        
+
+        /*
          * Falls gebotener Betrag im DTO größer als bisheriges topgebot im State,
          * werden topgebot und topbieter (der Name, also 'gebietername' aus dem DTO)
          * aus dem DTO aktualisiert
          */
+
+       let max = 0;
+
+       gebotState.gebotliste.forEach(gebot =>{
+        if (gebot.betrag > max){
+            max = gebot.betrag
+        }
+       })
+
+       if (max > gebotState.topgebot){
+        gebotState.topgebot = max;
+        gebotState.topbieter = gebotDTO.gebietername
+       }
+
+    
 
     }
 
@@ -79,6 +124,49 @@ export function useGebot(angebotid: number) {
          * bei einem Kommunikationsfehler auf false 
          * und die zugehörige Fehlermeldung wird in 'errormessage' des Stateobjekts geschrieben
          */
+
+       
+        
+
+        const stompclient = new Client({ brokerURL: wsurl })
+        stompclient.onWebSocketError = (event) => { 
+            console.log("WebsocketError -> useGebot()") 
+        }
+
+        stompclient.onStompError = (frame) => { 
+            console.log("STOMP Error in useGebot() ") 
+            gebotState.receivingMessages = false;
+            gebotState.errormessage = " useGebot -> KOMMUNIKATIONSFEHLER!";
+        }
+
+        stompclient.onConnect = (frame) => {
+            // Callback: erfolgreicher Verbindugsaufbau zu Broker
+            console.log("erfolgreicher Verbindugsaufbau in useGebot() zu Broker")
+            gebotState.receivingMessages = true;
+            
+            stompclient.subscribe(DEST, (message) => {
+            // Callback: Nachricht auf DEST empfangen
+            // empfangene Nutzdaten in message.body abrufbar,
+            // ggf. mit JSON.parse(message.body) zu JS konvertieren
+            const receivedMessage : IGetGebotResponseDTO = (JSON.parse(message.body))
+        
+            processGebotDTO(receivedMessage)
+
+
+            console.log("Neue STOMP Nachricht in useGebot() erhalten:");
+            //console.log(receivedMessage)
+       
+        
+
+            });
+        };
+
+        stompclient.onDisconnect = () => { 
+            console.log("STOMP Verbindung in useGebot() abgebaut") 
+        }
+
+        stompclient.activate();
+
 
 
 

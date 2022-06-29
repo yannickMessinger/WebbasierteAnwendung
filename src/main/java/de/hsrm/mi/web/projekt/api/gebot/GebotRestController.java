@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.hsrm.mi.web.projekt.gebot.Gebot;
 import de.hsrm.mi.web.projekt.gebot.GebotService;
-import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
-import de.hsrm.mi.web.projekt.messaging.BackendOperation;
+
 
 
 @RestController

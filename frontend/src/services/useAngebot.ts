@@ -65,21 +65,21 @@ export function updateAngebote(): void {
         stompclient.onStompError = (frame) => { console.log("STOMP Error in  receiveAngebotMessages() ") }
 
         stompclient.onConnect = (frame) => {
-            console.log("erfolgreicher Verbindugsaufbau zu Broker")
+            console.log("erfolgreicher Verbindugsaufbau zu Broker in receiveAngebotMessages()")
             // Callback: erfolgreicher Verbindugsaufbau zu Broker
             stompclient.subscribe(DEST, (message) => {
             // Callback: Nachricht auf DEST empfangen
             // empfangene Nutzdaten in message.body abrufbar,
             // ggf. mit JSON.parse(message.body) zu JS konvertieren
             const receivedMessage : IBackendInfoMessage = (JSON.parse(message.body))
-            console.log("Neue STOMP Nachricht erhalten:");
+            console.log("Neue STOMP Nachricht in receiveAngebotMessages() erhalten:");
             console.log(receivedMessage)
            
             updateAngebote()
 
             });
             };
-            stompclient.onDisconnect = () => { console.log("STOMP Verbindung abgebaut") }
+            stompclient.onDisconnect = () => { console.log("STOMP Verbindung in receiveAngebotMessages() abgebaut") }
 
             stompclient.activate();
 
