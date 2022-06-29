@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilServiceImpl;
+import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
+import de.hsrm.mi.web.projekt.messaging.BackendOperation;
 
 @Service
 public class GebotServiceImpl implements GebotService{
@@ -25,16 +27,15 @@ public class GebotServiceImpl implements GebotService{
 
     @Autowired
     private GebotRepository gebot_Repository;
+    
     @Autowired
     private BenutzerprofilServiceImpl benutzerProfil_service;
 
+    @Autowired
+    private BackendInfoServiceImpl backEndInfo_Service;
+
 
     
-    public GebotServiceImpl(GebotRepository g, BenutzerprofilServiceImpl b){
-
-        this.gebot_Repository = g;
-        this.benutzerProfil_service = b;
-    }
     
 
 
@@ -93,8 +94,8 @@ public class GebotServiceImpl implements GebotService{
 
         }
         
-      
-        
+        logger.info("BACKEND INO MESSAGE in bieteFuerAngebot()");
+        backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.UPDATE, gebot.getId());
 
         return  gebot_Repository.save(gebot);
     }

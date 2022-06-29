@@ -69,7 +69,7 @@ public class ProjektSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 //.antMatchers("/register", "/logout").permitAll()
-                .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN","USER")
                 .antMatchers("/user*", "/user/*").authenticated()
