@@ -261,19 +261,22 @@ export function useGebot(angebotid: number) {
 
         const url = '/api/gebot';
         //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
-        const hilo: IAddGebotRequestDTO = ({ benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag: betrag });
-
+        const sendGebot: IAddGebotRequestDTO = ({ benutzerprofilid: gebotState.angebotid, angebotid: angebotid , betrag: betrag });
+        console.log(sendGebot)
+        console.log("sendGebot angebotid: " + sendGebot.angebotid)
 
         fetch(url, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(hilo)
+            body: JSON.stringify(sendGebot)
 
         }).then(response => {
 
+
             if (!response.ok) {
-                gebotState.errormessage = response.statusText;
                 console.log('Fehler von sendeGebot()')
+                gebotState.errormessage = response.statusText;
+               
             } else {
 
                 console.log("Gebot erfolgreich abgegeben!");

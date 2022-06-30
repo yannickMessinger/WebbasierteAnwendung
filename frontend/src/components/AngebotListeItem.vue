@@ -1,9 +1,10 @@
 <template>
-   
+   <!---wie hier Routerlink ohne Button umsetzen? Routerlink to nimmt keine Backticks...:( -->
+    <!---wen Link net geht button rein und function aufrufen -->
    <div>
    <table>    
     <thead class="angebotsinfo">
-            <td class="beschreibung" >{{props.angebot.beschreibung}}</td>
+            <td class="beschreibung">{{props.angebot.beschreibung}}<button @click=" navToGebotView()">Gebot Details</button></td>
             <td class ="gebote">{{props.angebot.gebote}}</td>
             <td class="topgebot">{{props.angebot.topgebot}}</td>
             <td v-if="!showDet"><button @click="showDetails()">AUFklappe</button></td>
@@ -29,6 +30,9 @@
 <script  setup lang="ts">import { ref } from 'vue';
     import type {IAngebotListeItem } from '@/services/IAngebotListeItem';
     import GeoLink from '@/components/GeoLink.vue'
+    import { useRouter } from 'vue-router'
+
+    const router = useRouter()
 
     const props = defineProps<{
     angebot: IAngebotListeItem
@@ -52,6 +56,11 @@
         
         }
     }
+
+    function navToGebotView(): void {
+        router.push(`/gebot/${props.angebot.angebotid}`);
+}
+
 
 </script>
 

@@ -1,66 +1,129 @@
 <template>
-<h2>GEBOT TEST VIEW</h2>
+<h2>GEBOT VIEW</h2>
+
+    <div v-if = "angebote.errormessage" >{{gebote.errormessage}}</div>
 
     <div>
-   <table>    
-    <thead>
+        <table>    
+                <thead>
 
-            <td>{{gesuchtesAngebot.beschreibung}}</td>
-            <td>{{gesuchtesAngebot.mindestpreis}}</td>
-            <td>{{gesuchtesAngebot.anbietername}}</td>
-            <td>{{gesuchtesAngebot.ablaufzeitpunkt}}</td>
-            <td>{{gesuchtesAngebot.abholort}}</td>
+                    <td>{{gesuchtesAngebot.beschreibung}}</td>
+                    <td>{{gesuchtesAngebot.mindestpreis}}</td>
+                    <td>{{gesuchtesAngebot.anbietername}}</td>
+                    <td>{{gesuchtesAngebot.ablaufzeitpunkt}}</td>
+                    <td><GeoLink :lat="gesuchtesAngebot.lat" :lon="gesuchtesAngebot.lon" :zoom="18">Abholort</GeoLink></td>
+                    <td>{{gesuchtesAngebot.abholort}}</td>
             
-    </thead>
+                </thead>
 
-   </table>
+        </table>
 
-   <table>
-
-       <thead>
-           <td></td>
-           <td></td>
-            <td></td>
-
-       </thead>
-
-        
-        <tbody>
-            <tr>Gebieter: {{gebote.gebotliste[0].gebietername}}</tr>
-            <tr>gebotener Betrag: {{gebote.gebotliste[0].betrag}}</tr>
-            <tr>abgegeben am: {{gebote.gebotliste[0].gebotzeitpunkt}}</tr>
-        </tbody>
-        
-        
-    </table>
-
-    
-
-    
     </div>
+
+    <br/>
+    
+
+    <div>
+        <table>
+            <div>
+                Bisheriges Topgebot ist: {{aktTopgebot}} geboten von: {{aktTopbieter}}, verbleibende Zeit: {{restzeit}}
+            </div>
+
+            <div>
+                <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/>
+                <button @click="gebotAbgeben()">BIETEN</button>
+            </div>
+            
+           
+
+            <thead>
+                <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
+            </thead>
+    
+            <tbody>
+              <li v-for="gebot in gebotslistefiltered" :key="gebot.gebieterid">
+                 <tr>
+                        <td>{{gebot.gebotzeitpunkt}}</td>
+                        <td>{{gebot.gebietername}}</td>
+                        <td>{{gebot.betrag}}</td>
+                </tr>
+            </li>
+                   
+                
+            </tbody>
+    
+        </table>
+    </div>
+
+    
+
+    
+   
     
 
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive, onMounted } from "vue";
+import { computed, ref, reactive, onMounted, toRef } from "vue";
 import {useGebot} from '@/services/useGebot'
 import {useAngebot} from '@/services/useAngebot'
-import type { IAngebotListeItem } from "@/services/IAngebotListeItem";
+import GeoLink from '@/components/GeoLink.vue'
+import LoginView from './LoginView.vue'
 
 const props = defineProps<{
 angebotidstr: string
 }>()
 
+onMounted( async () => {
+   useGebot(Number(props.angebotidstr))
+   useGebot(Number(props.angebotidstr)).updateGebote()
+});
 
+
+const suchfeld = ref("");
+const bietfeld = ref(0);
 const {gebote} = useGebot(Number(props.angebotidstr))
+//const geboteList = computed(() => {gebote.gebotliste})
 const {angebote} = useAngebot()
+const aktTopbieter = toRef(gebote, 'topbieter')
+const aktTopgebot = toRef(gebote , 'topgebot')
 //const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
 
 const index = angebote.angebotliste.findIndex((angebot) => angebot.angebotid === Number(props.angebotidstr));
 const gesuchtesAngebot = angebote.angebotliste[index]
+let restzeit = ref(0)
 
 
+//noch Eingabefeld ausblenden wenn Zeit vorbei!
+//let timer_ID = setInterval(updateRestzeit,1000)
 
+const gebotslistefiltered = computed(() => {
+    const n: number = suchfeld.value.length;
+
+        //kp ob hier vllt reaktivität verloren geht....
+        //noch nach Höchstgebot sortieren! Höchsgebot ganz oben, dann zeitlich absteigend
+        if (suchfeld.value.length < 3) {
+            
+            return gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1)
+        
+        } else {
+        
+            return gebote.gebotliste.filter((e) =>
+            e.gebietername.toLowerCase().includes(suchfeld.value.toLowerCase())).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1).slice(0,10) 
+        }
+    });
+
+/*
+function updateRestzeit(){
+  
+    restzeit.value = gesuchtesAngebot.ablaufzeitpunkt.getMilliseconds() - Date.now()
+}
+*/
+
+function gebotAbgeben():void{
+    console.log("angebotid aus GebotView: " + props.angebotidstr);
+    useGebot(Number(props.angebotidstr)).sendeGebot(bietfeld.value);
+}
+ 
 
 </script >
