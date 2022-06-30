@@ -4,7 +4,7 @@ import { Client } from '@stomp/stompjs';
 const wsurl = `ws://${window.location.host}/stompbroker`
 
 import { useLogin } from '@/services/useLogin'
-//const { logindata } = useLogin()
+const { logindata } = useLogin()
 
 export function useGebot(angebotid: number) {
     /*

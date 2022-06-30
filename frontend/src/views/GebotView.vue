@@ -55,7 +55,9 @@
         </table>
     </div>
 
-    
+    <div>
+        <LoginView></LoginView>
+    </div>
 
     
    

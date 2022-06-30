@@ -15,7 +15,7 @@ interface ILoginState {
     errormessage: string
 }
 
-const loginState = /* reaktives Objekt zu Interface ILoginState */
+const loginState = reactive<ILoginState>({username : "", name : "", benutzerprofilid : 0, loggedin : false, jwtToken: "", errormessage: ""})/* reaktives Objekt zu Interface ILoginState */
 
 // Analog Java-Records auf Serverseite:
 // public record JwtLoginResponseDTO(String username, String name, Long benutzerprofilid, String jwtToken) {};
@@ -44,9 +44,42 @@ async function login(username: string, password: string) {
     * 
     * Falls Fehler, wird ein logout() ausgeführt und auf die Fehlermeldung in 'errormessage' geschrieben
     */
+   const url = '/api/login';
+   console.log('bin in login()')
+   console.log("Benutzername: " + username + "PW: " + password + " aus useLogin()");
+   let loginReq : IJwtLoginRequestDTO = ({username:username, password: password});
+
+   fetch(url, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginReq)
+        
+    }).then(response => {
+
+        if (response.ok) {
+            loginState.errormessage = ""
+            return response.json()
+
+        }else{
+            logout()
+            loginState.errormessage = response.statusText
+            console.log("Fehler in Login()")
+
+        }
+    })
+    .then((jsondata:IJwtLoginResponseDTO) => {
+        loginState.benutzerprofilid = jsondata.benutzerprofilid
+        loginState.jwtToken = jsondata.jwtToken
+        loginState.name = jsondata.name
+        loginState.username = jsondata.username
+        loginState.loggedin = true
+        console.log("login() erfolgreich");
+    })
 
 
 }
+
+
 
 function logout() {
     console.log(`logout(${loginState.name} [${loginState.username}])`)
