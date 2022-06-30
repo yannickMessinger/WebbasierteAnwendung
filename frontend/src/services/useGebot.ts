@@ -188,9 +188,59 @@ export function useGebot(angebotid: number) {
          * Bei Fehler wird im State-Objekt die 'gebotliste' auf das leere Array 
          * und 'errormessage' auf die Fehlermeldung geschrieben.
          */
+      
+        
+         const url = '/api/gebot';
+         console.log('bin in updateGEbot()')
+         
+         fetch(url,{
+             method:'GET'
+         }).then(response => {
+             
+             if(!response.ok){
+                 gebotState.errormessage = response.statusText;
+                 gebotState.gebotliste = []
+                 console.log('Fehler von Backend updateGEbot()')
+             }
+             
+             console.log('Angebot von Backend angefragt -> updateGEbot() Response aus Backend:')
+             console.log(response)
+
+            if (gebotState.receivingMessages === false){
+                receiveGebotMessages()
+
+            }
+             return response.json();
+         
+         })
+         
+         .then((jsondata: [IGetGebotResponseDTO]) => {
+             
+             gebotState.gebotliste = jsondata.filter(gebot => gebot.gebotid === angebotid)
+
+             let max1 = 0;
+             //klappt ggf so net, vlt mit normaler for of schleife
+             gebotState.gebotliste.forEach(gebot =>{
+              if (gebot.betrag > max1){
+                    max1 = gebot.betrag
+                    gebotState.topbieter = gebot.gebietername
+              }
+             })
+      
+
+             
+             gebotState.errormessage = ''
+         }
+         ).catch((error) =>{
+             //is das hier dann ein json fehler ?
+             gebotState.errormessage = error.statusText
+         })
+ 
+     }
+        
 
 
-    }
+    
 
 
     // Analog Java-DTO AddGebotRequestDTO.java
@@ -208,6 +258,33 @@ export function useGebot(angebotid: number) {
          * Falls ok, wird 'errormessage' im State auf leer gesetzt,
          * bei Fehler auf die Fehlermeldung
          */
+        
+       const url = '/api/gebot';
+       //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
+       const hilo = {benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag};
+      
+    
+       fetch(url,{
+        method:'POST',
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(hilo)
+        
+    }).then(response => {
+        
+                if(!response.ok){
+                    gebotState.errormessage = response.statusText;
+                    console.log('Fehler von sendeGebot()')
+                }else{
+
+                    console.log("Gebot erfolgreich abgegeben!");
+                    console.log(response.text());
+
+                }
+                
+        })
+    
+     
+
 
 
     }
