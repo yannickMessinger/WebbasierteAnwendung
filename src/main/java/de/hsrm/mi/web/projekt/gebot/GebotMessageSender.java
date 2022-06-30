@@ -22,7 +22,7 @@ public class GebotMessageSender {
         @EventListener
         public void sendGebotResponseDTO(GetGebotResponseDTO gebotresponseDTO){
             logger.info("GebotMessageSender GebotresponseDTO gesendet");
-            messaging.convertAndSend("/topic/gebot/"+ gebotresponseDTO.gebotid() ,gebotresponseDTO);
+            messaging.convertAndSend("/topic/gebot/" + gebotresponseDTO.gebotid() ,gebotresponseDTO);
         }
 
 

@@ -80,6 +80,8 @@ public class GebotServiceImpl implements GebotService{
             gebot.setAngebot(aufWelchesAngebot);
             bietender.getGebote().add(gebot);
             aufWelchesAngebot.getGebote().add(gebot);
+            logger.info("BACKEND INFO MESSAGE in bieteFuerAngebot() -> Create");
+            backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.CREATE, gebot.getId());
         
         }else if(sucheGebot.isPresent()){
             
@@ -87,7 +89,8 @@ public class GebotServiceImpl implements GebotService{
             gebot = sucheGebot.get();
             gebot.setBetrag(betrag);
             gebot.setGebotzeitpunkt(LocalDateTime.now());
-            
+            logger.info("BACKEND INFO MESSAGE in bieteFuerAngebot() -> Update");
+            backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.UPDATE, gebot.getId());
             //gebot.setGebieter(bietender);
             //gebot.setAngebot(aufWelchesAngebot);
 
@@ -95,7 +98,8 @@ public class GebotServiceImpl implements GebotService{
         }
         
         logger.info("BACKEND INO MESSAGE in bieteFuerAngebot()");
-        backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.UPDATE, gebot.getId());
+        //hier irgendwie den GebotsMessageSender nutzen?
+        
 
         return  gebot_Repository.save(gebot);
     }

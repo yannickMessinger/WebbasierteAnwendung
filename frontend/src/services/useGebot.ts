@@ -58,9 +58,9 @@ export function useGebot(angebotid: number) {
          * falls nicht, ist es ein neuer Bieter für dieses Angebot und das DTO wird vorne in die gebotliste des State-Objekts aufgenommen
          */
 
-
         /*
-        const index = gebotState.gebotliste.findIndex(gebot => gebot.gebieterid === gebotDTO.gebieterid);
+        
+        const index = gebotState.gebotliste.findIndex((gebot) => gebot.gebieterid === gebotDTO.gebieterid);
 
         if(index === -1){
             gebotState.gebotliste.unshift(gebotDTO)
@@ -71,8 +71,8 @@ export function useGebot(angebotid: number) {
 
 
         gebotState.gebotliste.forEach(o => o.gebieterid === gebotDTO.gebieterid)
-        */
         
+        */
         
         for(let gebot of gebotState.gebotliste){
             if (gebot.gebieterid === gebotDTO.gebieterid){
@@ -261,7 +261,7 @@ export function useGebot(angebotid: number) {
         
        const url = '/api/gebot';
        //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
-       const hilo = {benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag};
+       const hilo: IAddGebotRequestDTO = ({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
       
     
        fetch(url,{
