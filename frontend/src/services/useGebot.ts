@@ -12,7 +12,7 @@ export function useGebot(angebotid: number) {
      * um parallel mehrere *verschiedene* Versteigerungen managen zu können
      * (Gebot-State ist also *nicht* Frontend-Global wie Angebot(e)-State)
      */
-   
+
     // STOMP-Destination
     const DEST = `/topic/gebot/${angebotid}`
 
@@ -42,13 +42,13 @@ export function useGebot(angebotid: number) {
 
 
     /* reaktives Objekt auf Basis des Interface <IGebotState> */
-    const gebotState = reactive<IGebotState>({angebotid: 0, topgebot:0, topbieter : "", gebotliste : [], receivingMessages: false, errormessage:""});
-   
-    
+    const gebotState = reactive<IGebotState>({ angebotid: 0, topgebot: 0, topbieter: "", gebotliste: [], receivingMessages: false, errormessage: "" });
+
+
 
 
     function processGebotDTO(gebotDTO: IGetGebotResponseDTO) {
-        
+
         const dtos = JSON.stringify(gebotDTO)
         console.log(`processGebot(${dtos})`)
 
@@ -73,9 +73,9 @@ export function useGebot(angebotid: number) {
         gebotState.gebotliste.forEach(o => o.gebieterid === gebotDTO.gebieterid)
         
         */
-        
-        for(let gebot of gebotState.gebotliste){
-            if (gebot.gebieterid === gebotDTO.gebieterid){
+
+        for (let gebot of gebotState.gebotliste) {
+            if (gebot.gebieterid === gebotDTO.gebieterid) {
                 gebot.betrag = gebotDTO.betrag
                 gebot.gebotzeitpunkt = gebotDTO.gebotzeitpunkt
             }
@@ -83,8 +83,8 @@ export function useGebot(angebotid: number) {
 
         //neuer Bieter da nicht gefunden in der Liste
         gebotState.gebotliste.unshift(gebotDTO)
-        
-        
+
+
 
         /*
          * Falls gebotener Betrag im DTO größer als bisheriges topgebot im State,
@@ -92,20 +92,20 @@ export function useGebot(angebotid: number) {
          * aus dem DTO aktualisiert
          */
 
-       let max = 0;
+        let max = 0;
 
-       gebotState.gebotliste.forEach(gebot =>{
-        if (gebot.betrag > max){
-            max = gebot.betrag
+        gebotState.gebotliste.forEach(gebot => {
+            if (gebot.betrag > max) {
+                max = gebot.betrag
+            }
+        })
+
+        if (max > gebotState.topgebot) {
+            gebotState.topgebot = max;
+            gebotState.topbieter = gebotDTO.gebietername
         }
-       })
 
-       if (max > gebotState.topgebot){
-        gebotState.topgebot = max;
-        gebotState.topbieter = gebotDTO.gebietername
-       }
 
-    
 
     }
 
@@ -125,16 +125,16 @@ export function useGebot(angebotid: number) {
          * und die zugehörige Fehlermeldung wird in 'errormessage' des Stateobjekts geschrieben
          */
 
-       
-        
+
+
 
         const stompclient = new Client({ brokerURL: wsurl })
-        stompclient.onWebSocketError = (event) => { 
-            console.log("WebsocketError -> useGebot()") 
+        stompclient.onWebSocketError = (event) => {
+            console.log("WebsocketError -> useGebot()")
         }
 
-        stompclient.onStompError = (frame) => { 
-            console.log("STOMP Error in useGebot() ") 
+        stompclient.onStompError = (frame) => {
+            console.log("STOMP Error in useGebot() ")
             gebotState.receivingMessages = false;
             gebotState.errormessage = " useGebot -> KOMMUNIKATIONSFEHLER!";
         }
@@ -143,26 +143,26 @@ export function useGebot(angebotid: number) {
             // Callback: erfolgreicher Verbindugsaufbau zu Broker
             console.log("erfolgreicher Verbindugsaufbau in useGebot() zu Broker")
             gebotState.receivingMessages = true;
-            
+
             stompclient.subscribe(DEST, (message) => {
-            // Callback: Nachricht auf DEST empfangen
-            // empfangene Nutzdaten in message.body abrufbar,
-            // ggf. mit JSON.parse(message.body) zu JS konvertieren
-            const receivedMessage : IGetGebotResponseDTO = (JSON.parse(message.body))
-        
-            processGebotDTO(receivedMessage)
+                // Callback: Nachricht auf DEST empfangen
+                // empfangene Nutzdaten in message.body abrufbar,
+                // ggf. mit JSON.parse(message.body) zu JS konvertieren
+                const receivedMessage: IGetGebotResponseDTO = (JSON.parse(message.body))
+
+                processGebotDTO(receivedMessage)
 
 
-            console.log("Neue STOMP Nachricht in useGebot() erhalten:");
-            //console.log(receivedMessage)
-       
-        
+                console.log("Neue STOMP Nachricht in useGebot() erhalten:");
+                //console.log(receivedMessage)
+
+
 
             });
         };
 
-        stompclient.onDisconnect = () => { 
-            console.log("STOMP Verbindung in useGebot() abgebaut") 
+        stompclient.onDisconnect = () => {
+            console.log("STOMP Verbindung in useGebot() abgebaut")
         }
 
         stompclient.activate();
@@ -188,59 +188,59 @@ export function useGebot(angebotid: number) {
          * Bei Fehler wird im State-Objekt die 'gebotliste' auf das leere Array 
          * und 'errormessage' auf die Fehlermeldung geschrieben.
          */
-      
-        
-         const url = '/api/gebot';
-         console.log('bin in updateGEbot()')
-         
-         fetch(url,{
-             method:'GET'
-         }).then(response => {
-             
-             if(!response.ok){
-                 gebotState.errormessage = response.statusText;
-                 gebotState.gebotliste = []
-                 console.log('Fehler von Backend updateGEbot()')
-             }
-             
-             console.log('Angebot von Backend angefragt -> updateGEbot() Response aus Backend:')
-             console.log(response)
 
-            if (gebotState.receivingMessages === false){
+
+        const url = '/api/gebot';
+        console.log('bin in updateGEbot()')
+
+        fetch(url, {
+            method: 'GET'
+        }).then(response => {
+
+            if (!response.ok) {
+                gebotState.errormessage = response.statusText;
+                gebotState.gebotliste = []
+                console.log('Fehler von Backend updateGEbot()')
+            }
+
+            console.log('Angebot von Backend angefragt -> updateGEbot() Response aus Backend:')
+            console.log(response)
+
+            if (gebotState.receivingMessages === false) {
                 receiveGebotMessages()
 
             }
-             return response.json();
-         
-         })
-         
-         .then((jsondata: [IGetGebotResponseDTO]) => {
-             
-             gebotState.gebotliste = jsondata.filter(gebot => gebot.gebotid === angebotid)
+            return response.json();
 
-             let max1 = 0;
-             //klappt ggf so net, vlt mit normaler for of schleife
-             gebotState.gebotliste.forEach(gebot =>{
-              if (gebot.betrag > max1){
-                    max1 = gebot.betrag
-                    gebotState.topbieter = gebot.gebietername
-              }
-             })
-      
+        })
 
-             
-             gebotState.errormessage = ''
-         }
-         ).catch((error) =>{
-             //is das hier dann ein json fehler ?
-             gebotState.errormessage = error.statusText
-         })
- 
-     }
-        
+            .then((jsondata: [IGetGebotResponseDTO]) => {
+
+                gebotState.gebotliste = jsondata.filter(gebot => gebot.gebotid === angebotid)
+
+                let max1 = 0;
+                //klappt ggf so net, vlt mit normaler for of schleife
+                gebotState.gebotliste.forEach(gebot => {
+                    if (gebot.betrag > max1) {
+                        max1 = gebot.betrag
+                        gebotState.topbieter = gebot.gebietername
+                    }
+                })
 
 
-    
+
+                gebotState.errormessage = ''
+            }
+            ).catch((error) => {
+                //is das hier dann ein json fehler ?
+                gebotState.errormessage = error.statusText
+            })
+
+    }
+
+
+
+
 
 
     // Analog Java-DTO AddGebotRequestDTO.java
@@ -258,32 +258,32 @@ export function useGebot(angebotid: number) {
          * Falls ok, wird 'errormessage' im State auf leer gesetzt,
          * bei Fehler auf die Fehlermeldung
          */
-        
-       const url = '/api/gebot';
-       //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
-       const hilo: IAddGebotRequestDTO = ({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
-      
-    
-       fetch(url,{
-        method:'POST',
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(hilo)
-        
-    }).then(response => {
-        
-                if(!response.ok){
-                    gebotState.errormessage = response.statusText;
-                    console.log('Fehler von sendeGebot()')
-                }else{
 
-                    console.log("Gebot erfolgreich abgegeben!");
-                    console.log(response.text());
+        const url = '/api/gebot';
+        //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
+        const hilo: IAddGebotRequestDTO = ({ benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag: betrag });
 
-                }
-                
+
+        fetch(url, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(hilo)
+
+        }).then(response => {
+
+            if (!response.ok) {
+                gebotState.errormessage = response.statusText;
+                console.log('Fehler von sendeGebot()')
+            } else {
+
+                console.log("Gebot erfolgreich abgegeben!");
+                console.log(response.text());
+
+            }
+
         })
-    
-     
+
+
 
 
 
