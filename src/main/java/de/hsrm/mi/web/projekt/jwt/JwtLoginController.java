@@ -25,6 +25,8 @@ public class JwtLoginController {
      * eigenen UserDetailService verwenden, dann wären aber "nur" die Datenbank-User
      * abgedeckt, nicht z.B. die "in memory" angelegten
      */
+
+     //muss nicht noch irgendwo autowired hin?
     private AuthenticationManager authenticationManager;
     private ProjektUserService projektUserService;
 
@@ -58,7 +60,7 @@ public class JwtLoginController {
             var rollenname = authority.getAuthority().substring("ROLE_".length());
             logger.info("get_jwt_token({}) Authority {} -> rollenname {}", logindata, authority, rollenname);
 
-            // JWT mit Claims zu Benutzernamen und Rolle basteln
+            // JasonWebToken mit Claims zu Benutzernamen und Rolle basteln
             token = jwtUtil.bastelJwtToken(logindata.username(), rollenname);
 
             var projektuser = projektUserService.findeBenutzer(logindata.username());

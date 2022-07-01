@@ -1,9 +1,15 @@
 package de.hsrm.mi.web.projekt.jwt;
 
 /**
- * JwtLoginRequest - einfache Java-Datenklasse, um vom
- * Vue-Frontend (doLogin()) gelieferte JSON-Struktur
- * { 'username': '...', 'password': '...' }
- * aufzunehmen.
+ * Record, das der JSON-Struktur der POST-Antwort zum Login
+    entspricht
+ * 
+ * IJwtLoginResponseDTO {
+    username: string,
+    name: string,
+    benutzerprofilid: number,
+    jwtToken: string
+}
+ * 
  */
 public record JwtLoginResponseDTO(String username, String name, Long benutzerprofilid, String jwtToken) {};

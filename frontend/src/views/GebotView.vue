@@ -26,7 +26,7 @@
     <div>
         <table>
             <div>
-                Bisheriges Topgebot ist: {{aktTopgebot}} geboten von: {{aktTopbieter}}, verbleibende Zeit: {{restzeit}}
+                Bisheriges Topgebot ist: {{gebote.topgebot}} geboten von: {{gebote.topbieter}}, verbleibende Zeit: {{restzeit}}
             </div>
 
             <div>
@@ -55,9 +55,9 @@
         </table>
     </div>
 
-    <div>
-        <LoginView></LoginView>
-    </div>
+   <div>
+    <button @click="reloadGeboteList">reload gebote</button>
+   </div>
 
     
    
@@ -87,8 +87,7 @@ const bietfeld = ref(0);
 const {gebote} = useGebot(Number(props.angebotidstr))
 //const geboteList = computed(() => {gebote.gebotliste})
 const {angebote} = useAngebot()
-const aktTopbieter = toRef(gebote, 'topbieter')
-const aktTopgebot = toRef(gebote , 'topgebot')
+
 //const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
 
 const index = angebote.angebotliste.findIndex((angebot) => angebot.angebotid === Number(props.angebotidstr));
@@ -101,7 +100,7 @@ let restzeit = ref(0)
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
-
+        console.log("Eigentliche Gebotsliste die angezeigt werden soll " +  gebote.gebotliste)
         //kp ob hier vllt reaktivität verloren geht....
         //noch nach Höchstgebot sortieren! Höchsgebot ganz oben, dann zeitlich absteigend
         if (suchfeld.value.length < 3) {
@@ -109,11 +108,13 @@ const gebotslistefiltered = computed(() => {
             return gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1)
         
         } else {
-        
+            
             return gebote.gebotliste.filter((e) =>
             e.gebietername.toLowerCase().includes(suchfeld.value.toLowerCase())).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1).slice(0,10) 
         }
     });
+
+
 
 /*
 function updateRestzeit(){
@@ -125,6 +126,13 @@ function updateRestzeit(){
 function gebotAbgeben():void{
     console.log("angebotid aus GebotView: " + props.angebotidstr);
     useGebot(Number(props.angebotidstr)).sendeGebot(bietfeld.value);
+}
+
+function reloadGeboteList(){
+    console.log("refreshe Gebotsliste")
+     useGebot(Number(props.angebotidstr)).updateGebote()
+      console.log(gebote.gebotliste)
+      
 }
  
 

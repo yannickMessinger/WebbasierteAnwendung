@@ -11,10 +11,7 @@
 
     <button @click="submitLoginData">LOGIN</button>
 
-    <div>
-        {{test}}
-    </div>
-
+  
 
 </template>
 
@@ -26,7 +23,7 @@ import { computed, onMounted, ref, toRef } from 'vue';
 import {useLogin} from '@/services/useLogin'
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
+const router = useRouter();
 
 
 onMounted( async () => {
@@ -42,6 +39,7 @@ const {logindata} = useLogin();
 //geht so au netttt aller
 //const checkLogin = toRef(logindata, 'loggedin');
 
+/*
 const check = computed(() => {
     let checkLogin = computed(() => logindata.loggedin);
     //const checkLogin = toRef(logindata, 'loggedin');
@@ -63,7 +61,7 @@ if (test){
     }else{
         console.log("leider LOGIN FAIL");
     }
-
+*/
 
 function submitLoginData():void{
     console.log("Benutzername: " + benutzername.value + "PW: " + passwort.value  + " aus LoginView");

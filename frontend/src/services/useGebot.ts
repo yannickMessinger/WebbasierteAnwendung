@@ -154,7 +154,7 @@ export function useGebot(angebotid: number) {
 
 
                 console.log("Neue STOMP Nachricht in useGebot() erhalten:");
-                //console.log(receivedMessage)
+                console.log(receivedMessage)
 
 
 
@@ -194,7 +194,8 @@ export function useGebot(angebotid: number) {
         console.log('bin in updateGEbot()')
 
         fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            headers:{'Authorization' : `Bearer ${logindata.jwtToken}`}
         }).then(response => {
 
             if (!response.ok) {
@@ -203,7 +204,7 @@ export function useGebot(angebotid: number) {
                 console.log('Fehler von Backend updateGEbot()')
             }
 
-            console.log('Angebot von Backend angefragt -> updateGEbot() Response aus Backend:')
+            console.log('GebotListe von Backend angefragt -> updateGEbot() Response aus Backend:')
             console.log(response)
 
             if (gebotState.receivingMessages === false) {
@@ -216,18 +217,37 @@ export function useGebot(angebotid: number) {
 
             .then((jsondata: [IGetGebotResponseDTO]) => {
 
-                gebotState.gebotliste = jsondata.filter(gebot => gebot.gebotid === angebotid)
+                console.log("filtere Gebotsliste");
+                
 
+                //gebotState.gebotliste = jsondata.filter(gebot => gebot.gebotid === angebotid)
+                gebotState.gebotliste = jsondata
+
+                console.log("Gebotsliste aus updateGEbot()")
+                console.log(gebotState.gebotliste)
+
+                
                 let max1 = 0;
-                //klappt ggf so net, vlt mit normaler for of schleife
+            
+                
                 gebotState.gebotliste.forEach(gebot => {
                     if (gebot.betrag > max1) {
                         max1 = gebot.betrag
                         gebotState.topbieter = gebot.gebietername
+                        gebotState.topgebot = max1
+                        
                     }
                 })
 
 
+
+                
+                console.log("GebotListe nach Modifikation")
+                console.log(gebotState.gebotliste)
+
+                console.log("Höchstes Gebot:" + max1)
+                console.log("topbieter:" + gebotState.topbieter)
+                console.log("Anzahl Gebote " + gebotState.gebotliste.length)
 
                 gebotState.errormessage = ''
             }
@@ -261,13 +281,13 @@ export function useGebot(angebotid: number) {
 
         const url = '/api/gebot';
         //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
-        const sendGebot: IAddGebotRequestDTO = ({ benutzerprofilid: gebotState.angebotid, angebotid: angebotid , betrag: betrag });
+        const sendGebot: IAddGebotRequestDTO = ({ benutzerprofilid: logindata.benutzerprofilid, angebotid: angebotid , betrag: betrag });
         console.log(sendGebot)
         console.log("sendGebot angebotid: " + sendGebot.angebotid)
 
         fetch(url, {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",'Authorization' : `Bearer ${logindata.jwtToken}`},
             body: JSON.stringify(sendGebot)
 
         }).then(response => {

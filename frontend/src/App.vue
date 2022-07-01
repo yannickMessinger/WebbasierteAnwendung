@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
+import { useLogin } from '@/services/useLogin'
+const { logindata } = useLogin()
 </script>
 
 <template>
@@ -8,7 +9,9 @@ import { RouterLink, RouterView } from 'vue-router'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      
+    <div>
+      Sie sind: {{logindata.name}} 
+    </div>  
       
 
       <nav>

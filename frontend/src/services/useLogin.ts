@@ -4,6 +4,9 @@ import { reactive, readonly } from "vue";
 
 import { Client } from '@stomp/stompjs';
 import { stringifyQuery } from "vue-router";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const wsurl = `ws://${window.location.host}/stompbroker`
 
 interface ILoginState {
@@ -47,7 +50,7 @@ async function login(username: string, password: string) {
    const url = '/api/login';
    console.log('bin in login()')
    console.log("Benutzername: " + username + "PW: " + password + " aus useLogin()");
-   let loginReq : IJwtLoginRequestDTO = ({username:username, password: password});
+   const loginReq : IJwtLoginRequestDTO = ({username:username, password: password});
 
    fetch(url, {
         method: 'POST',
@@ -58,32 +61,31 @@ async function login(username: string, password: string) {
 
         if (response.ok) {
             loginState.errormessage = ""
+            console.log("resonse ok login()")
             return response.json()
 
         }else{
-            logout()
-            loginState.errormessage = response.statusText
-            console.log("Fehler in Login()")
-           
             
-
+            //console.log("error login()")
+            //throw new Error(response.statusText)
+            //so ist der immer ins catch gegangen:(
+            logout();
+            loginState.errormessage = response.statusText;
+            console.log("Fehler in Login()");
+            
         }
-    })
-    .then((jsondata:IJwtLoginResponseDTO) => {
-        //loginState.benutzerprofilid = jsondata.benutzerprofilid
-        //loginState.jwtToken = jsondata.jwtToken
-        //loginState.name = jsondata.name
-        //loginState.username = jsondata.username
-        //loginState.loggedin = true
-        //console.log("login() erfolgreich");
-        console.log("fake login erfolg");
-        loginState.benutzerprofilid = 1
-        loginState.jwtToken = 'fufghgj31442'
-        loginState.name = 'yannick'
-        loginState.username = 'yannick'
+    }).then((jsondata:IJwtLoginResponseDTO) => {
+        loginState.benutzerprofilid = jsondata.benutzerprofilid
+        loginState.jwtToken = jsondata.jwtToken
+        loginState.name = jsondata.name
+        loginState.username = jsondata.username
         loginState.loggedin = true
-    })
-
+        console.log("login() erfolgreich");
+        //router.push('/')
+        console.log("jwtToken aus login (): " + loginState.jwtToken)
+      
+    });
+    //router.push('/')
 
 }
 

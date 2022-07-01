@@ -36,7 +36,7 @@ public class GebotRestController {
     
     @GetMapping("api/gebot")
     public List<GetGebotResponseDTO> getGebotResponseDTOList(){
-        logger.info("Gebot REST aufgerufen!");
+        logger.info("Gebot REST getGebotResponseDTOList() aufgerufen!");
         List<Gebot> alleGebote =  g_gebotService.findeAlleGebote();
         
         List<GetGebotResponseDTO> responseDTOList = alleGebote.stream()
@@ -50,7 +50,7 @@ public class GebotRestController {
 
     @PostMapping(value = "api/gebot",consumes = MediaType.APPLICATION_JSON_VALUE)
     public long addGebot(@RequestBody AddGebotRequestDTO addGebot){
-        
+    logger.info("Gebot REST addGebot() aufgerufen!");    
     
     //alter...VL Folien 137/138
     

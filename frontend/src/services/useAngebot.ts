@@ -3,6 +3,9 @@ import { readonly, ref,reactive } from "vue";
 import { Client, type Message } from '@stomp/stompjs';
 import type { IBackendInfoMessage } from './IBackendInfoMessage';
 
+import { useLogin } from '@/services/useLogin'
+const { logindata } = useLogin()
+
 export interface IAngebotState {
     angebotliste: IAngebotListeItem[],
     errormessage: string
@@ -27,30 +30,31 @@ export function useAngebot() {
 export function updateAngebote(): void {
     const url = '/api/angebot';
         console.log('bin in updateAngebot()')
-        
+        console.log(" jwtToken aus updateAngebot() : " + logindata.jwtToken)
         fetch(url,{
-            method:'GET'
+            method:'GET',
+            headers:{'Authorization': `Bearer ${logindata.jwtToken}`}
+            
         }).then(response => {
             
-            if(!response.ok){
-                angebotState.errormessage = response.statusText;
-                console.log('Fehler von Backend Angebot')
+            if(response.ok){
+                console.log('Angebot von Backend angefragt -> Response aus Backend:')
+                console.log(response)
+                
+                return response.json();
+            }else{
+                console.log('Fehler in ->  updateAngebote()')
+                angebotState.errormessage = response.statusText
+                console.log(response.statusText)
             }
             
-            console.log('Angebot von Backend angefragt -> Response aus Backend:')
-            console.log(response)
-            return response.json();
-        
         })
-        
+        //oder doch beser mit catch anstatt else....?
         .then((jsondata: [IAngebotListeItem]) => {
             
             angebotState.angebotliste = jsondata
             console.log('Parse AngebotListe')
             angebotState.errormessage = ''
-        }
-        ).catch((error) =>{
-            angebotState.errormessage = error.statusText
         })
 
     }
@@ -96,33 +100,3 @@ export function updateAngebote(): void {
     }
 
     
-    
-
-
-
-//async function updateAngebote(): Promise <void>{
-    //try{
-        //const url = 'api/gebot'
-
-        //const response = await fetch(url,{
-            //method:'GET'
-        //})
-
-        //if(!response.ok){
-            
-            //angebotState.errormessage = response.statusText
-            //throw new Error(response.statusText)
-        
-        //}else{
-            //angebotState.angebotliste = await response.json()
-            //angebotState.errormessage = ""
-        //}
-
-
-
-
-    //}catch{
-        //angebotState.errormessage = response.statusText
-
-    //}
-//}
