@@ -64,16 +64,24 @@ async function login(username: string, password: string) {
             logout()
             loginState.errormessage = response.statusText
             console.log("Fehler in Login()")
+           
+            
 
         }
     })
     .then((jsondata:IJwtLoginResponseDTO) => {
-        loginState.benutzerprofilid = jsondata.benutzerprofilid
-        loginState.jwtToken = jsondata.jwtToken
-        loginState.name = jsondata.name
-        loginState.username = jsondata.username
+        //loginState.benutzerprofilid = jsondata.benutzerprofilid
+        //loginState.jwtToken = jsondata.jwtToken
+        //loginState.name = jsondata.name
+        //loginState.username = jsondata.username
+        //loginState.loggedin = true
+        //console.log("login() erfolgreich");
+        console.log("fake login erfolg");
+        loginState.benutzerprofilid = 1
+        loginState.jwtToken = 'fufghgj31442'
+        loginState.name = 'yannick'
+        loginState.username = 'yannick'
         loginState.loggedin = true
-        console.log("login() erfolgreich");
     })
 
 
