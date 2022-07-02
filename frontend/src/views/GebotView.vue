@@ -59,7 +59,9 @@
     <button @click="reloadGeboteList">reload gebote</button>
    </div>
 
-    
+    <div>
+        {{aktliste}}
+    </div>
    
     
 
@@ -70,7 +72,7 @@ import { computed, ref, reactive, onMounted, toRef } from "vue";
 import {useGebot} from '@/services/useGebot'
 import {useAngebot} from '@/services/useAngebot'
 import GeoLink from '@/components/GeoLink.vue'
-import LoginView from './LoginView.vue'
+
 
 const props = defineProps<{
 angebotidstr: string
@@ -79,14 +81,17 @@ angebotidstr: string
 onMounted( async () => {
    useGebot(Number(props.angebotidstr))
    useGebot(Number(props.angebotidstr)).updateGebote()
+   console.log("initiale Liste aus View aus onmounted")
+    console.log(angebote.angebotliste)
 });
-
+console.log("huan")
 
 const suchfeld = ref("");
 const bietfeld = ref(0);
 const {gebote} = useGebot(Number(props.angebotidstr))
 //const geboteList = computed(() => {gebote.gebotliste})
 const {angebote} = useAngebot()
+const aktliste = computed(() => gebote.gebotliste.length)
 
 //const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
 
@@ -131,7 +136,8 @@ function gebotAbgeben():void{
 function reloadGeboteList(){
     console.log("refreshe Gebotsliste")
      useGebot(Number(props.angebotidstr)).updateGebote()
-      console.log(gebote.gebotliste)
+    console.log("Gebotsliste aus View")
+    console.log(gebote.gebotliste)
       
 }
  

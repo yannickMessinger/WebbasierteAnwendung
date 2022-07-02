@@ -74,6 +74,8 @@ export function useGebot(angebotid: number) {
         
         */
 
+        console.log("PROZZESIERE GEBOT")
+
         for (let gebot of gebotState.gebotliste) {
             if (gebot.gebieterid === gebotDTO.gebieterid) {
                 gebot.betrag = gebotDTO.betrag
@@ -229,7 +231,7 @@ export function useGebot(angebotid: number) {
                 
                 let max1 = 0;
             
-                
+                /*
                 gebotState.gebotliste.forEach(gebot => {
                     if (gebot.betrag > max1) {
                         max1 = gebot.betrag
@@ -248,6 +250,7 @@ export function useGebot(angebotid: number) {
                 console.log("Höchstes Gebot:" + max1)
                 console.log("topbieter:" + gebotState.topbieter)
                 console.log("Anzahl Gebote " + gebotState.gebotliste.length)
+                */
 
                 gebotState.errormessage = ''
             }
