@@ -3,8 +3,8 @@ import { readonly, ref,reactive } from "vue";
 import { Client, type Message } from '@stomp/stompjs';
 import type { IBackendInfoMessage } from './IBackendInfoMessage';
 
-import { useLogin } from '@/services/useLogin'
-const { logindata } = useLogin()
+import { useLogin } from '@/services/useLogin';
+const { logindata } = useLogin();
 
 export interface IAngebotState {
     angebotliste: IAngebotListeItem[],

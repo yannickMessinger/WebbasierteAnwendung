@@ -1,10 +1,11 @@
 import { reactive, readonly } from "vue";
 
 import { Client } from '@stomp/stompjs';
-const wsurl = `ws://${window.location.host}/stompbroker`
+const wsurl = `ws://${window.location.host}/stompbroker`;
 
-import { useLogin } from '@/services/useLogin'
-const { logindata } = useLogin()
+
+import { useLogin } from '@/services/useLogin';
+const { logindata } = useLogin();
 
 export function useGebot(angebotid: number) {
     /*

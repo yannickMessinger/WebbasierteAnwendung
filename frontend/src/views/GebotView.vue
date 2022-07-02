@@ -41,7 +41,7 @@
             </thead>
     
             <tbody>
-              <li v-for="gebot in gebotslistefiltered" :key="gebot.gebieterid">
+              <li v-for="gebot in gebote.gebotliste" :key="gebot.gebieterid">
                  <tr>
                         <td>{{gebot.gebotzeitpunkt}}</td>
                         <td>{{gebot.gebietername}}</td>
@@ -91,6 +91,8 @@ const bietfeld = ref(0);
 const {gebote} = useGebot(Number(props.angebotidstr))
 //const geboteList = computed(() => {gebote.gebotliste})
 const {angebote} = useAngebot()
+console.log("Gebotliste aus VIEW")
+console.log(useGebot(Number(props.angebotidstr)).updateGebote())
 const aktliste = computed(() => gebote.gebotliste.length)
 
 //const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
