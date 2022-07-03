@@ -6,40 +6,74 @@
     <div>
         <table>    
                 <thead>
-
-                    <td>{{gesuchtesAngebot.beschreibung}}</td>
-                    <td>{{gesuchtesAngebot.mindestpreis}}</td>
-                    <td>{{gesuchtesAngebot.anbietername}}</td>
-                    <td>{{gesuchtesAngebot.ablaufzeitpunkt}}</td>
-                    <td><GeoLink :lat="gesuchtesAngebot.lat" :lon="gesuchtesAngebot.lon" :zoom="18">Abholort</GeoLink></td>
-                    <td>{{gesuchtesAngebot.abholort}}</td>
+                    
+                    <td>Artikel</td>
+                    <td>Preis</td>
+                    <td>Von</td>
+                    <td>Endet am:</td>
+                    <td>um:</td>
+                    <td>Abholort:</td>
+                    <td>Karte:</td>
+                    <td>verbleibende Zeit:</td>
             
                 </thead>
+
+                <tbody>
+
+                    <td>{{gesuchtesAngebot.beschreibung}}</td>
+                    <td>{{gesuchtesAngebot.mindestpreis}} €</td>
+                    <td>{{gesuchtesAngebot.anbietername}}</td>
+                    <td>{{new Date(gesuchtesAngebot.ablaufzeitpunkt).toLocaleDateString()}}</td>
+                    <td>{{new Date(gesuchtesAngebot.ablaufzeitpunkt).getHours()}}:{{new Date(gesuchtesAngebot.ablaufzeitpunkt).getMinutes()}} </td>
+                    <td>{{gesuchtesAngebot.abholort}}</td>
+                    <td><GeoLink :lat="gesuchtesAngebot.lat" :lon="gesuchtesAngebot.lon" :zoom="18">Abholort</GeoLink></td>
+                    <td>{{restzeit}} Sekunden</td>
+
+
+
+
+                </tbody>
 
         </table>
 
     </div>
 
     <br/>
+    <br/>
+    <br/>
+
+     <div>
+                
+            Bisheriges Topgebot ist: {{gebote.topgebot}}€, geboten von: {{gebote.topbieter}}!!
     
+    </div>
+
+            
+
+    <br/>
+
+    <div>
+        <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
+    </div>
+
+    <br/>
+    <br/>
+
+    <h3>Gebotsliste:</h3>
+
+    <br/>
 
     <div>
         <table>
-            <div>
-                Bisheriges Topgebot ist: {{gebote.topgebot}} geboten von: {{gebote.topbieter}}, verbleibende Zeit: {{restzeit}}
-            </div>
-
-            <div>
-                <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/>
-                <button @click="gebotAbgeben()">BIETEN</button>
-            </div>
-            
            
-
             <thead>
-                <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
+                
+                <td>Gebotszeitpunkt</td>
+                <td>Gebietername</td>
+                <td>Betrag</td>
             </thead>
     
+
             <tbody>
               <tr v-for="gebot in gebote.gebotliste">
                  
@@ -55,7 +89,11 @@
         </table>
     </div>
 
-   
+<br/>
+   <div>
+                <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/>
+                <button @click="gebotAbgeben()">BIETEN</button>
+    </div>
 
    
    
@@ -100,7 +138,7 @@ const restzeit = ref<number>();
 
 
 //noch Eingabefeld ausblenden wenn Zeit vorbei!
-let timer_ID = setInterval(updateRestzeit,1000)
+//let timer_ID = setInterval(updateRestzeit,1000)
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
