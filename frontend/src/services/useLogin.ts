@@ -52,7 +52,7 @@ async function login(username: string, password: string) {
    console.log("Benutzername: " + username + "PW: " + password + " aus useLogin()");
    const loginReq : IJwtLoginRequestDTO = ({username:username, password: password});
 
-   fetch(url, {
+   await fetch(url, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginReq)
@@ -75,14 +75,14 @@ async function login(username: string, password: string) {
             
         }
     }).then((jsondata:IJwtLoginResponseDTO) => {
-        loginState.benutzerprofilid = jsondata.benutzerprofilid
-        loginState.jwtToken = jsondata.jwtToken
-        loginState.name = jsondata.name
-        loginState.username = jsondata.username
-        loginState.loggedin = true
+        loginState.benutzerprofilid = jsondata.benutzerprofilid;
+        loginState.jwtToken = jsondata.jwtToken;
+        loginState.name = jsondata.name;
+        loginState.username = jsondata.username;
+        loginState.loggedin = true;
         console.log("login() erfolgreich");
-        //router.push('/')
-        console.log("jwtToken aus login (): " + loginState.jwtToken)
+        //router.push('/');
+        //console.log("jwtToken aus login (): " + loginState.jwtToken)
       
     });
     //router.push('/')

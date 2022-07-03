@@ -9,7 +9,7 @@
         <input type="password" v-model="passwort" placeholder="PASSWORT"/>
     </div>
 
-    <button @click="submitLoginData">LOGIN</button>
+    <button @click="check">LOGIN</button>
 
   
 
@@ -39,21 +39,29 @@ const {logindata} = useLogin();
 //geht so au netttt aller
 //const checkLogin = toRef(logindata, 'loggedin');
 
-/*
-const check = computed(() => {
-    let checkLogin = computed(() => logindata.loggedin);
+
+async function check():Promise<void>{
+    
+    await useLogin().login(benutzername.value,passwort.value);
+
+    let checkLogin = logindata.loggedin
+    
+    console.log("checklogin " + checkLogin);
     //const checkLogin = toRef(logindata, 'loggedin');
 
     if (checkLogin){
-        //router.push('/');
+        router.push('/');
         console.log("Login erfolgreich, Weiterleitung auf Übersichtsseite");
     }else{
         console.log("leider LOGIN FAIL");
+         router.push('/login');
+
     }
 
     
-})
+}
 
+/*
 let test = computed(() => logindata.loggedin);
 if (test){
         //router.push('/');

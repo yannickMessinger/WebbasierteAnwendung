@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
@@ -38,6 +39,10 @@ public class GebotServiceImpl implements GebotService{
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    private SimpMessagingTemplate messaging;
+
 
 
     
@@ -87,9 +92,12 @@ public class GebotServiceImpl implements GebotService{
             aufWelchesAngebot.getGebote().add(gebot);
             logger.info("BACKEND INFO MESSAGE in bieteFuerAngebot() -> Create");
             
-            backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.CREATE, gebot.getId());
-            GetGebotResponseDTO gebotDTO = GetGebotResponseDTO.from(gebot);
-            applicationEventPublisher.publishEvent(gebotDTO);
+            //backEndInfo_Service.sendInfo("gebot/" + gebot.getAngebot().getId(), BackendOperation.CREATE, gebot.getId());
+            GetGebotResponseDTO gebotresponseDTO = GetGebotResponseDTO.from(gebot);
+            messaging.convertAndSend("/topic/gebot/" + gebot.getAngebot().getId() ,gebotresponseDTO);
+            logger.info("convertAndSend -> /topic/gebot/" + gebot.getAngebot().getId());
+        
+            //applicationEventPublisher.publishEvent(gebotDTO);
 
         
         }else if(sucheGebot.isPresent()){
@@ -100,11 +108,12 @@ public class GebotServiceImpl implements GebotService{
             gebot.setGebotzeitpunkt(LocalDateTime.now());
             logger.info("BACKEND INFO MESSAGE in bieteFuerAngebot() -> Update");
             
-            backEndInfo_Service.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.UPDATE, gebot.getId());
-            GetGebotResponseDTO gebotDTO = GetGebotResponseDTO.from(gebot);
-            applicationEventPublisher.publishEvent(gebotDTO);
-            //gebot.setGebieter(bietender);
-            //gebot.setAngebot(aufWelchesAngebot);
+            //backEndInfo_Service.sendInfo("gebot/" + gebot.getAngebot().getId(), BackendOperation.UPDATE, gebot.getId());
+            GetGebotResponseDTO gebotresponseDTO = GetGebotResponseDTO.from(gebot);
+            messaging.convertAndSend("/topic/gebot/" + gebot.getAngebot().getId() ,gebotresponseDTO);
+            logger.info("convertAndSend -> /topic/gebot/" + gebot.getAngebot().getId());
+            //applicationEventPublisher.publishEvent(gebotDTO);
+            
 
 
         }

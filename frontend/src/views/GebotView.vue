@@ -41,13 +41,13 @@
             </thead>
     
             <tbody>
-              <li v-for="gebot in gebote.gebotliste" :key="gebot.gebieterid">
-                 <tr>
+              <tr v-for="gebot in gebote.gebotliste">
+                 
                         <td>{{gebot.gebotzeitpunkt}}</td>
                         <td>{{gebot.gebietername}}</td>
                         <td>{{gebot.betrag}}</td>
-                </tr>
-            </li>
+                
+            </tr>
                    
                 
             </tbody>
@@ -55,13 +55,9 @@
         </table>
     </div>
 
-   <div>
-    <button @click="reloadGeboteList">reload gebote</button>
-   </div>
+   
 
-    <div>
-        {{aktliste}}
-    </div>
+   
    
     
 
@@ -70,7 +66,7 @@
 <script setup lang="ts">
 import { computed, ref, reactive, onMounted, toRef } from "vue";
 import {useGebot} from '@/services/useGebot'
-import {useAngebot} from '@/services/useAngebot'
+import {updateAngebote, useAngebot} from '@/services/useAngebot'
 import GeoLink from '@/components/GeoLink.vue'
 
 
@@ -79,31 +75,32 @@ angebotidstr: string
 }>()
 
 onMounted( async () => {
-   useGebot(Number(props.angebotidstr))
-   useGebot(Number(props.angebotidstr)).updateGebote()
-   console.log("initiale Liste aus View aus onmounted")
-    console.log(angebote.angebotliste)
+   //useGebot(Number(props.angebotidstr));
+   await updateGebote();
+
+   //useGebot(Number(props.angebotidstr)).updateGebote()
+   //console.log(Number(props.angebotidstr))
+   //console.log("initiale Liste aus View aus onmounted")
+    //console.log(gebote.gebotliste)
 });
-console.log("huan")
+
 
 const suchfeld = ref("");
 const bietfeld = ref(0);
-const {gebote} = useGebot(Number(props.angebotidstr))
-//const geboteList = computed(() => {gebote.gebotliste})
-const {angebote} = useAngebot()
-console.log("Gebotliste aus VIEW")
-console.log(useGebot(Number(props.angebotidstr)).updateGebote())
-const aktliste = computed(() => gebote.gebotliste.length)
+const {gebote, updateGebote, sendeGebot} = useGebot(Number(props.angebotidstr));
+const {angebote} = useAngebot();
+
+
 
 //const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
 
 const index = angebote.angebotliste.findIndex((angebot) => angebot.angebotid === Number(props.angebotidstr));
 const gesuchtesAngebot = angebote.angebotliste[index]
-let restzeit = ref(0)
+const restzeit = ref<number>();
 
 
 //noch Eingabefeld ausblenden wenn Zeit vorbei!
-//let timer_ID = setInterval(updateRestzeit,1000)
+let timer_ID = setInterval(updateRestzeit,1000)
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
@@ -123,25 +120,29 @@ const gebotslistefiltered = computed(() => {
 
 
 
-/*
-function updateRestzeit(){
-  
-    restzeit.value = gesuchtesAngebot.ablaufzeitpunkt.getMilliseconds() - Date.now()
-}
-*/
 
-function gebotAbgeben():void{
+function updateRestzeit() {
+    if (gesuchtesAngebot != undefined) {
+        restzeit.value = new Date(gesuchtesAngebot.ablaufzeitpunkt).getTime() - Date.now()
+        restzeit.value = Math.ceil(restzeit.value/1000)
+        if (restzeit.value <= 0) {
+            clearInterval(timerid)
+        }
+    }
+}
+
+let timerid = setInterval(() => { updateRestzeit() }, restzeit.value)
+
+
+async function gebotAbgeben():Promise<void>{
     console.log("angebotid aus GebotView: " + props.angebotidstr);
-    useGebot(Number(props.angebotidstr)).sendeGebot(bietfeld.value);
+    await sendeGebot(bietfeld.value);
+    await updateGebote();
+    console.log("Gebotliste aus VIEW erstes Element! gebot abgeben")
+    console.log(gebote.gebotliste)
+
 }
 
-function reloadGeboteList(){
-    console.log("refreshe Gebotsliste")
-     useGebot(Number(props.angebotidstr)).updateGebote()
-    console.log("Gebotsliste aus View")
-    console.log(gebote.gebotliste)
-      
-}
- 
+
 
 </script >
