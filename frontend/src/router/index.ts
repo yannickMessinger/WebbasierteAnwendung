@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import {useLogin} from '@/services/useLogin'
 
 
 const router = createRouter({
@@ -28,7 +29,7 @@ const router = createRouter({
     },
     {
       path:'/login',
-      name:'“Login/Logout',
+      name:'Login/Logout',
       component: () => import('../views/LoginView.vue')
       
 
@@ -37,5 +38,15 @@ const router = createRouter({
     }
   ]
 })
+
+/*
+router.beforeEach( async (to, from) => {
+  // wenn z.B. ein 'berechtigt' nicht wahr ist,
+  // alle Nicht-/login-Navigationen auf /login leiten
+    if (!useLogin().logindata.loggedin && to.name !== 'Login') {
+  return { name: 'Login/Logout' }
+    }
+  })
+*/  
 
 export default router

@@ -24,7 +24,7 @@
                     <td>{{gesuchtesAngebot.mindestpreis}} €</td>
                     <td>{{gesuchtesAngebot.anbietername}}</td>
                     <td>{{new Date(gesuchtesAngebot.ablaufzeitpunkt).toLocaleDateString()}}</td>
-                    <td>{{new Date(gesuchtesAngebot.ablaufzeitpunkt).getHours()}}:{{new Date(gesuchtesAngebot.ablaufzeitpunkt).getMinutes()}} </td>
+                    <td>{{parseDate(new Date(gesuchtesAngebot.ablaufzeitpunkt))}} </td>
                     <td>{{gesuchtesAngebot.abholort}}</td>
                     <td><GeoLink :lat="gesuchtesAngebot.lat" :lon="gesuchtesAngebot.lon" :zoom="18">Abholort</GeoLink></td>
                     <td>{{restzeit}} Sekunden</td>
@@ -75,9 +75,9 @@
     
 
             <tbody>
-              <tr v-for="gebot in gebote.gebotliste">
+              <tr v-for="gebot in gebotslistefiltered">
                  
-                        <td>{{gebot.gebotzeitpunkt}}</td>
+                        <td>{{parseDate(new Date(gebot.gebotzeitpunkt))}}</td>
                         <td>{{gebot.gebietername}}</td>
                         <td>{{gebot.betrag}}</td>
                 
@@ -142,21 +142,28 @@ const restzeit = ref<number>();
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
-        console.log("Eigentliche Gebotsliste die angezeigt werden soll " +  gebote.gebotliste)
+        console.log("Eigentliche Gebotsliste die angezeigt werden soll ")
+        console.log(gebote.gebotliste)
         //kp ob hier vllt reaktivität verloren geht....
         //noch nach Höchstgebot sortieren! Höchsgebot ganz oben, dann zeitlich absteigend
         if (suchfeld.value.length < 3) {
+           
             
-            return gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1)
+            let orderedByTime = gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
+            let topgebot_index = orderedByTime.findIndex((o) => { return o.betrag === gebote.topgebot})
+            //orderedByTime.unshift(orderedByTime[topgebot]);
+            
+            return orderedByTime;
         
         } else {
             
             return gebote.gebotliste.filter((e) =>
-            e.gebietername.toLowerCase().includes(suchfeld.value.toLowerCase())).sort((a,b) => (a.gebotzeitpunkt > b.gebotzeitpunkt) ? 1 : -1).slice(0,10) 
+            e.gebietername.toLowerCase().includes(suchfeld.value.toLowerCase())).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1).slice(0,10) 
         }
     });
 
-
+console.log("gefilterte Liste aus GebotView");
+console.log(gebotslistefiltered);
 
 
 function updateRestzeit() {
@@ -179,6 +186,36 @@ async function gebotAbgeben():Promise<void>{
     console.log("Gebotliste aus VIEW erstes Element! gebot abgeben")
     console.log(gebote.gebotliste)
 
+}
+
+
+
+function parseDate(datum: Date){
+
+   
+    let b = datum.getHours(); 
+    let c = datum.getMinutes(); 
+    let hours;
+    let minutes;
+    
+    
+    if(b < 10){
+      hours = '0'+ b;
+    }else{
+        hours = b;
+    } 
+
+    if(c < 10){
+      minutes = '0'+ c;
+    }else{
+        minutes = c;
+    } 
+   
+    
+    const zeit = hours +':'+ minutes;
+
+    return zeit
+    
 }
 
 

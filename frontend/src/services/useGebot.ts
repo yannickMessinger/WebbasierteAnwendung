@@ -180,7 +180,7 @@ export function useGebot(angebotid: number) {
                 
 
                 console.log("Neue STOMP Nachricht in useGebot() erhalten:");
-                console.log(receivedMessage)
+                //console.log(receivedMessage)
 
                 
 
