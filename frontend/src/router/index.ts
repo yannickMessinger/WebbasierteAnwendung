@@ -29,7 +29,7 @@ const router = createRouter({
     },
     {
       path:'/login',
-      name:'Login/Logout',
+      name:'Login',
       component: () => import('../views/LoginView.vue')
       
 
@@ -39,14 +39,13 @@ const router = createRouter({
   ]
 })
 
-/*
-router.beforeEach( async (to, from) => {
-  // wenn z.B. ein 'berechtigt' nicht wahr ist,
-  // alle Nicht-/login-Navigationen auf /login leiten
-    if (!useLogin().logindata.loggedin && to.name !== 'Login') {
-  return { name: 'Login/Logout' }
+
+router.beforeEach( async (to) => {
+  
+    if (!useLogin().logindata.loggedin && to.path !== '/login') {
+  return { name: 'Login' }
     }
   })
-*/  
+ 
 
 export default router
