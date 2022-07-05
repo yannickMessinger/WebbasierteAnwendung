@@ -223,6 +223,9 @@ export function useGebot(angebotid: number) {
          * und 'errormessage' auf die Fehlermeldung geschrieben.
          */
 
+        //console.log("setze topgebot und topbieter auf 0");
+        //gebotState.topgebot = 0
+        //gebotState.topbieter=""
 
         const url = '/api/gebot';
         console.log('bin in updateGEbot()')
@@ -250,8 +253,8 @@ export function useGebot(angebotid: number) {
         })
 
             .then((jsondata: [IGetGebotResponseDTO]) => {
-
-                
+                console.log("topgebot: " + gebotState.topgebot)
+                console.log("topbieter " + gebotState.topbieter)
                
                 //let gebotListe:IGetGebotResponseDTO[] = jsondata;
                 gebotState.gebotliste = jsondata;
@@ -288,8 +291,17 @@ export function useGebot(angebotid: number) {
                         
                     }
                 })
-                
 
+                if(gebotState.topgebot < 0){
+                    gebotState.topgebot = 0;
+                }
+
+                if(gebotState.topbieter === ""){
+                    gebotState.topbieter = "noch niemand";
+                }
+                
+                //console.log("topgebot: " + gebotState.topgebot)
+                //console.log("topbieter " + gebotState.topbieter)
 
                 
                 //console.log("GebotListe nach Modifikation")

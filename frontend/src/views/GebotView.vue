@@ -42,28 +42,28 @@
     <br/>
     <br/>
 
+
      <div>
-                
+           <h3>Topgebot:</h3>     
             Bisheriges Topgebot ist: {{gebote.topgebot}}€, geboten von: {{gebote.topbieter}}!!
     
     </div>
 
             
 
-    <br/>
-
-    <div>
-        <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
-    </div>
-
-    <br/>
-    <br/>
+   <br/>
+   <br/>
+   <br/>
+   
+    
 
     <h3>Gebotsliste:</h3>
 
     <br/>
+    
 
     <div>
+         <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
         <table>
            
             <thead>
@@ -82,18 +82,15 @@
                         <td>{{gebot.betrag}}</td>
                 
             </tr>
-                   
-                
+                   <tr v-if="showBietFeld"> <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/> <button @click="gebotAbgeben()">BIETEN</button></tr>
+                  <tr v-else>DI DÖM VORBEI!</tr>
             </tbody>
     
         </table>
     </div>
 
 <br/>
-   <div>
-                <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/>
-                <button @click="gebotAbgeben()">BIETEN</button>
-    </div>
+ 
 
    
    
@@ -107,6 +104,7 @@ import {useGebot} from '@/services/useGebot'
 import {updateAngebote, useAngebot} from '@/services/useAngebot'
 import GeoLink from '@/components/GeoLink.vue'
 
+let showBietFeld = ref(true)
 
 const props = defineProps<{
 angebotidstr: string
@@ -130,15 +128,15 @@ const {angebote} = useAngebot();
 
 
 
-//const gesuchtesAngebot : IAngebotListeItem = angebote.angebotliste.filter((a) => a.angebotid === Number(props.angebotidstr))
+
 
 const index = angebote.angebotliste.findIndex((angebot) => angebot.angebotid === Number(props.angebotidstr));
 const gesuchtesAngebot = angebote.angebotliste[index]
 const restzeit = ref<number>();
 
 
-//noch Eingabefeld ausblenden wenn Zeit vorbei!
-//let timer_ID = setInterval(updateRestzeit,1000)
+
+
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
@@ -150,8 +148,10 @@ const gebotslistefiltered = computed(() => {
            
             
             let orderedByTime = gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
-            let topgebot_index = orderedByTime.findIndex((o) => { return o.betrag === gebote.topgebot})
-            //orderedByTime.unshift(orderedByTime[topgebot]);
+            let topgebot  = orderedByTime.find((o) => { return o.betrag === gebote.topgebot})
+            //orderedByTime.unshift(topgebot)
+            console.log("topgebot aus view")
+            console.log(topgebot);
             
             return orderedByTime;
         
@@ -172,6 +172,7 @@ function updateRestzeit() {
         restzeit.value = Math.ceil(restzeit.value/1000)
         if (restzeit.value <= 0) {
             clearInterval(timerid)
+            showBietFeld.value = false;
         }
     }
 }
