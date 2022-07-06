@@ -84,6 +84,19 @@ export function useGebot(angebotid: number) {
             gebotState.gebotliste[index].betrag = gebotDTO.betrag
             gebotState.gebotliste[index].gebotzeitpunkt = gebotDTO.gebotzeitpunkt
         }
+
+
+        const findGebot = gebotState.gebotliste.findIndex((gebot) => gebot.gebieterid === gebotDTO.gebieterid);
+
+        if(findGebot === undefined){
+            console.log("Gebot noch nicht in Liste")
+            //gebotState.gebotliste.unshift(gebotDTO);
+        
+        }else{
+            console.log("Gebot schon in Liste")
+            //updaten
+        }
+
         
         //updateGebote();
         /*
@@ -258,7 +271,7 @@ export function useGebot(angebotid: number) {
                 console.log("VOR FILTERN:")
                 console.log(gebotState.gebotliste)
                 
-                const filterList =   gebotState.gebotliste.filter((gebot) => {
+                gebotState.gebotliste  =   gebotState.gebotliste.filter((gebot) => {
                     return gebot.angebotid === angebotid;
                 });
 
@@ -266,7 +279,7 @@ export function useGebot(angebotid: number) {
                 console.log("NACH FILTERN");
                 console.log(gebotState.gebotliste)
 
-                gebotState.gebotliste = filterList;
+                //gebotState.gebotliste = filterList;
 
                 if(gebotState.topgebot <= 0){
                     gebotState.topgebot = 0;

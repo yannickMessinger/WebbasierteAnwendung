@@ -111,13 +111,10 @@ angebotidstr: string
 }>()
 
 onMounted( async () => {
-   //useGebot(Number(props.angebotidstr));
+   useGebot(Number(props.angebotidstr));
    await updateGebote();
 
-   //useGebot(Number(props.angebotidstr)).updateGebote()
-   //console.log(Number(props.angebotidstr))
-   //console.log("initiale Liste aus View aus onmounted")
-    //console.log(gebote.gebotliste)
+   
 });
 
 
@@ -149,8 +146,7 @@ const gebotslistefiltered = computed(() => {
             let orderedByTime = gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
             let topgebot  = orderedByTime.find((o) => { return o.betrag === gebote.topgebot})
             //orderedByTime.unshift(topgebot)
-            console.log("topgebot aus view")
-            console.log(topgebot);
+           
             
             return orderedByTime;
         

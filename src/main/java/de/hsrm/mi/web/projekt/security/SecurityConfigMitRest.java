@@ -90,7 +90,7 @@ public class SecurityConfigMitRest {
              */
 
             http.authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/stompbroker").permitAll()
                 .antMatchers("/registrieren","/logout").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()

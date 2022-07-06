@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import de.hsrm.mi.web.projekt.api.gebot.GetGebotResponseDTO;
 
+@Service
 public class GebotMessageSender {
 
     public static final Logger logger = LoggerFactory.getLogger(GebotMessageSender.class);
