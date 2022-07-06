@@ -55,11 +55,7 @@ export function useGebot(angebotid: number) {
         console.log(`processGebot(${dtos})`)
 
        
-        /*
-         * suche Angebot für 'gebieter' des übergebenen Gebots aus der gebotliste (in gebotState)
-         * falls vorhanden, hat der User hier schon geboten und das Gebot wird nur aktualisiert (Betrag/Gebot-Zeitpunkt)
-         * falls nicht, ist es ein neuer Bieter für dieses Angebot und das DTO wird vorne in die gebotliste des State-Objekts aufgenommen
-         */
+       
       
 
         console.log("Liste vor Prozessierung");
@@ -68,67 +64,66 @@ export function useGebot(angebotid: number) {
         console.log("PROZZESIERE GEBOT")
         const index = gebotState.gebotliste.findIndex((gebot) => gebot.gebieterid === gebotDTO.gebieterid);
 
+         /*
+         * suche Angebot für 'gebieter' des übergebenen Gebots aus der gebotliste (in gebotState)
+         * falls vorhanden, hat der User hier schon geboten und das Gebot wird nur aktualisiert (Betrag/Gebot-Zeitpunkt)
+         * falls nicht, ist es ein neuer Bieter für dieses Angebot und das DTO wird vorne in die gebotliste des State-Objekts aufgenommen
+         */
+
         if(index === -1){
+
+            
+
             console.log("erstes Gebot von " + gebotDTO.gebietername);
             gebotState.gebotliste.unshift(gebotDTO);
-            //oder gebotstate.gebotliste.unshift(gebotDTO);?????
+            
         }else{
+            
+            
+
             gebotState.gebotliste[index].betrag = gebotDTO.betrag
             gebotState.gebotliste[index].gebotzeitpunkt = gebotDTO.gebotzeitpunkt
         }
         
         //updateGebote();
-
-        //gebotState.gebotliste.forEach(o => o.gebieterid === gebotDTO.gebieterid)
-        
-        
-
-        
-
-
-
-
-        
-        
         /*
+            * Falls gebotener Betrag im DTO größer als bisheriges topgebot im State,
+            * werden topgebot und topbieter (der Name, also 'gebietername' aus dem DTO)
+            * aus dem DTO aktualisiert
+            */
 
-        for (let gebot of gebotState.gebotliste) {
-            if (gebot.gebieterid === gebotDTO.gebieterid) {
-                gebot.betrag = gebotDTO.betrag
-                gebot.gebotzeitpunkt = gebotDTO.gebotzeitpunkt
-            }
-        }
+                
+                
+               
+                let topbetrag = Math.max(... gebotState.gebotliste.map(gebot => gebot.betrag))
+                //let topbieter = gebotState.gebotliste.find((o) => { return o.betrag === topbetrag})
+                
+               
+                gebotState.topgebot = topbetrag;
+                
+               
+            
+                
+                gebotState.gebotliste.forEach((gebot) => {
+                    if (gebot.betrag === topbetrag) {
+                       
+                        
+                        gebotState.topbieter = gebot.gebietername;
+                        
+                    }
+                })
 
-        */
-
-        //neuer Bieter da nicht gefunden in der Liste
-        
-        //gebotState.gebotliste.unshift(gebotDTO);
+                
 
         console.log("Liste nach prozessierung");
         console.log(gebotState.gebotliste);
+        console.log("topbetrag ubieter aus processgebot")
+        console.log("topgebot: " + gebotState.topgebot)
+        console.log("topbieter " + gebotState.topbieter)
 
 
-        /*
-         * Falls gebotener Betrag im DTO größer als bisheriges topgebot im State,
-         * werden topgebot und topbieter (der Name, also 'gebietername' aus dem DTO)
-         * aus dem DTO aktualisiert
-         */
+        
 
-        /*
-        let max = 0;
-
-        gebotState.gebotliste.forEach(gebot => {
-            if (gebot.betrag > max) {
-                max = gebot.betrag
-            }
-        })
-
-        if (max > gebotState.topgebot) {
-            gebotState.topgebot = max;
-            gebotState.topbieter = gebotDTO.gebietername
-        }
-        */
 
 
     }
@@ -223,12 +218,14 @@ export function useGebot(angebotid: number) {
          * und 'errormessage' auf die Fehlermeldung geschrieben.
          */
 
-        //console.log("setze topgebot und topbieter auf 0");
-        //gebotState.topgebot = 0
-        //gebotState.topbieter=""
+        
 
         const url = '/api/gebot';
         console.log('bin in updateGEbot()')
+
+        console.log("Gebot ganz am Anfang")
+        console.log("topgebot: " + gebotState.topgebot)
+        console.log("topbieter " + gebotState.topbieter)
 
        await fetch(url, {
             method: 'GET',
@@ -261,55 +258,25 @@ export function useGebot(angebotid: number) {
                 console.log("VOR FILTERN:")
                 console.log(gebotState.gebotliste)
                 
-
-                
-                //filtern amk
-                //gebotState.gebotliste
                 const filterList =   gebotState.gebotliste.filter((gebot) => {
                     return gebot.angebotid === angebotid;
                 });
+
+                
                 console.log("NACH FILTERN");
                 console.log(gebotState.gebotliste)
-               
-                let topbetrag = Math.max(... gebotState.gebotliste.map(gebot => gebot.betrag))
-                //let topbieter = gebotState.gebotliste.find((o) => { return o.betrag === topbetrag})
-                
-                
-                
-                
-                gebotState.gebotliste = filterList;
-                gebotState.topgebot = topbetrag;
-                
-               
-            
-                
-                gebotState.gebotliste.forEach((gebot) => {
-                    if (gebot.betrag === topbetrag) {
-                       
-                        
-                        gebotState.topbieter = gebot.gebietername;
-                        
-                    }
-                })
 
-                if(gebotState.topgebot < 0){
+                gebotState.gebotliste = filterList;
+
+                if(gebotState.topgebot <= 0){
                     gebotState.topgebot = 0;
                 }
 
                 if(gebotState.topbieter === ""){
                     gebotState.topbieter = "noch niemand";
                 }
-                
-                //console.log("topgebot: " + gebotState.topgebot)
-                //console.log("topbieter " + gebotState.topbieter)
-
-                
-                //console.log("GebotListe nach Modifikation")
-                //console.log(gebotState.gebotliste)
-
-                //console.log("Höchstes Gebot:" + max1)
-                //console.log("topbieter:" + gebotState.topbieter)
-                //console.log("Anzahl Gebote " + gebotState.gebotliste.length)
+               
+               
                 
 
                 gebotState.errormessage = ''

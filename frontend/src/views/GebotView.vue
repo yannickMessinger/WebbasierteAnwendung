@@ -140,9 +140,8 @@ const restzeit = ref<number>();
 
 const gebotslistefiltered = computed(() => {
     const n: number = suchfeld.value.length;
-        console.log("Eigentliche Gebotsliste die angezeigt werden soll ")
-        console.log(gebote.gebotliste)
-        //kp ob hier vllt reaktivität verloren geht....
+        
+        
         //noch nach Höchstgebot sortieren! Höchsgebot ganz oben, dann zeitlich absteigend
         if (suchfeld.value.length < 3) {
            
@@ -184,8 +183,7 @@ async function gebotAbgeben():Promise<void>{
     console.log("angebotid aus GebotView: " + props.angebotidstr);
     await sendeGebot(bietfeld.value);
     await updateGebote();
-    console.log("Gebotliste aus VIEW erstes Element! gebot abgeben")
-    console.log(gebote.gebotliste)
+    
 
 }
 
