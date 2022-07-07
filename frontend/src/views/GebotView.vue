@@ -75,7 +75,7 @@
     
 
             <tbody>
-              <tr v-for="gebot in gebotslistefiltered">
+              <tr v-for="gebot in gebote.gebotliste">
                  
                         <td>{{parseDate(new Date(gebot.gebotzeitpunkt))}}</td>
                         <td>{{gebot.gebietername}}</td>
@@ -144,8 +144,13 @@ const gebotslistefiltered = computed(() => {
            
             
             let orderedByTime = gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
-            let topgebot  = orderedByTime.find((o) => { return o.betrag === gebote.topgebot})
-            //orderedByTime.unshift(topgebot)
+            let topgebot  = orderedByTime.find((o) =>  o.betrag === gebote.topgebot);
+            
+            if (topgebot !== undefined){
+                
+                //orderedByTime.unshift(topgebot);
+            }
+           
            
             
             return orderedByTime;
@@ -157,8 +162,7 @@ const gebotslistefiltered = computed(() => {
         }
     });
 
-console.log("gefilterte Liste aus GebotView");
-console.log(gebotslistefiltered);
+
 
 
 function updateRestzeit() {

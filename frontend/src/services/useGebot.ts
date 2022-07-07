@@ -52,49 +52,31 @@ export function useGebot(angebotid: number) {
     function processGebotDTO(gebotDTO: IGetGebotResponseDTO) {
 
         const dtos = JSON.stringify(gebotDTO)
-        console.log(`processGebot(${dtos})`)
+        //console.log(`processGebot(${dtos})`)
 
        
        
-      
-
-        console.log("Liste vor Prozessierung");
-        console.log(gebotState.gebotliste)
-        
-        console.log("PROZZESIERE GEBOT")
-        const index = gebotState.gebotliste.findIndex((gebot) => gebot.gebieterid === gebotDTO.gebieterid);
-
          /*
          * suche Angebot für 'gebieter' des übergebenen Gebots aus der gebotliste (in gebotState)
          * falls vorhanden, hat der User hier schon geboten und das Gebot wird nur aktualisiert (Betrag/Gebot-Zeitpunkt)
          * falls nicht, ist es ein neuer Bieter für dieses Angebot und das DTO wird vorne in die gebotliste des State-Objekts aufgenommen
          */
 
-        if(index === -1){
+       
 
-            
+        const findGebot = gebotState.gebotliste.find((findeGebot) => findeGebot.gebieterid === gebotDTO.gebieterid);
 
-            console.log("erstes Gebot von " + gebotDTO.gebietername);
-            gebotState.gebotliste.unshift(gebotDTO);
-            
-        }else{
-            
-            
+        if(findGebot !== undefined){
+            //console.log("Gebot von " + findGebot.gebietername + " schon in Liste, aktualisiere")
+            findGebot.betrag = gebotDTO.betrag;
+            findGebot.gebotzeitpunkt = gebotDTO.gebotzeitpunkt;
+           
 
-            gebotState.gebotliste[index].betrag = gebotDTO.betrag
-            gebotState.gebotliste[index].gebotzeitpunkt = gebotDTO.gebotzeitpunkt
-        }
-
-
-        const findGebot = gebotState.gebotliste.findIndex((gebot) => gebot.gebieterid === gebotDTO.gebieterid);
-
-        if(findGebot === undefined){
-            console.log("Gebot noch nicht in Liste")
-            //gebotState.gebotliste.unshift(gebotDTO);
         
         }else{
-            console.log("Gebot schon in Liste")
-            //updaten
+            //console.log("Gebot von noch nicht in Liste, hinzufügen")
+            gebotState.gebotliste.unshift(gebotDTO);
+            
         }
 
         
@@ -105,40 +87,24 @@ export function useGebot(angebotid: number) {
             * aus dem DTO aktualisiert
             */
 
-                
-                
-               
-                let topbetrag = Math.max(... gebotState.gebotliste.map(gebot => gebot.betrag))
-                //let topbieter = gebotState.gebotliste.find((o) => { return o.betrag === topbetrag})
-                
-               
-                gebotState.topgebot = topbetrag;
-                
-               
+            if(gebotDTO.betrag > gebotState.topgebot){
+                gebotState.topgebot = gebotDTO.betrag;
+                gebotState.topbieter = gebotDTO.gebietername;
             
+            }else{
+
+                let topbetrag = Math.max(... gebotState.gebotliste.map(gebot => gebot.betrag));
+                gebotState.topgebot = topbetrag;
+
+                let topbieter = gebotState.gebotliste.find((o) => o.betrag === topbetrag);
+                if(topbieter !== undefined){
+                    
+                    gebotState.topbieter = topbieter.gebietername;
+
+                }
                 
-                gebotState.gebotliste.forEach((gebot) => {
-                    if (gebot.betrag === topbetrag) {
-                       
-                        
-                        gebotState.topbieter = gebot.gebietername;
-                        
-                    }
-                })
-
-                
-
-        console.log("Liste nach prozessierung");
-        console.log(gebotState.gebotliste);
-        console.log("topbetrag ubieter aus processgebot")
-        console.log("topgebot: " + gebotState.topgebot)
-        console.log("topbieter " + gebotState.topbieter)
-
-
-        
-
-
-
+            }   
+                    
     }
 
 
@@ -188,7 +154,7 @@ export function useGebot(angebotid: number) {
                 
 
                 console.log("Neue STOMP Nachricht in useGebot() erhalten:");
-                //console.log(receivedMessage)
+               
 
                 
 
@@ -234,11 +200,8 @@ export function useGebot(angebotid: number) {
         
 
         const url = '/api/gebot';
-        console.log('bin in updateGEbot()')
+        //console.log('bin in updateGEbot()')
 
-        console.log("Gebot ganz am Anfang")
-        console.log("topgebot: " + gebotState.topgebot)
-        console.log("topbieter " + gebotState.topbieter)
 
        await fetch(url, {
             method: 'GET',
@@ -248,11 +211,11 @@ export function useGebot(angebotid: number) {
             if (!response.ok) {
                 gebotState.errormessage = response.statusText;
                 gebotState.gebotliste = []
-                console.log('Fehler von Backend updateGEbot()')
+                //console.log('Fehler von Backend updateGEbot()')
             }
 
-            console.log('GebotListe von Backend angefragt -> updateGEbot() Response aus Backend:')
-            console.log(response)
+            //console.log('GebotListe von Backend angefragt -> updateGEbot() Response aus Backend:')
+            //console.log(response)
 
             if (gebotState.receivingMessages === false) {
                 receiveGebotMessages()
@@ -263,39 +226,41 @@ export function useGebot(angebotid: number) {
         })
 
             .then((jsondata: [IGetGebotResponseDTO]) => {
-                console.log("topgebot: " + gebotState.topgebot)
-                console.log("topbieter " + gebotState.topbieter)
+             
                
-                //let gebotListe:IGetGebotResponseDTO[] = jsondata;
                 gebotState.gebotliste = jsondata;
-                console.log("VOR FILTERN:")
-                console.log(gebotState.gebotliste)
+               
                 
-                gebotState.gebotliste  =   gebotState.gebotliste.filter((gebot) => {
+                gebotState.gebotliste = gebotState.gebotliste.filter((gebot) => {
                     return gebot.angebotid === angebotid;
                 });
 
+
+                let topbetrag = Math.max(... gebotState.gebotliste.map(gebot => gebot.betrag))
+                gebotState.topgebot = topbetrag;
                 
-                console.log("NACH FILTERN");
-                console.log(gebotState.gebotliste)
+                let topbieter = gebotState.gebotliste.find((o) => o.betrag === topbetrag);
+    
+                if(topbieter !== undefined){
+                   
+                    gebotState.topbieter = topbieter.gebietername;
+                }
 
-                //gebotState.gebotliste = filterList;
-
-                if(gebotState.topgebot <= 0){
+                
+            
+               if(gebotState.topgebot < 0 ){
                     gebotState.topgebot = 0;
-                }
+               }
 
-                if(gebotState.topbieter === ""){
-                    gebotState.topbieter = "noch niemand";
-                }
-               
-               
+               if(gebotState.topbieter === ""){
+                  gebotState.topbieter = "niemand!";
+               }
                 
 
                 gebotState.errormessage = ''
             }
             ).catch((error) => {
-                //is das hier dann ein json fehler ?
+                
                 gebotState.errormessage = error.statusText
             })
 
@@ -323,10 +288,9 @@ export function useGebot(angebotid: number) {
          */
 
         const url = '/api/gebot';
-        //const hilo = <IAddGebotRequestDTO>({benutzerprofilid: gebotState.angebotid, angebotid: gebotState.angebotid, betrag:betrag});
+       
         const sendGebot: IAddGebotRequestDTO = ({ benutzerprofilid: logindata.benutzerprofilid, angebotid: angebotid , betrag: betrag });
-        //console.log(sendGebot)
-        //console.log("sendGebot angebotid: " + sendGebot.angebotid)
+      
 
         await fetch(url, {
             method: 'POST',
@@ -343,7 +307,7 @@ export function useGebot(angebotid: number) {
             } else {
 
                 console.log("Gebot erfolgreich abgegeben aus useGebot() -> sendeGebot()!");
-                //console.log(response.text());
+               
 
             }
 
