@@ -1,15 +1,33 @@
 <template>
-<h1>LOGIN VIEW</h1>
+
+
+
+
+<div>
+<h1>LOGIN</h1>
+</div>
+
+
+    
 
     <div>
         <input type="text" v-model="benutzername" placeholder="BENUTZERNAME"/>
     </div>
 
+    <br/>
+    
     <div>
         <input type="password" v-model="passwort" placeholder="PASSWORT"/>
+
     </div>
 
-    <button @click="check">LOGIN</button>
+    <br/>
+
+    <div>
+        <button @click="check">LOGIN</button>
+    </div>
+
+    
 
   
 
@@ -34,10 +52,7 @@ const benutzername = ref("");
 const passwort = ref("")
 const {logindata} = useLogin(); 
 
-//const timer_ID = setInterval(checkLogin,100)
 
-//geht so au netttt aller
-//const checkLogin = toRef(logindata, 'loggedin');
 
 
 async function check():Promise<void>{
@@ -46,8 +61,7 @@ async function check():Promise<void>{
 
     let checkLogin = logindata.loggedin
     
-    console.log("checklogin " + checkLogin);
-    //const checkLogin = toRef(logindata, 'loggedin');
+   
 
     if (checkLogin){
         router.push('/');
@@ -61,21 +75,12 @@ async function check():Promise<void>{
     
 }
 
-/*
-let test = computed(() => logindata.loggedin);
-if (test){
-        //router.push('/');
-        console.log("Login erfolgreich, Weiterleitung auf Übersichtsseite");
-    }else{
-        console.log("leider LOGIN FAIL");
-    }
-*/
-
-function submitLoginData():void{
-    console.log("Benutzername: " + benutzername.value + "PW: " + passwort.value  + " aus LoginView");
-    useLogin().login(benutzername.value,passwort.value);
-    
-    
-}
 
 </script>
+
+
+<style scoped>
+
+
+
+</style>

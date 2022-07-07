@@ -1,9 +1,24 @@
 <template>
-<h2>GEBOT VIEW</h2>
-
+    <div style="text-align: center;">
+    <h2>GEBOT VIEW</h2>
+    <img alt="Vue logo" class="logo" src="@/assets/hochschule-rheinmain-bildmarke.jpg" width="125"/>
+     <nav>
+        <RouterLink to="/">Gebotsübersicht</RouterLink>
+        
+      </nav>
+    </div>
     <div v-if = "angebote.errormessage" >{{gebote.errormessage}}</div>
 
-    <div>
+    
+
+    <div class="gebotview">
+         <h3>Topgebot:</h3>     
+            Bisheriges Topgebot ist: {{gebote.topgebot}}€, geboten von: {{gebote.topbieter}}!!
+        
+        <br/>
+        <br/>
+
+
         <table>    
                 <thead>
                     
@@ -29,41 +44,24 @@
                     <td><GeoLink :lat="gesuchtesAngebot.lat" :lon="gesuchtesAngebot.lon" :zoom="18">Abholort</GeoLink></td>
                     <td>{{restzeit}} Sekunden</td>
 
-
-
-
                 </tbody>
 
         </table>
 
-    </div>
-
-    <br/>
-    <br/>
-    <br/>
-
-
-     <div>
-           <h3>Topgebot:</h3>     
-            Bisheriges Topgebot ist: {{gebote.topgebot}}€, geboten von: {{gebote.topbieter}}!!
     
-    </div>
-
-            
-
-   <br/>
-   <br/>
-   <br/>
+    
+    
    
+        <h3>Gebotsliste:</h3>
+
     
 
-    <h3>Gebotsliste:</h3>
-
-    <br/>
     
+         <input type="text" v-model="suchfeld" placeholder="Suchbegriff" style="width:90%;"/>
 
-    <div>
-         <input type="text" v-model="suchfeld" placeholder="Suchbegriff" />
+         <br/>
+         <br/>
+
         <table>
            
             <thead>
@@ -73,7 +71,6 @@
                 <td>Betrag</td>
             </thead>
     
-
             <tbody>
               <tr v-for="gebot in gebotslistefiltered">
                  
@@ -87,11 +84,11 @@
             </tbody>
     
         </table>
-    </div>
+    
 
-<br/>
+    
  
-
+ </div>
    
    
     
@@ -143,17 +140,24 @@ const gebotslistefiltered = computed(() => {
         if (suchfeld.value.length < 3) {
            
             
-            let orderedByTime = gebote.gebotliste.slice(0,10).sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
+            let orderedByTime = gebote.gebotliste.slice()
+            orderedByTime = orderedByTime.sort((a,b) => (a.gebotzeitpunkt < b.gebotzeitpunkt) ? 1 : -1)
             let topgebot  = orderedByTime.find((o) =>  o.betrag === gebote.topgebot);
+           
+           
             
             if (topgebot !== undefined){
+                 let index = orderedByTime.findIndex((i) => i.gebotid === topgebot?.gebotid);
+                 if(index !== -1){
+                     orderedByTime.splice(index, 1);
+                     orderedByTime.unshift(topgebot);
+                 }
                 
-                //orderedByTime.unshift(topgebot);
             }
            
            
             
-            return orderedByTime;
+            return orderedByTime.slice(0,10);
         
         } else {
             
@@ -220,3 +224,59 @@ function parseDate(datum: Date){
 
 
 </script >
+
+
+<style scoped>
+
+
+.gebotview{
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    background-color: transparent;
+    margin-top: 10%;
+    text-align: center;
+}
+
+
+table{
+    border-collapse: collapse;
+    text-align: center;
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:100%;
+    
+    
+}
+
+tr{
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:20%;
+    
+}
+
+td{
+   
+    
+    border-radius: 0.5px; 
+    width: 20%;
+    padding: 0.5vw;
+    
+}
+
+thead{
+   
+    background-color: darkgray;
+     
+}
+
+
+
+
+
+</style>

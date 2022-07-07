@@ -1,14 +1,14 @@
 <template>
-   <!---wie hier Routerlink ohne Button umsetzen? Routerlink to nimmt keine Backticks...:( -->
-    <!---wen Link net geht button rein und function aufrufen -->
+  
    <div>
    <table>    
-    <thead class="angebotsinfo">
-            <td class="beschreibung">{{props.angebot.beschreibung}}<button @click=" navToGebotView()">Gebot Details</button></td>
-            <td class ="gebote">{{props.angebot.gebote}}</td>
-            <td class="topgebot">{{props.angebot.topgebot}}</td>
-            <td v-if="!showDet"><button @click="showDetails()">AUFklappe</button></td>
-            <td v-else><button @click="showDetails()">ZUklappe</button></td>
+    <thead>
+            <td >{{props.angebot.beschreibung}}</td>
+            <td >{{props.angebot.gebote}}</td>
+            <td >{{props.angebot.mindestpreis}}</td>
+            <td><button @click=" navToGebotView()">zur Versteigerung</button></td>
+            <td v-if="!showDet"><button @click="showDetails()">Details</button></td>
+            <td v-else><button @click="showDetails()">x</button></td>
         </thead>
 
         <tbody v-if="showDet">
@@ -64,29 +64,42 @@
 
 </script>
 
-<style>
+<style scoped>
 
-.angebotsinfo{
-    background-color:lightgrey;
+
+
+table{
+    border-collapse: collapse;
+    text-align: center;
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:100%;
+    
+    
 }
 
-.beschreibung{
-    padding-left: 1vw;
-    background-color:orange;
-    width: 60%;
+tr{
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:20%;
+    
 }
 
-.gebote{
-    padding-left: 1vw;
-    background-color:blue;
+td{
+   
+    
+    border-radius: 0.5px; 
     width: 20%;
+    padding: 0.5vw;
+    
 }
 
-.topgebot{
-    padding-left: 1vw;
-    background-color:purple;
-    width: 20%;
-
+thead{
+   
+    background-color: darkgray;
+     
 }
 
 </style>

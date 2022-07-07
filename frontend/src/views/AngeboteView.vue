@@ -36,4 +36,44 @@ const n = computed(() => angebote.angebotliste.length)
 
 
 
-</script >
+</script>
+
+<style scoped>
+
+
+
+table{
+    border-collapse: collapse;
+    text-align: center;
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:100%;
+    
+    
+}
+
+tr{
+    border:transparent;
+    border-color: black;
+    border-radius: 0.5px;
+    width:20%;
+    
+}
+
+td{
+   
+    
+    border-radius: 0.5px; 
+    width: 20%;
+    padding: 0.5vw;
+    
+}
+
+thead{
+   
+    background-color: darkgray;
+     
+}
+
+</style>
