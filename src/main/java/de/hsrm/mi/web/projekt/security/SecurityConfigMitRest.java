@@ -102,6 +102,7 @@ public class SecurityConfigMitRest {
                 .anyRequest().hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()
+                .failureForwardUrl("/login_failure")
                 //.loginPage("/login") // falls eigenes Login-Formular
                 .defaultSuccessUrl("/benutzerprofil")
                 .permitAll()

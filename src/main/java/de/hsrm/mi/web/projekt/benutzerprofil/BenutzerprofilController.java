@@ -206,6 +206,13 @@ public class BenutzerprofilController {
     }
 
 
+    @PostMapping("login_failure")
+    public String loginfail(){
+
+        return "redirect:/registrieren";
+    }
+
+
 
 
 

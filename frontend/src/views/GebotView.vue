@@ -11,9 +11,16 @@
 
     
 
+    
+
     <div class="gebotview">
+
+        <div v-if = "countdown"><h1 style="color: red; text-align: center;">{{restzeit}}</h1></div>
+
          <h3>Topgebot:</h3>     
             Bisheriges Topgebot ist: {{gebote.topgebot}}€, geboten von: {{gebote.topbieter}}!!
+        
+        <div v-if ="restzeit == 0"><h2>Bieter {{gebote.topbieter}} hat den Zuschlag für {{gesuchtesAngebot.beschreibung}} erhalten!</h2></div>
         
         <br/>
         <br/>
@@ -80,7 +87,7 @@
                 
             </tr>
                    <tr v-if="showBietFeld"> <input type ="number" v-model ="bietfeld" placeholder ="BIETEN SIE GEFÄLLIGST!"/> <button @click="gebotAbgeben()">BIETEN</button></tr>
-                  <tr v-else>DI DÖM VORBEI!</tr>
+                  <tr v-else>Zeit abgelaufen!</tr>
             </tbody>
     
         </table>
@@ -128,7 +135,7 @@ const index = angebote.angebotliste.findIndex((angebot) => angebot.angebotid ===
 const gesuchtesAngebot = angebote.angebotliste[index]
 const restzeit = ref<number>();
 
-
+const countdown = ref(false);
 
 
 
@@ -173,9 +180,16 @@ function updateRestzeit() {
     if (gesuchtesAngebot != undefined) {
         restzeit.value = new Date(gesuchtesAngebot.ablaufzeitpunkt).getTime() - Date.now()
         restzeit.value = Math.ceil(restzeit.value/1000)
+
+        if(restzeit.value <= 3){
+            countdown.value = true;
+        }
+
+
         if (restzeit.value <= 0) {
             clearInterval(timerid)
             showBietFeld.value = false;
+            restzeit.value = 0;
         }
     }
 }
@@ -236,7 +250,7 @@ function parseDate(datum: Date){
     margin-right: auto;
     width: 50%;
     background-color: transparent;
-    margin-top: 10%;
+    margin-top: 5%;
     text-align: center;
 }
 
