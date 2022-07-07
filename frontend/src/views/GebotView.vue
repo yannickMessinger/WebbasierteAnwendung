@@ -75,7 +75,7 @@
     
 
             <tbody>
-              <tr v-for="gebot in gebote.gebotliste">
+              <tr v-for="gebot in gebotslistefiltered">
                  
                         <td>{{parseDate(new Date(gebot.gebotzeitpunkt))}}</td>
                         <td>{{gebot.gebietername}}</td>
