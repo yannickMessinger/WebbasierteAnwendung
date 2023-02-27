@@ -6,7 +6,7 @@
 * Backend starten: bitte in src Verzeichnis navigieren, Befehl via Terminal "./gradlew bootrun" startet backend auf Port 8080
 * Frontend starten: bitte in frontend Verzeichnis navigieren, Befehl via Terminal  "npm run dev" startet frontend auf Port 3000 
 
-* Login Vorgang: Bitte auf http://localhost:8080 registrieren, anschließend einloggen. Dort lassen sich im Anschluss Nutzerprofil vervollstaendigen und Angeboten hinzufuegen.
+* Login Vorgang: Bitte auf http://localhost:8080 registrieren, anschließend einloggen. Dort lassen sich im Anschluss Nutzerprofil vervollstaendigen und Angebote hinzufuegen.
 * Danach auf http://localhost:3000 ebenfalls einloggen, Uebersichtsseite fuer Angebote sollte sichtbar sein. 
 
 * Viel Spaß beim bieten;)
